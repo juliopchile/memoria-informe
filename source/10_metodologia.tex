@@ -1,0 +1,64 @@
+\section{Metodología}
+Para alcanzar los objetivos planteados en el proyecto se propone el siguiente flujo de trabajo:
+
+\begin{enumerate}
+    \item Adquirir o desarrollar una base de datos orientada a la segmentación de instancias.
+    \item Adquirir o desarrollar una base de datos para tareas de seguimiento.
+    \item Llevar a cabo el entrenamiento de diversos modelos YOLO para segmentación de instancias, utilizando hiperparámetros de entrenamiento por defecto con algunas variaciones.
+    \item Realizar validación de los modelos previamente entrenados para obtener un ``benchmark'' inicial que compare los diferentes modelos en distintas circunstancias de entrenamiento, esto con el fin de encaminar la siguiente etapa.
+    \item Realizar la validación de los modelos entrenados con el fin de establecer un ``benchmark'' inicial que permita comparar el desempeño de los distintos modelos en diversas condiciones de entrenamiento y orientar la siguiente etapa.
+    \item Ejecutar una búsqueda de hiperparámetros para identificar la configuración óptima para el entrenamiento definitivo del modelo. Dicha búsqueda se restringe a los casos más prometedores identificados en la etapa anterior, con el objetivo de reducir el espacio de búsqueda debido a limitaciones de tiempo.
+    \item Proceder al entrenamiento final del modelo, empleando los hiperparámetros optimizados, y validar los resultados obtenidos.
+    \item Validar los modelos entrenados en la tarea de seguimiento.
+\end{enumerate}
+
+Cada etapa conlleva desafíos específicos, requiere el uso de herramientas particulares y demanda el desarrollo correspondiente de código. Además, con el objetivo de facilitar la replicación de los experimentos y resultados obtenidos en este trabajo, se contempla de forma paralela el entrenamiento y validación utilizando la base de datos pública Deepfish; en dicha parte de la memoria no se modifica la base de datos ni se incluyen pruebas relacionadas con seguimiento.
+
+\section{Herramientas computacionales}
+En esta sección se discuten los programas y herramientas utilizadas en el desarrollado de esta memoria.
+
+\subsection{Herramientas de desarrollo y despliegue}
+Python se ha consolidado como el lenguaje de programación por excelencia para el desarrollo y despliegue de modelos de aprendizaje automático. Entre los ``frameworks'' principales destacan TensorFlow y PyTorch, las cuales se caracterizan por su robustez y adaptabilidad a diversas necesidades. Dado que esta memoria consiste en entrenar un modelo de segmentación y no modificar ni diseñar uno nuevo, es recomendable emplear una librería más sencilla para esta tarea.
+
+\begin{table}[htbp]
+\centering
+\caption[Plataformas de desarrollo en Python para visión por computadora]{Tabla comparativa de distintas plataformas de desarrollo en Python.}
+\label{tab:comparativa_plataformas_desarrollo}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Característica}} & \multicolumn{1}{c|}{\textbf{Tensorflow} \cite{TensorFlow,TensorFlow-whitepaper}} & \multicolumn{1}{c|}{\textbf{Pytorch} \cite{Pytorch,Pytorch2}} & \multicolumn{1}{c|}{\textbf{Supergradients} \cite{Supergradients}} & \multicolumn{1}{c|}{\textbf{Ultralytics} \cite{Ultralytics}} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Disponibilidad\\ de modelos\end{tabular} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Múltiples modelos\\ y backbones para usar.\\ \checkmark\hspace{3px} Permite customizar y\\ diseñar modelos.\end{tabular} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Multiples modelos\\ y backbones para usar.\\ \checkmark\hspace{3px} El mayor nivel de\\ customización.\end{tabular} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Modelos de pose y de\\ detección.\\ \xmark \hspace{3px} No hay soporte para\\ modelos de segmentación.\end{tabular} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Modelos YOLO\\ para múltiples tareas.\\ \xmark \hspace{3px} Poca a nula\\ customización.\end{tabular} \\ \hline
+Entrenamiento & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Simple de realizar.\\ \checkmark\hspace{3px} Muy alto nivel de\\ personalización.\end{tabular} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Algo complicado\\ de realizar.\\ \checkmark\hspace{3px} El mayor nivel de\\ personalización.\end{tabular} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px}Algo complicado\\ de realizar.\\ \checkmark\hspace{3px} Alto nivel de personaliza-\\ ción (en modelos soportados).\end{tabular} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Muy sencillo.\\ \checkmark\hspace{3px} Buen nivel de\\ personalización.\end{tabular} \\ \hline
+Validación & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Implementación\\ manual.\end{tabular} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Implementación\\ manual.\end{tabular} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Implementación\\ por interfaz.\end{tabular} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Implementación\\ por interfaz.\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Exportación\\ con TensorRT\end{tabular} & \checkmark\hspace{3px} Implementado. & \checkmark\hspace{3px} Implementado. & \begin{tabular}[c]{@{}l@{}}\xmark \hspace{3px} Debe implementarse\\ a parte utilizando Pytorch.\end{tabular} & \checkmark\hspace{3px} Wrapp de Pytorch. \\ \hline
+Dificultad. & Media & Alta & Media-alta & Fácil \\ \hline
+\end{tabular}
+}
+\end{table}
+
+\subsubsection{Ultralytics}
+Ultralytics \cite{Ultralytics} es un ``toolkit'' construido sobre PyTorch, especializado en la implementación de la familia de modelos YOLO para detección, segmentación y estimación de pose en tiempo real. Proporciona ``scripts'' listos para usar, configuraciones predeterminadas optimizadas y facilidades para búsqueda de hiperparámetros, exportación a formatos ONNX y TensorRT, y despliegue en dispositivos borde. Su enfoque ligero y modular permite integrarlo fácilmente en ``pipelines'' de producción donde se requiera alta velocidad de inferencia y versatilidad en el entrenamiento. El mismo equipo de Ultralytics ha desarrollado algunos de los últimos modelos YOLO disponibles, y es esta disponibilidad de dichos modelos, al igual que la facilidad en sus entrenamientos, la razón por la que se decide usar esta biblioteca por sobre otras alternativas ---como SuperGradients.
+
+\subsection{Herramientas de etiquetado}
+
+\begin{table}[htpb]
+\centering
+\caption[Plataformas de etiquetado de bases de datos]{Tabla comparativa de distintas plataformas de etiquetado.}
+\label{tab:comparativa_plataformas_etiquetado}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Plataforma}} & \multicolumn{1}{c|}{\textbf{Bbox}} & \multicolumn{1}{c|}{\textbf{Segmentación}} & \multicolumn{1}{c|}{\textbf{Tracking}} & \multicolumn{1}{c|}{\textbf{Pros}} & \multicolumn{1}{c|}{\textbf{Contras}} \\ \hline
+Roboflow \cite{Roboflow} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Manual\\ \xmark \hspace{3px} Asistida\end{tabular} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Manual\\ \checkmark\hspace{3px} Asistida\end{tabular} & \xmark \hspace{3px} No disponible. & \begin{tabular}[c]{@{}l@{}}- Interfaz simple.\\ - Permite entrenar \\ modelos dentro\\ de su plataforma.\end{tabular} & \begin{tabular}[c]{@{}l@{}}- Hay que pagar\\ para tener el\\ dataset privado.\end{tabular} \\ \hline
+CVAT \cite{CVAT} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Manual\\ \xmark \hspace{3px} Asistida\end{tabular} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Manual\\ \checkmark\hspace{3px} Asistida\end{tabular} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Manual\\ \checkmark\hspace{3px} Asistida\\ con bbox.\end{tabular} & \begin{tabular}[c]{@{}l@{}}- Intefaz simple.\\ -Corre de forma\\ local.\end{tabular} & \begin{tabular}[c]{@{}l@{}}- Puede tener\\ incompatibilidad\\ con Firefox.\\ - Segmentación\\ asistida lenta.\end{tabular} \\ \hline
+V7 Labs \cite{V7Labs} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Manual\\ \checkmark\hspace{3px} Asistida\end{tabular} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Manual\\ \checkmark\hspace{3px} Asistida\end{tabular} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Manual\\ \checkmark\hspace{3px} Asistida\\ con segmentación.\end{tabular} & \begin{tabular}[c]{@{}l@{}}- Permite entrenar\\ modelos dentro\\ de su plataforma.\end{tabular} & \begin{tabular}[c]{@{}l@{}}- Interfaz muy\\ lenta y con lag.\end{tabular} \\ \hline
+Labellerr \cite{Labellerr} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Manual\\ \checkmark\hspace{3px} Asistida\end{tabular} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Manual\\ \checkmark\hspace{3px} Asistida\end{tabular} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Manual\\ \xmark \hspace{3px} Asistida\end{tabular} & \begin{tabular}[c]{@{}l@{}}- Permite entrenar\\ modelos dentro de\\ su plataforma.\end{tabular} & \begin{tabular}[c]{@{}l@{}}- Interfaz\\ complicada y\\ difícil de usar.\end{tabular} \\ \hline
+Supervisely \cite{Supervisely} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Manual\\ \checkmark\hspace{3px} Asistida\end{tabular} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Manual\\ \checkmark\hspace{3px} Asistida\end{tabular} & \begin{tabular}[c]{@{}l@{}}\checkmark\hspace{3px} Manual\\ \checkmark\hspace{3px} Asistida\end{tabular} & \begin{tabular}[c]{@{}l@{}}- Múltiples apps\\ y opciones para\\ configurar los\\ proyectos.\end{tabular} & \begin{tabular}[c]{@{}l@{}}- Tracking\\ asistido lento.\end{tabular} \\ \hline
+SAM2 \cite{SAM2} & \checkmark\hspace{3px} Asistida & \checkmark\hspace{3px} Asistida & \checkmark\hspace{3px} Asistida & \begin{tabular}[c]{@{}l@{}}- Se ejecuta\\ localmente\end{tabular} & \begin{tabular}[c]{@{}l@{}}- Implementación\\ manual.\end{tabular} \\ \hline
+\end{tabular}
+}
+\end{table}
+
+\subsubsection{CVAT}
+CVAT \cite{CVAT} (Computer Vision Annotation Tool) es una herramienta de código abierto diseñada para facilitar la anotación de imágenes y videos. Soporta la creación de cajas englobantes, polígonos, y keypoints de manera manual, así como la segmentación de instancias y seguimiento de objetos en videos. CVAT es conocido por su simplicidad y velocidad, lo que lo convierte en una opción ideal para proyectos que requieren anotaciones precisas. Sin embargo, la segmentación automática puede ser lenta en datasets grandes, y pueden existir incompatibilidades con el navegador Firefox.

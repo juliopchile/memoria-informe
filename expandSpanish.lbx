@@ -1,0 +1,37 @@
+\ProvidesFile{expandSpanish.lbx}[2025/05/23 v1.0 custom biblatex strings]
+\InheritBibliographyExtras{spanish}
+\InheritBibliographyStrings{spanish}
+
+\DeclareBibliographyStrings{%
+% "En sección" y "En su" con abreviatura y plural.
+insection  = {{\bibstring{in}\addspace{secci\'on}}{\bibstring{in}\addspace{sec}\adddot}},%
+insections = {{\bibstring{in}\addspace{secciones}}{\bibstring{in}\addspace{secs}\adddot}},%
+intheir    = {{\bibstring{in}\addspace{su}}{\bibstring{in}\addspace{su}}},%
+intheirs   = {{\bibstring{in}\addspace{sus}}{\bibstring{in}\addspace{sus}}},%
+% Formatos audiovisuales
+image      = {{imagen}{img\adddot}},%
+photo      = {{fotograf\'ia}{foto}},%
+slide      = {{diapositiva}{diapo\adddot}},%
+paint      = {{pintura}{pint\adddot}},%
+drawing    = {{dibujo}{dib\adddot}},%
+artwork    = {{obra{\addspace}de{\addspace}arte}{o\adddot{\addspace}a\adddot}},%
+audio      = {{audio}{audio}},%
+music      = {{m\'usica}{m\'us\adddot}},%
+video      = {{video}{video}},%
+movie      = {{pel\'icula}{peli}},%
+song       = {{canci\'on}{canc\adddot}},%
+vhs        = {{VHS}{VHS}},%
+cd         = {{CD-ROM}{CD}},%
+dvd        = {{DVD}{DVD}},%
+% Solicitudes de patente (arreglado, estabán mal formateadas)
+patreqde   = {{\setunit{\biblstring{patreq}\addspace\biblstring{patentde}}}%
+              {\setunit{\bibsstring{patreq}\addspace\bibsstring{patentde}}}},%
+patreqeu   = {{\setunit{\biblstring{patreq}\addspace\biblstring{patenteu}}}%
+              {\setunit{\bibsstring{patreq}\addspace\bibsstring{patenteu}}}},%
+patreqfr   = {{\setunit{\biblstring{patreq}\addspace\biblstring{patentfr}}}%
+              {\setunit{\bibsstring{patreq}\addspace\bibsstring{patentfr}}}},%
+patrequk   = {{\setunit{\biblstring{patreq}\addspace\biblstring{patentuk}}}%
+              {\setunit{\bibsstring{patreq}\addspace\bibsstring{patentuk}}}},%
+patrequs   = {{\setunit{\biblstring{patreq}\addspace\biblstring{patentus}}}%
+              {\setunit{\bibsstring{patreq}\addspace\bibsstring{patentus}}}},%
+}%

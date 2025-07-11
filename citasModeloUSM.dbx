@@ -1,0 +1,17 @@
+% citasModeloUSM.dbx
+\DeclareBibliographyAlias{image}{media}%
+\DeclareBibliographyAlias{photo}{media}%
+\DeclareBibliographyAlias{slide}{media}%
+\DeclareBibliographyAlias{paint}{media}%
+\DeclareBibliographyAlias{drawing}{media}%
+\DeclareBibliographyAlias{artwork}{media}%
+\DeclareBibliographyAlias{audio}{media}%
+\DeclareBibliographyAlias{music}{media}%
+\DeclareBibliographyAlias{video}{media}%
+\DeclareBibliographyAlias{movie}{media}%
+\DeclareBibliographyAlias{legislation}{legal}%
+\DeclareBibliographyAlias{jurisdiction}{legal}%
+\DeclareDatamodelFields[type=field,datatype=range]{column}%
+\DeclareDatamodelFields[type=field,datatype=literal]{section}%
+\DeclareDatamodelFields[type=list,datatype=name]{director}%
+\DeclareDatamodelFields[type=field,datatype=literal]{venue}%

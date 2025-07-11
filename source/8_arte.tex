@@ -1,0 +1,237 @@
+% Introducción
+\section{Estado del arte}
+En la presente sección se exponen los avances recientes y las técnicas predominantes en tareas de visión por computadora, enfocándose en la segmentación de instancias, el seguimiento de objetos y la optimización del entrenamiento de modelos. Se abordan además las técnicas actuales de optimización y las consideraciones en validación y despliegue.%, estableciendo la relación de estos métodos con el trabajo realizado.
+
+% Segmentación en Visión por computadora
+\subsection{Segmentación en imágenes}
+La segmentación de imágenes constituye una técnica común en el procesamiento de imágenes digitales, para dividir una imagen en diversas regiones, a menudo basándose en las características de los píxeles. De interés particular es la segmentación de instancias, que permite identificar cada objeto presente en la imagen asignándole una clase y una máscara específica a nivel píxel (Fig. \ref{fig:segmentation_types_instance}).
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/image.png}
+        \caption{Imagen original.}
+        \label{fig:segmentation_types_original}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/semantic_segmentation.png}
+        \caption{Segmentación semántica.}
+        \label{fig:segmentation_types_semantic}
+    \end{subfigure}
+    \vspace{0.5cm}
+
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/instance_segmentation.png}
+        \caption{Segmentación de instancias.}
+        \label{fig:segmentation_types_instance}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/panoptic_segmentation.png}
+        \caption{Segmentación panóptica.}
+        \label{fig:segmentation_types_panoptic}
+    \end{subfigure}
+    \caption[Tipos de segmentación en visión por computadora]{Tipos de segmentación en visión por computadora.}
+    \label{fig:segmentation_types}
+\end{figure}
+
+% Modelos de segmentación de instancias
+\subsection{Modelos de segmentación de instancias}
+Diversas arquitecturas han sido desarrolladas para abordar el problema de la segmentación de instancias, con especial relevancia en aplicaciones de tiempo real. Se describen a continuación algunos de los modelos más representativos para este propósito.
+
+\subsubsection{Mask-RCNN}
+%Mask R-CNN (Region-based Convolutional Neural Network) \cite{MaskRCNN} es una extensión del modelo Faster R-CNN \cite{FasterRCNN} que no solo realiza detección de objetos y clasificación, sino también segmentación de instancias, asignando una máscara a cada objeto identificado. Su novedad es la introducción de una tercera rama en su arquitectura, agregando una capa de salida adicional que predice la máscara binaria para cada objeto detectado.
+Mask R-CNN \cite{MaskRCNN} es una extensión del modelo Faster R-CNN \cite{FasterRCNN} donde se añade una tercera rama en su arquitectura, que integra una capa para predecir la máscara binaria de cada objeto detectado. Esto le permite detección y segmentación simultánea de objetos. 
+
+\subsubsection{MS-RCNN}
+%MS-RCNN \cite{MaskScoringRCNN} es una mejora sobre Mask R-CNN. Su principal innovación es la inclusión de una puntuación de máscara ``mask scoring'', que mide la precisión de las máscaras segmentadas para cada objeto en vez de asumir una confianza fija. Esto se logra introduciendo una capa adicional que evalúa la calidad de cada máscara generada, mejorando así el rendimiento en la segmentación de objetos y reduciendo las falsas detecciones.
+MS-RCNN \cite{MaskScoringRCNN} representa una mejora sobre Mask R-CNN mediante la incorporación del mecanismo denominado ``mask scoring'', que mide la precisión de las máscaras segmentadas para cada objeto en vez de asumir una confianza fija. Esto se logra introduciendo una capa adicional que evalúa la calidad de cada máscara generada, mejorando así el rendimiento en la segmentación de objetos y reduciendo las falsas detecciones.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}[b]{0.48\textwidth}
+        \centering
+    \includegraphics[width=1\textwidth]{figures/Model Mask RCNN.pdf}
+    \caption[Arquitectura Mask RCNN]{Arquitectura Mask RCNN.}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.48\textwidth}
+        \centering
+    \includegraphics[width=1\textwidth]{figures/Model Mask Scoring RCNN.pdf}
+    \caption[Arquitectura MS RCNN]{Arquitectura MS RCNN.}
+    \end{minipage}
+\end{figure}
+
+\subsubsection{SOLOv2}
+%SOLO \cite{SOLOv1} es un modelo de segmentación de instancias que introduce un enfoque novedoso para identificar y segmentar objetos en una imagen sin necesidad de propuestas de regiones o anclas (anchor-free). En lugar de dividir la imagen en regiones sugeridas (region proposals) como hacen modelos anteriores, SOLO emplea una malla de cuadrículas. Cada celda de esta cuadrícula representa una instancia de objeto en función de la posición del objeto en la imagen. SOLOv2 \cite{SOLOv2} introduce varias mejoras significativas para optimizar y hacer más preciso el enfoque de SOLO, entre las más relevantes está la convolución dinámica.
+El modelo SOLO \cite{SOLOv1} introduce un enfoque basado en la división de la imagen en una malla de cuadrículas, eliminando la necesidad de propuestas de regiones o anclas. SOLOv2 \cite{SOLOv2} incorpora mejoras significativas, entre las que destaca la convolución dinámica, con la que se obtiene una mayor precisión en segmentación sin aumentar considerablemente la complejidad computacional.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{figures/Model SOLOv1.pdf}
+        \caption[Arquitectura SOLO]{Arquitectura SOLO.}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{figures/Model SOLOv2.pdf}
+        \caption[Arquitectura SOLOv2]{Arquitectura SOLOv2.}
+    \end{minipage}
+\end{figure}
+
+\subsubsection{YOLOv8}
+%Lanzado por Ultralytics, YOLOv8 \cite{yolov8_ultralytics} es la versión más popular de la serie YOLO (You Only Look Once), que ofrece un diseño modular y una arquitectura más optimizada para la detección en tiempo real. YOLOv8 se enfoca en la detección de objetos y es especialmente útil en aplicaciones de baja latencia. La arquitectura de YOLOv8 incorpora una red de ``backbone'' basada en una versión mejorada de CSPDarknet53 con un nuevo módulo de convolución C2f, detección sin anclas para predecir directamente el centro de los objetos, y un diseño de cabeza desmontable que optimiza la extracción de características y la precisión en múltiples escalas \cite{YOLOv8}. Estas mejoras permiten un mejor rendimiento en detección de objetos, con mayor precisión media (mAP) y menor complejidad computacional. Con la incorporación de una red Proto es además capaz de realizar tareas de segmentación (Fig. \ref{yolov8-seg}).
+
+La serie YOLO, en su versión YOLOv8 \cite{yolov8_ultralytics}, ha sido diseñada para la detección en tiempo real, combinando eficiencia y precisión. Esta versión introduce un diseño modular, una red ``backbone'' basada en una variante optimizada de CSPDarknet53 (con el módulo de convolución C2f) y mecanismos de detección sin anclas \cite{YOLOv8}. Con la incorporación de una red Proto es además capaz de realizar tareas de segmentación (Fig. \ref{yolov8-seg}).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.83\linewidth]{figures/Model YOLOv8.jpg}
+    \caption[Arquitectura YOLOv8 de detección]{Arquitectura YOLOv8 de detección.}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\linewidth]{figures/Model YOLOv8seg.png}
+    \caption[Arquitectura YOLOv8 de segmentación utilizada en FastSAM]{Arquitectura YOLOv8 de segmentación utilizada en FastSAM \cite{FastSAM}.}
+    \label{yolov8-seg}
+\end{figure}
+
+\subsubsection{YOLOv9}
+%YOLOv9 \cite{YOLOv9} es una versión avanzada de la serie YOLO, centrada en mejorar la precisión y eficiencia a través de innovaciones arquitectónicas clave. Una de sus principales mejoras es la introducción de Programmable Gradient Information (PGI), un mecanismo de supervisión auxiliar que optimiza la transmisión de gradientes y reduce la pérdida de información a medida que los datos avanzan por la red. PGI utiliza una rama reversible auxiliar para conservar características críticas, generando gradientes confiables que mejoran la precisión y permiten el uso efectivo de modelos más ligeros. Además, YOLOv9 incorpora GELAN (Generalized Efficient Layer Aggregation Network), una extensión de la arquitectura ELAN, diseñada para optimizar el uso de parámetros y permitir configuraciones personalizables según el dispositivo.
+La versión YOLOv9 \cite{YOLOv9} introduce innovaciones encaminadas a mejorar la precisión y la eficiencia, haciendo uso de mecanismos como Programmable Gradient Information (PGI), que optimiza la transmisión de gradientes mediante una rama reversible auxiliar. Además, se incorpora GELAN (Generalized Efficient Layer Aggregation Network), que facilita una mejor utilización de los parámetros y posibilita configuraciones ajustables según el dispositivo.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\linewidth]{figures/PGI YOLOv9.png}
+    \caption[PGI de YOLOv9 y otras arquitecturas de red y métodos relacionados]{PGI y arquitecturas de red y métodos relacionados. (a) Path Aggregation Network (PAN), (b) Reversible Columns (RevCol), (c) supervisión profunda convencional, y (d) método usado en YOLOv9 de Información de Gradiente Programable (PGI).}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\linewidth]{figures/Mapas de caracteristicas YOLOv9.png}
+    \caption[Mapas de características para diferentes arquitecturas de red (PlainNet, ResNet, CSPNet y GELAN)]{Resultados de visualización de mapas de características de salida con pesos iniciales aleatorios para diferentes arquitecturas de red: (a) imagen de entrada, (b) PlainNet, (c) ResNet, (d) CSPNet, y (e) la arquitectura propuesta GELAN.}
+\end{figure}
+
+\subsubsection{YOLO11}
+%YOLO11 \cite{yolo11_ultralytics} es una de las últimas versiones de la serie YOLO, diseñada para mejorar la detección de objetos en tiempo real y expandir sus capacidades a tareas de visión por computadora como segmentación de instancias, estimación de pose y detección de objetos orientados. Este modelo incorpora el nuevo bloque C3k2, una variación optimizada del Cross Stage Partial (CSP) que utiliza dos convoluciones más pequeñas en lugar de una grande, lo cual reduce la carga computacional y aumenta la velocidad sin comprometer la precisión \cite{YOLOv11}. Además, YOLOv11 introduce el módulo de convolución con atención espacial paralela (C2PSA), que mejora la capacidad del modelo para enfocarse en áreas críticas de una imagen, aumentando la precisión en la detección de objetos de tamaños y posiciones variados.
+YOLO11 \cite{yolo11_ultralytics} se posiciona como la última actualización de la serie YOLO por parte de Ultralytics, optimizando sus capacidades en tareas de segmentación de instancias, estimación de pose y detección de objetos orientados, etc. La introducción del bloque C3k2 y del módulo de convolución con atención espacial paralela (C2PSA) permite mejorar la velocidad y la precisión mediante la reducción de la carga computacional \cite{YOLOv11}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\linewidth]{figures/Model YOLO11.png}
+    \caption[Módulos arquitectónicos clave de YOLO11]{Módulos arquitectónicos clave de YOLO11.}
+\end{figure}
+
+% Hiperparámetros de entrenamiento
+\subsection{Hiperparámetros de entrenamiento}
+%La adecuada configuración de los hiperparámetros de entrenamiento resulta fundamental para obtener un desempeño óptimo en modelos de aprendizaje automático. Estos parámetros, definidos antes del inicio del proceso de entrenamiento, regulan aspectos clave como la velocidad de convergencia, la estabilidad del algoritmo y la capacidad del modelo para generalizar a nuevos datos. Su sintonización precisa incide directamente en la evolución del error durante el entrenamiento y, en consecuencia, en el rendimiento del modelo sobre datos no vistos.
+La configuración adecuada de los hiperparámetros resulta determinante para alcanzar un desempeño óptimo en modelos de aprendizaje automático. Dichos parámetros, definidos antes del inicio del proceso de entrenamiento, influyen notablemente en la velocidad de convergencia, la estabilidad del algoritmo y la capacidad del modelo para generalizar frente a nuevos datos.
+
+\subsubsection{Optimizador}
+Los optimizadores de entrenamiento son algoritmos utilizados en el proceso de entrenamiento de modelos en aprendizaje de máquina para minimizar la función de pérdida ajustando los pesos y sesgos del modelo. Su utilidad principal es mejorar la convergencia del modelo hacia un mínimo local o global en el espacio de la función de costo, lo que se traduce en una mejor predicción \cite{Goodfellow-et-al-2016}. Algunos ejemplos comunes incluyen:
+%Los optimizadores de entrenamiento tienen la función de ajustar los pesos y sesgos del modelo minimizando la función de pérdida. Su utilidad principal es mejorar la convergencia del modelo hacia un mínimo local o global en el espacio de la función de costo, lo que se traduce en una mejor predicción \cite{Goodfellow-et-al-2016}. Entre los algoritmos más utilizados se encuentran:
+
+\begin{itemize}
+\setlength\itemsep{-0.3em}
+    \item \textbf{Gradiente Descendente (SGD)}: Realiza ajustes basados en la derivada del error respecto a los pesos.
+    \item \textbf{RMSProp}: Emplea una media móvil de gradientes pasados para normalizar el valor de la derivada, mejorando la estabilidad.
+    \item \textbf{Adam}: Combina las ventajas del momentum y RMSProp, adaptando la actualización de cada parámetro individualmente.
+\end{itemize}
+
+%Los algoritmos de optimización adaptativa, como Adam, han mostrado un mejor rendimiento de optimización que SGD en algunos escenarios. Sin embargo, estudios recientes muestran que Adam suele ofrecer peores resultados de generalización que SGD en el entrenamiento de redes neuronales profundas para tareas de clasificación de imágenes \cite{Keskar2017}. Adam encuentra soluciones que generalizan peor que las encontradas por SGD \cite{Deng2009, Goyal2017, He2016}. Incluso cuando Adam consigue la misma o menor pérdida de entrenamiento que SGD, el rendimiento en las pruebas es peor.
+
+%Asimismo, en el contexto del problema de segmentación de instancias de peces, existe precedente en la memoria de titulo de \cite[Alejandro Guerrero, 2024]{Guerrero2024} y experiencia personal \cite{Lopez2024} que evidencia que SGD suele superar a Adam.
+A pesar de que los algoritmos adaptativos, como Adam, suelen acelerar la convergencia, diversas investigaciones han señalado que, en ciertos escenarios, Adam puede generar soluciones con menor capacidad de generalización en comparación con SGD \cite{Keskar2017, Deng2009, Goyal2017, He2016}. Además existe precedente en trabajos previos de segmentación de instancias con YOLO, donde se ha observado que SGD supera a Adam \cite{Guerrero2024, Lopez2024}.
+
+\subsubsection{Técnicas de regularización}
+%Las técnicas de regularización son métodos aplicados durante el entrenamiento de un modelo para prevenir el sobre-ajuste. Estas técnicas agregan restricciones o penalizaciones a la función de costo del modelo para mejorar su capacidad de generalización \cite{Goodfellow-et-al-2016}. Algunos ejemplos comunes incluyen:
+
+Las técnicas de regularización se aplican durante el entrenamiento para contrarrestar el sobreajuste, al imponer restricciones adicionales en la función de costo \cite{Goodfellow-et-al-2016}. Entre las técnicas más comunes se encuentran:
+ 
+\begin{itemize}
+\setlength\itemsep{-0.3em}
+    \item \textbf{L1 y L2}: Penalizan pesos elevados, utilizando normas basadas en L1 y L2 respectivamente.
+    \item \textbf{Dropout}: Inhabilita aleatoriamente una fracción de neuronas durante el entrenamiento, para evitar que el modelo dependa demasiado de algunas características.
+    \item \textbf{Early Stopping}: Finaliza el entrenamiento cuando la mejora en la función de pérdida se estanca, evitando sobre-entrenar el modelo.
+    \item \textbf{Data Augmentation}: Aumenta la diversidad de muestras de entrenamiento mediante transformaciones (rotación, escalado, ruido, etc.).
+    %\item \textbf{Weight Decay}: Variante de la regularización L2 que impone penalizaciones al crecimiento excesivo de los pesos.
+\end{itemize}
+
+\subsubsection{Ajustador de la tasa de aprendizaje}
+Los ajustadores de la tasa de aprendizaje ---en inglés ``learning rate schedulers''--- son técnicas que modifican dinámicamente la tasa de aprendizaje a medida que avanza el entrenamiento. Esta adaptación permite mejorar la convergencia y evitar que el modelo quede atrapado en mínimos locales oscilando alrededor de la solución óptima \cite{Bengio2012}. Entre los métodos más comunes destacan:
+
+\begin{itemize}
+\setlength\itemsep{-0.3em}
+    \item \textbf{Step Decay}: Reduce la tasa de aprendizaje en intervalos predefinidos.
+    \item \textbf{Exponential Decay}: Disminuye la tasa de aprendizaje de forma exponencial a lo largo del entrenamiento.
+    \item \textbf{Cosine Annealing}: Aplica una disminución de la tasa de aprendizaje siguiendo una función cosenoidal para lograr una convergencia más suave.
+\end{itemize}
+
+\subsubsection{Tamaño de lote}
+Estudios recientes han indicado que el tamaño del lote, si bien no afecta significativamente el rendimiento final, debe ajustarse en conjunto con otros hiperparámetros (como la tasa de aprendizaje) para optimizar el entrenamiento. En la búsqueda de hiperparámetros, se ha evidenciado que lotes de tamaño intermedio facilitan un ajuste más rápido y eficiente \cite{Shallue2018, Breuel2015}.
+
+\subsection{Técnicas de optimización}
+Diversas técnicas se han desarrollado para optimizar modelos de aprendizaje automático, ya sea mediante la reducción del costo computacional, la disminución del tiempo de inferencia o la reducción en consumo energéticos. Entre las técnicas más populares se destacan:
+
+\subsubsection{Pruning (poda)}
+La poda comprende la eliminación de conexiones, pesos o neuronas redundantes en un modelo entrenado, con el fin de reducir la complejidad del modelo. Esta técnica requiere un manejo cuidadoso, ya que la eliminación indiscriminada de parámetros puede deteriorar la precisión \cite{Cheng2018}.
+
+\subsubsection{Cuantización numérica}
+La cuantización consiste en representar los pesos y activaciones utilizando menos bits (por ejemplo, pasar de 32 bits flotantes a 8 bits enteros). Esta técnica reduce el tamaño del modelo y disminuye el consumo de memoria, siendo especialmente útil en dispositivos con recursos limitados, como teléfonos móviles o sistemas embebidos \cite{Jacob2018}. Se distinguen dos enfoques principales:
+
+\begin{itemize}
+\setlength\itemsep{-0.3em}
+    \item \textbf{Post-Training Quantization (PTQ)}: se aplica la cuantización después del entrenamiento, lo cual es más rápido pero puede inducir pérdida de precisión.
+    \item \textbf{Quantization Aware Training (QAT)}: el modelo es entrenado teniendo en cuenta la cuantización, simulando la precisión reducida durante el entrenamiento. Esto permite que el modelo se ajuste mejor a las restricciones de cuantización, obteniendo mejores resultados.
+\end{itemize}
+
+En grandes modelos de lenguaje se observa que el impacto negativo de la cuantización disminuye conforme aumenta el tamaño del modelo \cite{Yao2024}. Si bien aún no se ha evidenciado de forma concluyente un comportamiento similar en tareas de visión por computadora, se piensa que la tendencia podría ser comparable.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.78\textwidth]{figures/pruning_quantization.png}
+\label{pruning_quantization}
+\caption[Representación de una red optimizada con poda y cuantización]{Representación de una red optimizada con poda y cuantización.}
+\end{figure}
+
+\subsubsection{Knowledge Distillation}
+Esta técnica implica entrenar un modelo más pequeño y eficiente (llamado modelo estudiante) utilizando las predicciones de un modelo más grande y preciso (modelo maestro). El estudiante aprende a imitar el comportamiento del maestro, lo que permite reducir el tamaño del modelo manteniendo un buen rendimiento \cite{Cheng2018}.
+
+\subsection{Seguimiento}
+En su forma más simple, el seguimiento puede definirse como el problema de estimar la trayectoria de un objeto en el plano de la imagen a medida que se desplaza por una escena. En otras palabras, un rastreador asigna etiquetas coherentes a los objetos rastreados en diferentes fotogramas de un vídeo. Además, dependiendo del dominio de seguimiento, un rastreador también puede proporcionar información centrada en el objeto, como la orientación, el área o la forma de un objeto \cite{Yilmaz2006}.
+
+Según \cite[Yilmaz et al.]{Yilmaz2006} es posible clasificar taxonómicamente el seguimiento según el método empleado, donde distinguen basado en el modelo de representación utilizado para el objeto de interés.
+     
+\begin{itemize}
+    \item \textbf{Seguimiento por punto}: los objetos detectados se representan mediante puntos, y la asociación de los puntos se basa en el estado anterior ---o futuro--- del objeto, que puede incluir su posición y movimiento. Este método requiere detecciones previas.
+    \item \textbf{Seguimiento por plantilla (\textit{kernel})}: se rastrean objetos basándose en modelos de apariencia del objeto de interés. Estos modelos de apariencia pueden ser plantillas, estimaciones de densidad de aparición o regiones de objeto (por ejemplo cajas englobantes). Este método puede utilizar detecciones previas o ser la forma en que se realizan detecciones futuras.
+    \item \textbf{Seguimiento por silueta}: aquí el modelo de apariencia corresponde a un contorno o silueta del objeto de interes. Similar al seguimiento por plantilla es posible utilizar detecciones previas (``shape matching'') o realizar nuevas deteccioens (``contour tracking'').
+\end{itemize}
+
+Otra forma de categorizar la tarea de seguimiento es según su implementación basada o no en detecciones.
+
+\begin{itemize}
+    \item \textbf{Seguimiento basado en detección}: implica detectar objetos en cada fotograma de una secuencia de video mediante un detector y luego usar algoritmos de asociación de datos (como SORT o DeepSORT), para vincular estas detecciones a través de los fotogramas. 
+
+    \item \textbf{Seguimiento basado en modelos}: utiliza un modelo predefinido del objeto, el cual puede ser predeterminado o aprendido, simple (forma, color, etc.) o complejo (representación semática o basada en contexto) y lo ajusta en cada fotograma. En resumen se realiza detección al mismo tiempo que se sigue al objeto.
+\end{itemize}
+
+\subsubsection{Algoritmos de seguimiento relevantes}
+Entre los algoritmos desarrollados para el seguimiento de objetos destacan:
+\begin{itemize}
+    \item \textbf{BoT-SORT}: algoritmo de seguimiento de múltiples objetos que combina información sobre el movimiento, la apariencia y la Compensación del Movimiento de Cámara (CMC) \cite{BotSORT}.
+
+    \item \textbf{OC-SORT}:el algoritmo Observation-Centric SORT (OC-SORT) \cite{OCSORT} es una versión avanzada del algoritmo Simple Online and Real-Time Tracking (SORT) \cite{SORT}. OC-SORT mejora la robustez ante oclusiones y movimientos no lineales al centrarse en las observaciones de los objetos en lugar de solo las estimaciones de estado.
+
+    \item \textbf{Deep OC-SORT}: mejora el seguimiento de múltiples objetos integrando características visuales con técnicas basadas en el movimiento. Este modelo se basa en OC-SORT e introduce módulos clave como (CMC), la Apariencia Dinámica (DA) y la Ponderación Adaptativa (AW) \cite{DeepOCSORT}.
+
+    \item \textbf{Hybrid-SORT}: en Hybrid SORT \cite{HybridSORT}, el vector de estado del filtro de Kalman se amplía para incluir los estados de confianza y altura, que representan la estimación de la confianza y el tamaño de la detección. Esto se utiliza para predecir la confianza y la altura de la detección mediante un modelado lineal basado en el historial de trayectorias.
+
+    \item \textbf{ByteTrack}: este algoritmo es conocido por su capacidad para manejar tanto cajas de detección de alta puntuación como de baja puntuación. Emplea una estrategia de asociación de objetos en dos etapas, mejorando la precisión al incluir detecciones de baja puntuación como parte integral del proceso de asociación \cite{ByteTrack}.
+\end{itemize}

@@ -1,0 +1,56 @@
+\input{style.tex}
+\input{glossary.tex}
+% Author
+\title{"Proyecto para segmentar y trackear salmones"}
+\author{Julio López Blanche}
+\date{\today}
+% PDF config
+\hypersetup{
+    pdfstartview={FitH},
+    pdftitle={\MyTitle},
+    pdfauthor={\MyAuthor}, 
+    pdfsubject={rev.\the\year.\ifnum\month<10\relax0\fi\the\month.\ifnum\day<10\relax0\fi\the\day},
+    pdfcreator={Universidad Técnica Federico Santa María},
+    pdfproducer={pdfLaTeX},
+}
+
+%\addbibresource{references.bib} %Imports bibliography file
+\bibliography{references.bib}
+\makeglossaries
+
+%%%%%%%%%%%%%%%%%%%%%
+%%%%% DOCUMENTO %%%%%
+%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\renewcommand{\thelstlisting}{\arabic{section}.\arabic{lstlisting}}
+% Portada
+\include{source/1_portada}
+\frontmatter
+% Agradecimientos
+\include{source/2_agradecimientos}
+% Resumen
+\include{source/3_resumen}
+% Glosario
+\include{source/4_glosario}
+% Índice
+\include{source/5_indice}
+% Introducción
+\mainmatter
+\include{source/6_introduccion}
+% Marco teórico
+\include{source/7_MarcoTeorico}
+% Estado del arte
+\include{source/8_arte}
+% Objetivos
+\include{source/9_TrabajoaRealizar}
+% Metodología
+\include{source/10_metodologia}
+% Resultados
+\include{source/11_resultados}
+% Conclusiones
+\include{source/12_conclusiones}
+% Referencias
+\include{source/13_referencias}
+% Anexos
+\include{source/14_anexos}
+\end{document}

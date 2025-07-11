@@ -1,0 +1,77 @@
+% 2 imagenes en figuras separadas
+\begin{figure}[H]
+\label{Diagrama_original}
+\begin{minipage}[b]{0.47\linewidth}
+\centering
+\includegraphics[width=\linewidth]{fotos/Diseño/diagramaPrincipal.png}
+\caption{Diseño pantalla  Menú principal.}
+\label{diagrama_prinicpal_original}
+\end{minipage}
+\hspace{0.5 cm}
+\begin{minipage}[b]{0.47\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{fotos/Diseño/diagramaTimer.png}
+    \caption{Diagrama}
+    \label{dis_calculoModelo}
+\end{minipage}
+\end{figure}
+
+
+% 3 imagenes en la misma figura
+\begin{figure}
+    \centering
+    \subfloat[Gatito]{
+        \label{f:gato}
+        \includegraphics[width=0.3\textwidth]{gato.png}}
+    \subfloat[Tigre]{
+        \label{f:tigre}
+        \includegraphics[width=0.3\textwidth]{tigre.png}}
+    \subfloat[Conejo]{
+        \label{f:conejo}\includegraphics[width=0.3\textwidth]
+        {conejo.png}}
+        \caption{Múltiples imágenes}\label{f:animales}
+\end{figure}
+
+
+% 1 imagen
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.1\linewidth]{fotos/programa/Etiquetas_programa2.png}
+    \caption{Interfaz gráfica original.}
+    \label{diagrama_timer_original}
+\end{figure}
+
+
+% Tabla
+\begin{table}[h]
+    \centering
+    \footnotesize
+    \renewcommand{\arraystretch}{1.3} % Aumenta la separación entre filas para mejor legibilidad
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Parámetro} & \textbf{\makecell{Banda de \\ Frecuencia}} & \textbf{\makecell{Tasa de \\ Transmisión}} & \textbf{\makecell{Rango de \\ Transmisión}} & \textbf{\makecell{Consumo \\ Energético}} \\ 
+    \hline
+    WiFi & 5-60 GHz & 1-7 Mb/s & 20-100 m & Alto  \\ 
+    \hline
+    LoRaWAN  & 868-900 MHz & 0.3-50 Kb/s & <30 Km & Muy Bajo\\ 
+    \hline
+    \multirow{3}{*}{Mobile} & \multirow{3}{*}{\makecell{865 MHz \\ 2.4 GHz}} & 2G: 50-100 Kb/s & \multirow{3}{*}{Entire Cellular Area} & \multirow{3}{*}{Medio} \\
+    & & 3G: 200 Kb/s & & \\  
+    & & 4G: 0.1-1 Gb/s & & \\ 
+    \hline
+    WiMAX & 2-66 GHz & \makecell{1 Mb/s - 1 Gb/s \\ 50-100 Mb/s} & <50 Km & Medio \\
+    \hline
+    LR-WPAN & \makecell{868-915 MHz \\ 2.4 GHz} & 40-250 Kb/s & 10-20 m & Bajo \\
+    \hline
+    RFID & 868-960 MHz & 40-160 Kb/s & 1-5 m & Bajo \\
+    \hline
+    ZigBee & 2.4 GHz & 20-250 Kb/s & 10-20 m & Bajo \\
+    \hline
+    SigFox & 200 KHz & 100-600 bit/s & 30-50 Km & Bajo \\
+    \hline
+    Bluetooth & 2.4 GHz & 1-24 Mb/s & 8-10 m & Muy Bajo \\
+    \hline
+    \end{tabular}
+    \caption{Comparación de Protocolos IoT}
+    \label{tab:wireless-prot}
+\end{table}

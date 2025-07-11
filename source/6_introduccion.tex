@@ -1,0 +1,17 @@
+\part*{Introducción}\addcontentsline{toc}{part}{Introducción}
+\section{Contexto general}
+WildSense, empresa spin-off de la UTFSM, entre sus muchas actividades provee servicios de estimación de biomasa con análisis de profundidad estéreo \cite{wildsense-1}. Es en este ámbito que la visión por computadora juega un rol fundamental, donde la segmentación de instancias y el seguimiento funcionan como etapas iniciales en la caracterización biométrica de salmones \cite{wildsense-2} (Fig. \ref{fig:workflow_wildsense}).
+
+Previo a la estimación de masa se descartan las muestras que presentan deficiencias, las cuales constituyen una mayoría de los casos. Esta situación es una clara ineficiencia en el flujo de procesamiento. En consecuencia, se plantea el desarrollo de una base de datos especializada que permita entrenar modelos de segmentación orientados únicamente a identificar los peces de interés, reduciendo así los tiempos de procesamiento en las etapas de seguimiento y posteriores. Además, se busca ampliar y explorar aspectos poco abordados en trabajos previos. Se llevarán a cabo entrenamientos con búsqueda exhaustiva de hiperparámetros en modelos tales como YOLOv8, YOLOv9 y YOLOv11, además de experimentar con el despliegue en Tensor-RT.
+
+\subsection{Objetivo general}
+Entrenar modelos de segmentación de instancias YOLO para una base de datos de salmones mejorada y validar los modelos resultantes en las tareas de segmentación y seguimiento.
+
+\subsection{Objetivos específicos}
+\begin{itemize}
+    \item Optimizar una base de datos de salmones para adecuarla al caso de uso de WildSense.
+    \item Evaluar y buscar hiperparámetros que potencien el rendimiento de modelos entrenados.
+    \item Llevar a cabo entrenamientos con una base de datos pública para fines de replicación.
+    \item Validar los modelos en segmentación de instancia y seguimiento basado en detección.
+    \item Concluir sobre los efectos de optimizar la base de datos, la búsqueda de hiperparámetros y la exportación con cuantización numérica.
+\end{itemize}

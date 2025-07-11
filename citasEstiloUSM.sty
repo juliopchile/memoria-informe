@@ -1,0 +1,701 @@
+% citasEstiloUSM.sty
+\ProvidesPackage{citasEstiloUSM}[2025/05/25 Estilo de citas según las especificaciones para trabajos de memoria de la UTFSM]
+\RequirePackage[T1]{fontenc}
+\RequirePackage{csquotes}
+\RequirePackage{comment}
+
+\DeclareCapitalPunctuation{.!?} % Se empieza en mayúsculas luego de un ".!?"
+\DeclareQuotePunctuation{} % Evita que se escriban ".," dentro de comillas
+\DeclareFieldFormat{quote}{\mkbibquote{#1}} % Escribir entre comillas
+\DeclareFieldFormat{underline}{\ul{#1}} % Escribir subrayado (usando soul)
+\DeclareFieldFormat{column}{\mkpageprefix[pagination][\mkcomprange\allowbreak]{#1}}%
+\DeclareFieldFormat{pages}{\mkpageprefix[bookpagination][\mkcomprange\allowbreak]{#1}}%
+\DeclareFieldFormat{url}{\bibstring{urlfrom}\addcolon\addspace<\url{#1}>}
+\DeclareFieldFormat{urldate}{\mkbibbrackets{\bibstring{urlseen}{\addspace}#1}}
+\DeclareFieldFormat{eid}{\mkbibacro{EID}\addcolon\space #1}
+
+%% DEFINIR BIBSTRINGS NUEVOS %%
+\NewBibliographyString{intheir,intheirs,insection,insections}
+\NewBibliographyString{image,photo,slide,paint,drawing,artwork}
+\NewBibliographyString{audio,music,video,movie,song,vhs,cd,dvd}
+%% EXPANDIR Y ARREGLAR COSAS EN ESPAÑOL %%
+\DeclareLanguageMapping{spanish}{expandSpanish} 
+
+\DefineBibliographyStrings{spanish}{%
+    andothers   = {[et~al]},%
+% Estos están definidos en un archivo .lbx que debes de importar en el preambulo
+% En caso de preferirlos, sin abreviatura:
+    image       = {imagen},%
+    photo       = {fotograf\'ia},%
+    slide       = {diapositiva},%
+    paint       = {pintura},%
+    drawing     = {dibujo},%
+    artwork     = {obra{\addspace}de{\addspace}arte},%
+    audio       = {audio},%
+    music       = {m\'usica},%
+    video       = {video},%
+    movie       = {pel\'icula},%
+    song        = {canci\'on},%
+    vhs         = {VHS},%
+    cd          = {CD-ROM},%
+    dvd         = {DVD},%
+    %intheir     = {\bibstring{in}\addspace{su}},%
+    %intheirs    = {\bibstring{in}\addspace{sus}},%
+    %insection   = {\bibstring{in}\addspace{secci\'on}},%
+    %insections  = {\bibstring{in}\addspace{secciones}},%
+}
+
+\DefineBibliographyStrings{english}{%
+    andothers   = {[et~al]\adddot},%
+    intheir     = {\bibstring{in}\addspace{their}},%
+    intheirs    = {\bibstring{in}\addspace{their}},%
+    insection   = {\bibstring{in}\addspace{section}},%
+    insections  = {\bibstring{in}\addspace{sections}},%
+    image={image}, photo={photo}, slide={slide}, paint={paint},%
+    drawing={drawing}, artwork={artwork}, audio={audio},%
+    music={music}, video={video}, movie={movie}, song={song},%
+    vhs={VHS}, cd={CD-ROM}, dvd={DVD},%
+}
+
+% Asignar valores por defecto a diferentes 
+\DeclareSourcemap{%
+  \maps[datatype=bibtex]{%
+    \map{%
+      \pertype{article}% Mapa para @article
+      \step[fieldsource=pagination, match=\regexp{^\$}]%
+      \step[fieldset=pagination, fieldvalue={column}]%
+      \step[fieldsource=bookpagination, match=\regexp{^\$}]%
+      \step[fieldset=bookpagination, fieldvalue={page}]%
+    }%
+    \map{% Mapa para @newspaper
+      \pertype{newspaper}%
+      \step[fieldsource=pagination, match=\regexp{^\$}]%
+      \step[fieldset=pagination, fieldvalue={column}]%
+      \step[fieldsource=bookpagination, match=\regexp{^\$}]%
+      \step[fieldset=bookpagination, fieldvalue={page}]%
+    }%
+    \map{% Mapa para @artwork
+      \pertype{artwork}%
+      \step[fieldsource=type, match=\regexp{^\$}]%
+      \step[fieldset=type, fieldvalue={artwork}]%
+    }%
+    \map{% Mapa para @image
+      \pertype{image}%
+      \step[fieldsource=type, match=\regexp{^\$}]%
+      \step[fieldset=type, fieldvalue={image}]%
+    }%
+    \map{% Mapa para @photo
+      \pertype{photo}%
+      \step[fieldsource=type, match=\regexp{^\$}]%
+      \step[fieldset=type, fieldvalue={photo}]%
+    }%
+    \map{% Mapa para @slide
+      \pertype{slide}%
+      \step[fieldsource=type, match=\regexp{^\$}]%
+      \step[fieldset=type, fieldvalue={slide}]%
+    }%
+    \map{% Mapa para @paint
+      \pertype{paint}%
+      \step[fieldsource=type, match=\regexp{^\$}]%
+      \step[fieldset=type, fieldvalue={paint}]%
+    }%
+    \map{% Mapa para @drawing
+      \pertype{drawing}%
+      \step[fieldsource=type, match=\regexp{^\$}]%
+      \step[fieldset=type, fieldvalue={drawing}]%
+    }%
+    \map{% Mapa para @audio
+      \pertype{audio}%
+      \step[fieldsource=type, match=\regexp{^\$}]%
+      \step[fieldset=type, fieldvalue={audio}]%
+    }%
+    \map{% Mapa para @music
+      \pertype{music}%
+      \step[fieldsource=type, match=\regexp{^\$}]%
+      \step[fieldset=type, fieldvalue={music}]%
+    }%
+    \map{% Mapa para @video
+      \pertype{video}%
+      \step[fieldsource=type, match=\regexp{^\$}]%
+      \step[fieldset=type, fieldvalue={video}]%
+    }%
+    \map{% Mapa para @movie
+      \pertype{movie}%
+      \step[fieldsource=type, match=\regexp{^\$}]%
+      \step[fieldset=type, fieldvalue={movie}]%
+    }%
+  }%
+}%
+
+% Solo si el campo es un key y es el nombre de un bibstring, no el string.
+%\iffieldbibstring{}{}{}
+% No funcan con campos solo string literales.
+%\ifbibstring{}{}{}
+%\ifbibxstring{}{}{}
+
+%% MACRO PARA DETERMINAR SI EL CAMPO "type" ES DE UN PERIODICO
+\newcommand{\iftypeisnews}[2]{%
+    \ifboolexpr{%
+        test {\iffieldequalstr{type}{diario}} or%
+        test {\iffieldequalstr{type}{diarios}} or%
+        test {\iffieldequalstr{type}{noticia}} or%
+        test {\iffieldequalstr{type}{noticias}} or%
+        test {\iffieldequalstr{type}{periodico}} or%
+        test {\iffieldequalstr{type}{periodicos}} or%
+        test {\iffieldequalstr{type}{periódico}} or%
+        test {\iffieldequalstr{type}{periódicos}} or%
+        test {\iffieldequalstr{type}{periodical}} or%
+        test {\iffieldequalstr{type}{periodicals}} or%
+        test {\iffieldequalstr{type}{news}} or%
+        test {\iffieldequalstr{type}{newspaper}} or%
+        test {\iffieldequalstr{type}{newspapers}}%
+    }%
+    {#1}% si coincide
+    {#2}% si no coincide
+}%
+
+%% MACRO PARA ESCRIBIR "En " o "En su" EN CAPITULO DE LIBRO
+\newcommand{\printinbook}{
+    \ifnameundef{author}
+        {\ifnameundef{bookauthor}
+            {\bibstring[\uline]{in}}% Ambos indefinidos: "En"
+            {\bibstring[\uline]{intheir}}}% Solo bookauthor: "En su"
+        {\ifnameundef{bookauthor}
+            {\bibstring[\uline]{intheir}}% Solo author: "En su"
+            {\ifnamesequal{author}{bookauthor}
+                {\bibstring[\uline]{intheir}}% Iguales: "En su"
+                {\bibstring[\uline]{in}}}}% Diferentes: "En"
+}%
+%% MACROS PARA PRINTEAR PÁGINAS Y FECHA EN DIARIOS 
+\newcommand{\printnewspagedate}{%
+    \printdate\setunit{\addperiod\addspace}% --- Fecha de publicación
+    \printfield{pages}\setunit*{\addcomma\addspace}% --- Páginas
+}%
+%% MACROS PARA PRINTEAR PÁGINAS Y FECHA EN ARTÍCULO DE REVISTA
+\newcommand{\printmagazinepagedate}{%
+    \iffieldundef{pages}{}{\setunit{\addcolon\addspace}}%
+    \printfield{pages}\setunit*{\addcomma\addspace}% --- Paginación (precedida de dos puntos)
+    \printdate\setunit{\addperiod\addspace}%--- Fecha de publicación
+}%
+%% MACRO PARA PRINTEAR EDITOR O SHORTEDITOR
+\newcommand{\printeditor}[1][]{%
+    \ifnameundef{shorteditor}{\printnames[#1]{editor}}{\printnames[#1]{shorteditor}}%
+}%
+%% MACRO PARA PRINTEAR AUTHOR O SHORTAUTHOR
+\newcommand{\printauthor}[1][]{%
+    \ifnameundef{shortauthor}{\printnames[#1]{author}}{\printnames[#1]{shortauthor}}%
+}%
+%% MACRO PARA PRINTEAR TITLE + SUBTITLE JUNTOS
+\newbibmacro*{title+subtitle}{%
+    \ifboolexpr{test {\iffieldundef{title}} and test {\iffieldundef{subtitle}}}{}
+        {\printtext[title]{%
+            \printfield[titlecase]{title}%
+            \setunit{\subtitlepunct}%
+            \printfield[titlecase]{subtitle}}%
+        \newunit}%
+}%
+\renewbibmacro*{title}{%
+  \ifboolexpr{test {\iffieldundef{title}} and test {\iffieldundef{subtitle}}}{}
+    {\printtext[title]{%
+       \printfield[titlecase]{title}%
+       \setunit{\subtitlepunct}%
+       \printfield[titlecase]{subtitle}}%
+     \newunit}%
+  \printfield{titleaddon}%
+}%
+% MACRO PARA PRINTEAR INSTITUTION + ORGANIZATION + PUBLISHER
+\newbibmacro*{inst+org+pub}{%
+    \printlist{institution}\setunit*{\addcomma\addspace}%
+    \printlist{organization}\setunit*{\addcomma\addspace}%
+    \printlist{publisher}\newunit%
+}%
+% MACRO PARA PRINTEAR "Editado por EDITOR"
+\newbibmacro*{byshorteditor}{%
+    \ifnameundef{shorteditor}{%
+        \ifnameundef{editor}{}%
+            {\usebibmacro{bytypestrg}{editor}{editor}%
+            \setunit{\addspace}%
+            \printnames[byeditor]{editor}%
+            \newunit}}{%
+        \usebibmacro{bytypestrg}{shorteditor}{editor}%
+        \setunit{\addspace}%
+        \printnames[byeditor]{shorteditor}%
+        \newunit}%
+    \usebibmacro{byeditorx}%
+}%
+% MACRO PARA PRINTEAR INFORMACIÓN DE EVENTO EN INPROCEEDINGS (PERMITE ELEGIR SEPARADOR)
+\newbibmacro*{addonsA}[1]{%
+    \printfield{edition}\setunit*{#1\addspace}% --- Edición
+    \printfield{number}\setunit*{#1\addspace}% --- Número
+    \printeventdate\setunit*{#1\addspace}% --- Fecha del evento
+    \printfield{venue}%
+}%
+% MACRO PARA PRINTEAR INFORMACIÓN DE PUBLICACIÓN EN INPROCEEDINGS (PERMITE ELEGIR SEPARADOR)
+\newbibmacro*{addonsB}[1]{%
+    \printfield{pages}\setunit*{#1\addspace}% --- Páginas
+    \printfield[volcitevolume]{volume}\setunit*{#1\addspace}% --- Volumen
+    \printlist{location}% --- Lugar de publicación
+}%
+% MACRO PARA TESTEAR LA PRECENCIA DE ADDONS-A EN INPROCEEDINGS
+\newcommand{\testaddonsA}[2]{%
+  \ifboolexpr{%
+    not test {\iffieldundef{edition}} or%
+    not test {\iffieldundef{number}} or%
+    not test {\iffieldundef{eventdate}} or%
+    not test {\iffieldundef{venue}}%
+  }{#1}{#2}%
+}%
+% MACRO PARA TESTEAR LA PRECENCIA DE ADDONS-B EN INPROCEEDINGS
+\newcommand{\testaddonsB}[2]{%
+  \ifboolexpr{%
+    not test {\iffieldundef{pages}} or%
+    not test {\iffieldundef{volume}} or%
+    not test {\iffieldundef{location}}%
+  }{#1}{#2}%
+}%
+% MACRO PARA PRINTEAR INFORMACIÓN DEL EVENTO Ó BOOKTITLE EN INPROCEEDINGS
+\newbibmacro*{inproceedingssingletitle}[1]{%
+    \bibstring{in}\setunit{\addcolon\addspace}%
+    \printfield{#1}\setunit{\addspace}% --- Nombre del congreso o Título de la publicación
+    \testaddonsA% <-- Condicionales para printear datos entre paréntesis
+    {\printtext[parens]{\usebibmacro{addonsA}{\addsemicolon}}}% <-- Verdadero: imprimir
+    {}% <-- Falso: no hace nada (para no imprimir paréntesis vacíos)
+    \setunit{\addperiod\addspace}%
+    \usebibmacro{addonsB}{\addcomma}%
+}%
+% MACRO PARA PRINTEAR INFORMACIÓN DE AMBOS EVENTO Y BOOKTITLE EN INPROCEEDINGS
+\newbibmacro*{inproceedingsbothtitles}{%
+    \bibstring{in}\setunit{\addcolon\addspace}%
+    \printfield{eventtitle}\setunit{\addspace}% --- Nombre del congreso
+    \testaddonsA% <-- Condicionales para printear datos entre paréntesis
+        {\printtext[parens]{\usebibmacro{addonsA}{\addsemicolon}}}% <-- Verdadero: imprimir
+        {}% <-- Falso: no hace nada (para no imprimir paréntesis vacíos)
+    \setunit{\addperiod\addspace}% --- Número de la conferencia, año y lugar del evento, entre paréntesis.
+    \printfield{booktitle}\setunit*{\addspace}% --- Título de la publicación
+    \testaddonsB% <-- Condicionales para printear datos entre paréntesis
+        {\printtext[parens]{\usebibmacro{addonsB}{\addsemicolon}}}% <-- Verdadero: imprimir
+        {}% <-- Falso: no hace nada (para no imprimir paréntesis vacíos)
+}%
+
+%% MACRO PARA ESCRIBIR CAMPOS OPCIONALES EXTRAS %%
+\newcommand*{\printextraoptionals}{%
+    % --- Imprimir notas como primer campo opcional --- %
+    \printfield{note}\setunit{\addperiod\addspace}%
+    % --- Para libros --- %
+    \ifentrytype{book}{%
+        \printfield{isbn}\setunit{\addperiod\addspace}}{}%
+    \ifentrytype{inbook}{%
+        \printfield{isbn}\setunit{\addperiod\addspace}}{}%
+    % --- Para revistas o periódicos --- %
+    \ifentrytype{periodical}{%
+        \printfield{issn}\setunit{\addperiod\addspace}}{}%
+    \ifentrytype{article}{%
+        \printfield{eid}\setunit{\addperiod\addspace}%
+        \printfield{issn}\setunit{\addperiod\addspace}}{}%
+    \ifentrytype{newspaper}{%
+        \printfield{eid}\setunit{\addperiod\addspace}%
+        \printfield{issn}\setunit{\addperiod\addspace}}{}%
+    % --- Para congreso, conferencia o reunión --- %
+    \ifentrytype{proceedings}{%
+        \printfield{eid}\setunit{\addperiod\addspace}%
+        \printfield{isbn}\setunit{\addperiod\addspace}}{}%
+    \ifentrytype{inproceedings}{%
+        \printfield{eid}\setunit{\addperiod\addspace}%
+        \printfield{isbn}\setunit{\addperiod\addspace}}{}%
+    % --- Para todos los demás --- %
+    \printfield{doi}\setunit{\addperiod\addspace}%
+    \printfield{eprint}\setunit{\addperiod\addspace}%
+    \ifentrytype{online}{}{% No incluir url para @online
+        \usebibmacro{url+urldate}%
+    \printfield{addendum}\setunit{\addperiod\addspace}}%
+}%
+
+
+%%% 1. LIBRO %%%
+\begin{comment}
+· Autor(es) personal(es) o institucional
+· Título de la publicación
+· Número de la edición (excepto la primera edición)
+· Editor
+· Lugar de publicación o dirección
+· Editorial
+· Fecha de publicación
+· Volumen o páginas (con chapter), preferir volumen
+· Serie
+· Más opcionales (note, isbn, doi, eprint, url, urldate, addendum)
+\end{comment}
+\DeclareBibliographyDriver{book}{%
+    \printnames{director}\setunit{\addperiod\addspace}%
+    \printauthor\setunit{\addperiod\addspace}% --- Autor(es)
+    \usebibmacro{title}\setunit{\addperiod\addspace}% --- Título de la publicación
+    \printfield{edition}\setunit{\addperiod\addspace}% --- Edición
+    \usebibmacro{byshorteditor}\setunit{\addperiod\addspace}%<-- "Ed. por "
+    \printlist{location}\setunit*{\addcomma\addspace}% --- Lugar de publicación o dirección
+    \printlist{publisher}\setunit*{\addcomma\addspace}% --- Editorial
+    \printdate\setunit*{\addcomma\addspace}% --- Fecha de publicación
+    \iffieldundef{volume}%
+        {\printfield{chapter}\setunit*{\addcomma\addspace}\printfield{pages}}%
+        {\printfield{volume}\setunit*{\addcomma\addspace}\printfield{chapter}}%
+    \setunit*{\addspace}%  --- Volumen o páginas (con chapter)
+    \printfield[parens]{series}\setunit{\addperiod\addspace}%--- Serie entre paréntesis
+    \printfield{column}\setunit{\addperiod\addspace}
+    \printextraoptionals% --- Otros opcionales
+\finentry}
+
+%%% 2. CAPÍTULO DE LIBRO %%%
+\begin{comment}
+· Autor (es) del capítulo
+· Título del capítulo
+· "En: " autor(es) del libro. "En su " si el autor es el mismo.
+· Título del libro.
+· Número de la edición (excepto la primera edición)
+· Editor
+· Lugar de publicación o dirección
+· Editorial
+· Fecha de publicación
+· Capitulo (opcional)
+· Páginas
+· Serie
+· Más opcionales (note, isbn, doi, eprint, url, urldate, addendum)
+\end{comment}
+\DeclareBibliographyDriver{inbook}{%
+    \ifnameundef{author}
+        {\printnames{bookauthor}\setunit{\addperiod\addspace}} % --- Author sin definir: imprimir bookauthor
+        {\printauthor\setunit{\addperiod\addspace}} % --- Author definido: imprimirlo
+    \usebibmacro{title}\setunit{\addperiod\addspace}% --- Título del capitulo
+    \printinbook\setunit{\addcolon\addspace}% --- "En " o "En su"
+    \ifnameundef{author}{}% Author indefinido, ya se imprimió bookauthor como autor del capítulo
+        {\ifnameundef{bookauthor}{}% Bookauthor no está definido, no imprimir
+            {\ifnamesequal{author}{bookauthor}{}%--- Iguales, no imprimir bookauthor nuevamente
+                {\printnames{bookauthor}\setunit{\addperiod\addspace}}}}% --- Diferentes, imprimir bookauthor
+    \printfield{booktitle}\setunit{\addperiod\addspace}% --- Título del libro
+    \printfield{edition}\setunit{\addperiod\addspace}% --- Edición
+    \usebibmacro{byshorteditor}\setunit{\addperiod\addspace}% --- Editor(es)
+    \printlist{location}\setunit*{\addcomma\addspace}% --- Lugar de publicación o dirección
+    \printlist{publisher}\setunit*{\addcomma\addspace}% --- Editorial
+    \printdate\setunit*{\addcomma\addspace}% --- Fecha de publicación
+    \printfield{chapter}\setunit*{\addcomma\addspace}% --- chapter (opcional)
+    \printfield{pages}\setunit*{\addspace}%  --- Páginas
+    \printfield[parens]{series}\setunit{\addperiod\addspace}%- -- Serie entre paréntesis
+    \printextraoptionals% --- Otros opcionales
+\finentry}
+
+%%% 3. TESIS %%%
+\begin{comment}
+· Autor (es) de la tesis, memoria y/o seminario
+· Título de la tesis, memoria y/o seminario
+· Tipo de trabajo (tesis, memoria, etc.)
+· Mención o grado al que se opta (se utiliza key) entre paréntesis
+· Lugar de publicación
+· Institución patrocinante
+· Año de publicación
+· Paginación
+· Opcionales (note, doi, eprint, url, urldate, addendum)
+\end{comment}
+\DeclareBibliographyDriver{thesis}{%
+    \printauthor\setunit{\addperiod\addspace}% --- Autor (es) de la tesis
+    \usebibmacro{title+subtitle}\setunit{\addperiod\addspace}% --- Título de la tesis
+    \printfield{type}\setunit*{\addspace}% --- Tipo de trabajo
+    \printfield[parens]{titleaddon}\setunit{\addperiod\addspace}% --- mención o grado al que se opta
+    \printlist{location}\setunit*{\addcomma\addspace}% --- Lugar de publicación o dirección
+    \printlist{institution}\setunit*{\addcomma\addspace}% -- Institución patrocinante
+    \printdate\setunit{\addperiod\addspace}% --- Fecha de publicación
+    \printfield{pages}\setunit{\addperiod\addspace}%  --- Páginas
+    \printextraoptionals% --- Otros opcionales
+\finentry}
+
+
+%%% 4. REVISTA (PERIÓDICO) %%%
+\begin{comment}
+· Título de la revista
+· Lugar y país de publicación
+· Volumen (cuando la revista lo incluye)
+· Número entre paréntesis
+· Año de publicación
+· Opcionales (note, issn, doi, eprint, url, urldate, addendum)
+\end{comment}
+\DeclareBibliographyDriver{periodical}{%
+    \usebibmacro{title}\setunit{\addperiod\addspace}% --- Título de la revista
+    \printlist{location}\setunit{\addperiod\addspace}% --- Lugar y país de publicación
+    \printfield{volume}\setunit*{\addcomma\addspace}% --- Volumen
+    \printfield[parens]{number}\setunit{\addperiod\addspace} % --- Número
+    \printdate\setunit{\addperiod\addspace}% --- Fecha de publicación
+    \printextraoptionals% --- Otros opcionales
+\finentry}
+
+
+%%% 5. ARTÍCULO DE REVISTA %%%
+%%% 9. ARTÍCULO DE DIARIO %%%
+%%% ARTÍCULO DE LA SECCIÓN DE UN DIARIO %%%
+\begin{comment}
+· [Revista] Autor(es) del artículo
+· Título del artículo
+· Título del diario o revista (subrayado)
+· [Diario] Lugar de publicación
+· [Revista] Volumen (cuando la revista lo incluye)
+· [Revista] Número entre paréntesis
+· [Revista] Paginación (precedida de dos puntos) y Fecha de publicación (mes y año)
+· [Diario] Fecha de publicación (día, mes y año) y Paginación
+· [Diario] Nº de columna
+. [Diario] Nombre de la sección del diario entre paréntesis y precedido de "En sección: "
+· Opcionales (note, eid, issn, doi, eprint, url, urldate, addendum)
+\end{comment}
+\DeclareBibliographyDriver{newspaper}{\usebibmacro{newsarticlestyle}}
+\DeclareBibliographyDriver{article}{\usebibmacro{newsarticlestyle}}
+\newbibmacro*{newsarticlestyle}{%
+    \printauthor\setunit{\addperiod\addspace}% --- Autor(es) del artículo
+    \usebibmacro{title}\setunit*{\addspace}%--- Título del artículo
+    \iffieldundef{type}{}%
+        {\printtext[brackets]{\printfield{type}}}%--- Tipo de articulo
+    \setunit{\addperiod\addspace}%
+    \printfield[underline]{journaltitle}\setunit*{\addcomma\addspace}% ---Título del diario o revista (subrayado)
+    \printlist{location}\setunit*{\addcomma\addspace}% --- Lugar de publicación
+    \printfield{volume}\setunit*{\addspace}%--- Volumen
+    \printfield[parens]{number}\setunit*{\addcomma\addspace}%--- Número entre paréntesis
+    \setunit{\addperiod\addspace}%
+    % Si type sin definir, depende del entrytype. newspaper->diario else revista
+    \iffieldundef{type}{%
+        \ifentrytype{newspaper}{\printnewspagedate}{\printmagazinepagedate}}{%
+        \iftypeisnews{\printnewspagedate}{\printmagazinepagedate}}%
+    % --- [Revista] Paginación (precedida de dos puntos) y Fecha de publicación (mes y año)
+    % --- [Diario] Fecha de publicación (día, mes y año) y Paginación
+    \printfield{column}\setunit{\addperiod\addspace}% --- Nº de columna
+    \iffieldundef{section}{}%
+        {\printtext[parens]{\bibstring{insection}\setunit{\addcolon\addspace}\printfield{section}}}%
+    \setunit{\adddot\addspace}% --- Nombre de la sección del diario entre paréntesis
+    \printextraoptionals% --- Otros opcionales
+\finentry}
+
+
+%%% 6. CONGRESO, CONFERENCIA O REUNIÓN %%%
+\begin{comment}
+· Nombre completo del congreso, seminario o reunión.
+· Número de la conferencia, año y lugar del evento, entre paréntesis.
+· Título de la publicación
+· Lugar y país de publicación
+· Editorial, o Institución (es) que lo patrocinan
+· Año de publicación
+· Número total de páginas si las hubiere
+· Opcionales (note, isbn, eid, doi, eprint, url, urldate, addendum)
+(@conference cuenta como @inproceedings no @proceedings)
+\end{comment}
+\DeclareBibliographyDriver{proceedings}{%
+    \printfield{booktitle}\setunit{\addperiod\addspace}% --- Nombre del congreso, seminario o reunión.
+    \ifboolexpr{%
+            not test {\iffieldundef{edition}} or%
+            not test {\iffieldundef{volume}} or%
+            not test {\iffieldundef{number}} or%
+            not test {\iffieldundef{eventdate}} or%
+            not test {\iffieldundef{venue}}%
+        }% <-- Condicionales para printear datos entre paréntesis
+        {\printtext[parens]{%
+        \printfield{edition}\setunit*{\addcomma\addspace}%
+        \printfield{volume}\setunit*{\addcomma\addspace}%
+        \printfield{number}\setunit*{\addcomma\addspace}%
+        \printeventdate\setunit*{\addcomma\addspace}%
+        \printfield{venue}}}% <-- Verdadero: imprimir todo entre paréntesis
+        {}% <-- Falso: no hace nada (para no imprimir paréntesis vacíos)
+    \setunit{\addperiod\addspace}% --- Número de la conferencia, año y lugar del evento, entre paréntesis.
+    \usebibmacro{title}\setunit{\addperiod\addspace}% --- Título de la publicación
+    \printlist{location}\setunit*{\addcomma\addspace}% --- Lugar de publicación (priorizar país)
+    \usebibmacro{inst+org+pub}\setunit*{\addcomma\addspace}% --- Editorial, o Institución(es)
+    \printfield{year}\setunit{\addperiod\addspace}% --- Año de publicación
+    \printfield{pagetotal}\setunit{\addperiod\addspace}% -- Número total de páginas si las hubiere
+    \printextraoptionals% --- Otros opcionales
+\finentry}
+
+
+%%% 7. DOCUMENTOS PRESENTADOS EN CONGRESO, CONFERENCIA O REUNIÓN %%%
+\begin{comment}
+· Autor(es)
+· Título del documento presentado al congreso, conferencia o reunión
+· "En: " nombre del congreso, conferencia o reunión 
+· Número de la conferencia, año y lugar del evento, entre paréntesis
+· Título de la publicación
+· Lugar y país de publicación
+· Editor o Institución (es) que lo patrocinan
+· Año de publicación
+· Número total de páginas si las hubiere
+· Opcionales (note, isbn, eid, doi, eprint, url, urldate, addendum)
+\end{comment}
+\DeclareBibliographyDriver{inproceedings}{%
+    \printauthor\setunit{\addperiod\addspace}% --- Autor(es)
+    \usebibmacro{title}\setunit{\addperiod\addspace}% --- Título del documento presentado
+    \iffieldundef{booktitle}%
+        {\iffieldundef{eventtitle}{}% --- No booktitle nor eventtitle
+            {\usebibmacro{inproceedingssingletitle}{eventtitle}}}% --- Only eventtitle
+        {\iffieldundef{eventtitle}%
+            {\usebibmacro{inproceedingssingletitle}{booktitle}}% --- Only booktitle
+            {\usebibmacro{inproceedingsbothtitles}}}% --- Both eventtitle and booktitle
+    \setunit{\addperiod\addspace}%
+    \usebibmacro{inst+org+pub}\setunit*{\addcomma\addspace}% --- Editorial, o Institución(es)
+    \printfield{year}\setunit{\addperiod\addspace}% --- Año de publicación
+    \printfield{pagetotal}\setunit{\addperiod\addspace}% -- Número total de páginas si las hubiere
+    \printextraoptionals% --- Otros opcionales
+\finentry}%
+\DeclareBibliographyDriver{report}{%
+    \printauthor\setunit{\addperiod\addspace}% --- Autor(es)
+    \usebibmacro{title}\setunit{\addperiod\addspace}% --- Título del documento presentado
+    \usebibmacro{inst+org+pub}\setunit*{\addcomma\addspace}% --- Editorial, o Institución(es)
+    \iffieldundef{type}{\iffieldundef{number}{}%
+        {\printfield[parens]{number}}}%
+        {\printtext[parens]{\printfield{type}\setunit*{\addspace}\printfield{number}}}%
+    \setunit{\addperiod\addspace}% --- Tipo de reporte y número
+    \printlist{location}\setunit*{\addcomma\addspace}% --- Lugar de publicación (priorizar país)
+    \printdate\setunit*{\addcomma\addspace}% --- Fecha de publicación
+    \printfield{eid}\setunit*{\addcomma\addspace}% --- Número eid
+    \printfield{pages}\setunit*{\addcomma\addspace}% --- Páginas
+    \printfield[volcitevolume]{volume}\setunit{\addperiod\addspace}%
+    \printfield{pagetotal}\setunit{\addperiod\addspace}% -- Número total de páginas
+    \printextraoptionals% --- Otros opcionales
+\finentry}%
+
+
+%%% 8. LEY %%%
+\begin{comment}
+· Número de la ley
+· Nombre de la ley o decreto, si lo tiene
+· Título de la publicación en que aparece oficialmente.
+· Lugar de publicación
+· Fecha de publicación (día, mes y año si hubiere)
+· Paginación si hubiera
+· Opcionales (note, doi, eprint, url, urldate, addendum)
+\end{comment}
+\DeclareBibliographyDriver{legal}{%
+    \printfield{number}\setunit{\addperiod\addspace}% --- Número de la ley
+    \usebibmacro{title}\setunit{\addperiod\addspace}% --- Nombre de la ley o decreto
+    \printfield{journaltitle}\setunit*{\addcomma\addspace}% --- Publicación en que aparece
+    \printlist{location}\setunit*{\addcomma\addspace}% --- Lugar de publicación
+    \printfield{date}\setunit{\addperiod\addspace}% --- Fecha de publicación
+    \printfield{pages}\setunit{\addperiod\addspace}% --- Paginación si hubiera
+    \printextraoptionals% --- Otros opcionales
+\finentry}%
+
+
+%%% 10. NORMA %%%
+\begin{comment}
+. Institución responsable (o autor)
+. Título de la norma
+. Designación fija para esta norma seguido de año de adopción original o en el caso de revisión, del año de la última revisión.
+. Lugar de publicación
+. Año de publicación
+. Paginación
+· Opcionales (note, doi, eprint, url, urldate, addendum)
+\end{comment}
+\DeclareBibliographyDriver{standard}{%
+    \printlist{institution}\setunit{\addperiod\addspace}% --- Institución responsable
+    \printauthor\setunit{\addperiod\addspace}% --- o autor
+    \usebibmacro{title}\setunit{\addperiod\addspace}% --- Título de la norma
+    \printfield{number}\setunit*{\addcolon\addspace}% --- Designación fija de norma
+    \printfield{origyear}\setunit{\addperiod\addspace}% --- Año de adopción o última revisión
+    \printlist{location}\setunit*{\addcomma\addspace}% --- Lugar de publicación
+    \printfield{year}\setunit{\addperiod\addspace}% --- Año de publicación
+    \printfield{pages}\setunit{\addperiod\addspace}% --- Paginación
+    \printextraoptionals% --- Otros opcionales
+\finentry}%
+
+
+%%% 11. PATENTE %%%
+\begin{comment}
+. Nombre(s) del(os) inventor(es)
+. Título de la patente
+. País y/o número de la patente
+. Clasificación de la patente
+. Fecha de concesión oficial
+. Número y fecha de solicitud de la patente
+. Paginación
+· Opcionales (note, doi, eprint, url, urldate, addendum)
+\end{comment}
+\DeclareBibliographyDriver{patent}{%
+    \printauthor\setunit*{\addsemicolon\addspace}% --- Author(es) o inventor(es)
+    \printnames{holder}\setunit{\addperiod\addspace}% -- Dueño (opcional)
+    \usebibmacro{title}\setunit{\addperiod\addspace}% --- Titulo de la patente
+    \printlist{location}\setunit*{\addspace}% --- País
+    \printfield{number}\setunit*{\addspace}% --- Número de la patente
+    \printfield[parens]{type}\setunit{\addperiod\addspace}% --- Clasificación
+    \printdate\setunit{\addperiod\addspace}% --- Fecha de concesión oficial
+    \iffieldundef{origyear}{}
+        {\bibstring{patreq}\setunit{\addspace}%<-- "sol. de pat. "
+        \printorigdate\setunit{\addperiod\addspace}}% --- Fecha de solicitud de la patente
+    \printfield{pages}\setunit{\addperiod\addspace}% --- Paginación
+    \setunit{\addspace}%
+    \printextraoptionals% --- Otros opcionales
+\finentry}%
+
+
+%%% 12. ABSTRACT E ÍNDICE %%%
+\begin{comment}
+· Autor(es) del artículo
+· Título del artículo
+· Título de la revista de índices y resúmenes
+· Volumen
+· Número de la referencia citada, entre paréntesis
+· Paginación
+· Año de la revista de índices y resúmenes
+· Opcionales (note, doi, eprint, url, urldate, addendum)
+\end{comment}
+\DeclareBibliographyDriver{abstract}{%
+    \printauthor\setunit{\addsemicolon\addspace}% --- Author(es) del artículo
+    \usebibmacro{title}\setunit{\addperiod\addspace}% --- Titulo del artículo
+    \printfield{journaltitle}\setunit{\addperiod\addspace}% --- Título de la revista
+    \printfield{volume}% --- Volumen
+    \printfield[parens]{number}\setunit*{\addcolon\addspace}% --- Número de la referencia citada
+    \printfield{pages}\setunit*{\addcomma\addspace}% --- Paginación
+    \printfield{year}\setunit{\addperiod\addspace}% --- Año
+    \printextraoptionals% --- Otros opcionales
+\finentry}%
+
+
+%%% 13. MATERIALES ESPECIALES VISUAL (diapositivas, foto) %%%
+%%% 14. MATERIALES ESPECIALES AUDIOVISUAL (videos, música) %%%
+\begin{comment}
+· Autor (es)
+· [Medio audiovisual] Director
+· Título
+· Tipo de material entre corchetes
+· Lugar de publicación
+· Editorial
+· Año de publicación
+· [Medio visual] Descripción física
+· [Medio audiovisual] Descripción física: incluya el tiempo total de duración de la proyección; presencia de sonido o ausencia; velocidad de la proyección y dimensiones.
+· Opcionales (note, doi, eprint, url, urldate, addendum)
+\end{comment}
+\DeclareBibliographyDriver{media}{%
+    \printauthor\setunit{\addperiod\addspace}% --- Autor(es)
+    \printnames{director}\setunit{\addperiod\addspace}% --- Director(es)
+    \usebibmacro{title}\setunit*{\addspace}% --- Titulo de la obra
+    \iffieldundef{type}{}%
+        {\iffieldbibstring{type}%
+            {\printtext[brackets]{\bibstring{\thefield{type}}}}%
+            {\printfield[brackets]{type}}}% --- Tipo de material
+    \setunit{\addperiod\addspace}%
+    \printlist{location}\setunit*{\addcomma\addspace}% --- Lugar de publicación
+    \printfield{publisher}\setunit*{\addcomma\addspace}% --- Editorial
+    \printdate\setunit{\addperiod\addspace}% --- Año de publicación
+    \printfield{howpublished}\setunit{\addperiod\addspace}% --- Descripción física
+    \printextraoptionals% --- Otros opcionales
+\finentry}%
+
+
+%%% 15. RECURSOS EN LÍNEA %%%
+\begin{comment}
+· Autor (es)
+· Título
+· Tipo de soporte entre corchetes
+· Lugar de publicación
+· Editor
+· Dirección electrónica entre ángulos (< >)
+· Fecha de la consulta entre corchetes ([ ])
+· Opcionales (note, doi, eprint, addendum)
+\end{comment}
+\DeclareBibliographyDriver{online}{%
+    \printauthor\setunit{\addperiod\addspace}% --- Autor(es)
+    \usebibmacro{title}\setunit*{\addspace}% --- Título
+    \iffieldundef{type}{}{\printtext[brackets]{\printfield{type}}}% --- Tipo de soporte
+    \setunit{\addperiod\addspace}%
+    \printlist{location}\setunit*{\addcomma\addspace}% --- Lugar de publicación
+    \usebibmacro{inst+org+pub}\setunit*{\addcomma\addspace}% --- Editorial, o Institución(es)
+    \usebibmacro{byeditor}\setunit{\addperiod\addspace}% --- Editor
+    \usebibmacro{url+urldate}\setunit{\addperiod\addspace}% --- Fecha de la consulta
+    \printextraoptionals% --- Otros opcionales
+\finentry}%

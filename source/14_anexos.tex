@@ -1,0 +1,70 @@
+\part*{Anexos}\addcontentsline{toc}{part}{Anexos}
+\label{part:anexo}
+\section{Estado del arte en modelos de segmentación de instancias}
+En la presente sección se añade material suplementario relativo al estado del arte en técnicas de segmentación de instancias, material que no fue incorporada al corpus principal debido a restricciones de espacio y a su no esencialidad para la comprensión integral del proyecto. Aquí se adopta un enfoque más histórico y categórico enfocado en aspectos generales de la segmentación en visión por computadora, en contraposición a la descripción detallada de las propiedades de modelos específicos en la parte de introducción. La fuente principal de información para esta sección es el trabajo \enquote{A Survey on Instance Segmentation: State of the art} \cite[Hafiz y Bhat 2020]{Hafiz2020}.
+
+\subsection{Técnicas tradicionales para segmentación de imágenes}
+Previo a la adopción de las redes neuronales, las técnicas de segmentación se fundamentaban en métodos de procesamiento de imágenes y en el análisis de características visuales. Entre las técnicas descritas en \enquote{Computer Vision: Algorithms and Applications} \cite[Szeliski 2022]{Szeliski2022}, se incluyen aquellas basadas en umbralización, detección de bordes, crecimiento de regiones y segmentación por clústeres.
+
+\begin{itemize}
+\setlength\itemsep{-0.3em}
+    \item \textbf{Umbralización}: consiste en separar los objetos del fondo mediante la asignación de un valor de intensidad fijo a los píxeles, útil en imágenes con contrastes pronunciados.
+    \item \textbf{Detección de bordes}: utiliza operadores como Sobel, Canny o Laplaciano para identificar el contorno de los objetos, aprovechando los cambios bruscos en la intensidad de los píxeles.
+    \item \textbf{Crecimiento de regiones}: consiste en a agrupar píxeles adyacentes que comparten propiedades similares, tales como color o intensidad, con el fin de formar regiones coherentes.
+    \item \textbf{Segmentación basada en clústeres}: algoritmos como K-means clasifican los píxeles en grupos con características similares, segmentando la imagen en varias partes.
+\end{itemize}
+
+Estas técnicas, aunque útiles en casos sencillos, eran limitadas en situaciones complejas, especialmente ante escenas con variaciones de iluminación o formas de objetos poco definidas.
+
+\subsection{Técnicas con redes neuronales}
+Con la llegada del aprendizaje profundo, especialmente las Redes Neuronales Convolucionales (CNNs), se han propuesto varios marcos para la tarea de segmentación de instancias.
+
+En la evolución de técnicas de segmentación prima la buena representación de características de una imagen, esencial para la detección. En un inicio se intentó con el diseño de descriptores locales (como SIFT \cite{SIFT} y HOG \cite{HOG}) y técnicas para agrupar y abstraer descriptores en representaciones de alto nivel que destacaran las partes discriminativas (como Bag of Words \cite{BagOfWords} y Fisher Vector \cite{FisherVector}). El inconveniente de estos métodos de representación es que requerían una ingeniería manual compleja y conocimiento especializado. En cambio, los métodos de aprendizaje profundo, como las CNNs, aprenden automáticamente representaciones de características con distintos niveles de abstracción.
+
+Luego la tendencia ha sido el de aumentar la profundidad de la redes neuronales. AlexNet \cite{AlexNet} tenía 8 capas, VGGNet \cite{VGGNet} 16 y ResNet \cite{ResNet} junto a DenseNet \cite{DenseNet} más de 100. Fue con VGGNet y GoogLeNet \cite{GoogleNet} que se demostró que aumentar la profundidad de la red mejora su capacidad de representación. Algunas redes no tan profundas como AlexNet, OverFeat \cite{OverFeat}, ZFNet \cite{ZFNet} y VGGNet, aún así tienen un gran numero de parámetros debido a sus capas densas, y estas implican un mayor coste computacional que las capas puramente convolucionales.
+
+En la actualidad para problemas de clasificación de imágenes se prefieren Redes Neuronales Convolucionales Profundas (DCNNs) basadas en detectores como lo son Mask R-CNN \cite{MaskRCNN} y YOLO \cite{YOLO}. Usualmente se utilizan las características extraídas en las últimas capas para la representación de los objetos.
+
+\subsection{Marcos de detección: dos etapas versus una etapa}
+\label{sec:anexo_marcos}
+Se presentan dos categorías principales al clasificar los marcos de detección según el número de etapas: los métodos basados en regiones (dos etapas) y los métodos unificados (una etapa).
+
+\begin{itemize}
+\setlength\itemsep{-0.3em}
+    \item En el caso de plataformas con elevados recursos computacionales, los \textbf{marcos de dos etapas} ofrecen una mayor precisión. Esto se debe a que la mayoría de las técnicas que han obtenido mejores resultados en desafíos reconocidos se basan en este enfoque, el cual proporciona una estructura más flexible y se adapta de manera óptima a la detección basada en regiones, tal como se observa en Mask R-CNN \cite{MaskRCNN}.
+    \item Por otra parte, los \textbf{marcos de una sola etapa}, representados por ejemplos como YOLO \cite{YOLO}, logran mayores velocidades al prescindir de preprocesamiento, utilizar una red de fondo más ligera, contar con un menor número de regiones candidatas y aprovechar una subred de detección totalmente convolucional. No obstante, se constata que presentan limitaciones para detectar objetos pequeños, contrariamente a lo que ocurre con los marcos de dos etapas.
+\end{itemize}
+
+\subsubsection{Categorización taxonómica}
+Una alternativa de clasificación para modelos de segmentación es la categorización taxonómica según la técnica empleada. A continuación se explican las diferentes categorías taxonómicas según es descrito en \cite[Hafiz y Bhat, 2020]{Hafiz2020}.
+
+\begin{table}[h]
+\centering
+\caption[Taxonomía de técnicas de segmentación con sus fortalezas y debilidades]{Tabla taxonómica de técnicas de segmentación con sus fortalezas y debilidades.}
+\label{tab:tabular_taxonomy}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Grupo} & \textbf{Técnicas} & \textbf{Fortalezas} & \textbf{Debilidades} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Clasificación de\\ propuestas de máscara.\end{tabular} & \begin{tabular}[c]{@{}l@{}}RCNN \cite{RCNN},\\ Fast RCNN \cite{FastRCNN},\\ Faster RCNN \cite{FasterRCNN}.\end{tabular} & \begin{tabular}[c]{@{}l@{}}- Relativamente simple\\ de implementar. \\ - Modesta precisión\\ de segmentación.\end{tabular} & \begin{tabular}[c]{@{}l@{}}- Lento y difícil de optimizar.\\ - Problemas de almacenamiento,\\ tiempo y escala de detección\\ durante el entrenamiento.\\ - Pruebas lentas.\\ - No adecuado para aplicaciones\\ en tiempo real.\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Detección seguida\\ por segmentación.\end{tabular} & \begin{tabular}[c]{@{}l@{}}HTC, PANet \cite{PANet},\\ Mask RCNN \cite{MaskRCNN},\\ Mask Scoring RCNN \cite{MaskScoringRCNN},\\ MPN, YOLACT \cite{YOLACT},\\ SOLOv2 \cite{SOLOv2}.\end{tabular} & \begin{tabular}[c]{@{}l@{}}- Relativamente simple\\ de entrenar.\\ - Mejor generalización.\\ - Relativamente más rápido.\\ - Buena precisión de\\ segmentación.\end{tabular} & \begin{tabular}[c]{@{}l@{}}- Depende de un pipeline de\\ entrenamiento complicado,\\ difícil de entrenar y optimizar.\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Etiquetado de píxeles\\ seguido por agrupamiento.\end{tabular} & \begin{tabular}[c]{@{}l@{}}Deep Watershed\\ Transform \cite{DeepWatershed},\\ Instance Cut.\end{tabular} & \begin{tabular}[c]{@{}l@{}}- Utiliza algunas técnicas\\ investigadas recientemente.\\ - Técnicas relativamente\\ más simples.\end{tabular} & \begin{tabular}[c]{@{}l@{}}- Menor precisión de segmentación.\\ - Cálculo intenso requiere alto\\ poder computacional.\\ - No adecuado para aplicaciones en\\ tiempo real.\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Métodos de deslizamiento\\ denso de ventana\end{tabular} & \begin{tabular}[c]{@{}l@{}}Deep Mask \cite{DeepMask},\\ Instance FCN \cite{InstanceFCN},\\ Tensor Mask \cite{TensorMask}.\end{tabular} & \begin{tabular}[c]{@{}l@{}}-Área relativamente\\ inexplorada. \\ - Modesta precisión\\ de segmentación.\end{tabular} & \begin{tabular}[c]{@{}l@{}}- Usan algoritmos complejos.\\ - Difícil de entrenar y optimizar.\\ - No adecuado para aplicaciones en\\ tiempo real.\end{tabular} \\ \hline
+\end{tabular}
+}
+\end{table}
+
+\begin{itemize}
+\setlength\itemsep{-0.3em}
+    \item \textbf{Clasificación de máscara propuesta:} Esta técnica implica la generación de propuestas de máscaras, seguida de la clasificación de las propuestas generadas.
+    \item \textbf{Detección seguida por segmentación:} Este popular enfoque implica la detección de objetos mediante una caja seguida de la segmentación objeto-caja.
+    \item \textbf{Etiquetado de pixeles seguido por agrupamiento:} Este enfoque implica el etiquetado categórico de cada píxel de la imagen, luego los píxeles se agrupan en instancias de objetos mediante un algoritmo de agrupación.
+    \item \textbf{Métodos de deslizamiento denso de ventana:} Se pasa una ventana de tamaño fijo a lo largo de toda la imagen para examinar cada región en detalle. En cada posición de la ventana, el modelo realiza una predicción para determinar qué clase de objeto o región pertenece a esa área.
+\end{itemize}
+
+\subsection{Segmentación de instancias en vídeo}
+En 2019 \cite[Yang et al]{Yang2019} introducen la tarea de segmentación de instancias en video, ``Video Instance Segmentation'' (VIS), que consiste en detectar, segmentar y seguir instancias individuales de objetos en videos. Ese mismo año, \cite[Voigtlaender et al.]{Voigtlaender2019} amplian la tarea de seguimiento en múltiples objetos, ``Multi-Object Tracking'' (MOT), para incluir el seguimiento de segmentación de instancias, denominándolo ``Multi-Object Tracking and Segmentation'' (MOTS). En la literatura científica y a efectos prácticos VIS y MOTS corresponden a la misma tarea y pueden ser usados indistintamente.
+
+A diferencia de la segmentación en imágenes, todas las técnicas conocidas de VIS implementan Redes Neuronales, siendo las más comunes CNNs. En un inicio se recurrió a modelos de segmentación, como Mask R-CNN, con la incorporación de capas extras, las cuales almacenaban información de cuadros anteriores, pero en la actualidad métodos más complejos existen. Las mayores innovaciones se dan en el uso Redes Convolucionales Recurrentes (RCNNs) para el manejo de datos secuenciales y captura de características temporales, Graph Neural Networks (GNNs) para modelar las relaciones entre distintas instancias para un mejor seguimiento y segmentación, y el uso de transformadores que permiten la tokenización de parches de vídeo con mecanismos de atención capaces de detección y segmentación en imágenes \cite{Zhou2023}.
+
+Estás técnicas resuelven simultáneamente el seguimiento y segmentación de instancias. Lamentablemente el mayor problema con VIS es la dificultad del etiquetado en bases de datos para su entrenamiento. Es por este inconveniente que suele preferirse un acercamiento con modelos cuadro a cuadro.

@@ -1,0 +1,582 @@
+\documentclass[12pt, letterpaper, english, spanish]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[letterpaper, top = 2.5cm, bottom = 2.5cm, right = 2.5cm, left = 3cm]{geometry}
+%\usepackage[myheadings]{fullpage}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{enumitem}
+%\usepackage{booktabs}
+\usepackage{graphicx, wrapfig, setspace, booktabs}
+\usepackage[font=small, labelfont=bf]{caption}
+%\usepackage{bookmark}
+%\usepackage[normalem,hyphens]{ulem} % Para escribir subrayado
+\usepackage[normalem]{ulem} % Para escribir subrayado
+\usepackage{soul} % Para escribir otros subrayados dentro de la bibliografía
+%\usepackage{colortbl}
+\usepackage{color}
+\usepackage{array}
+%\usepackage[protrusion=true, expansion=true]{microtype}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{tabularx}
+%\usepackage{listingsutf8}
+%\usepackage[usenames,dvipsnames]{color}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{svg}
+%\usepackage{subfig}
+\usepackage{subcaption}
+
+\usepackage{amssymb}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\hbadness=99999
+\hfuzz=9999pt
+\usepackage{dirtytalk}
+\usepackage{authoraftertitle}
+\usepackage{glossaries}
+%\usepackage[acronym]{glossaries}
+%\usepackage[acronym, toc]{glossaries}
+\usepackage[stable]{footmisc}
+
+
+%\usepackage[noadjust, nospace, compress, sort]{cite}
+%\renewcommand{\citedash}{--}
+%\renewcommand{\citepunct}{,}
+
+%Paquete para hipervinculos
+\usepackage[hyphens]{url}
+\usepackage[colorlinks=true]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=black,
+    citecolor=blue
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  MATLAB  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Listings package is used to include code %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage{color}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{csquotes}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Listings doesn't recognize UTF-8 in files otherwise %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Format for included code %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{maroon}{cmyk}{0, 0.87, 0.68, 0.32}
+\definecolor{halfgray}{gray}{0.55}
+\definecolor{ipython_frame}{RGB}{207, 207, 207}
+\definecolor{ipython_bg}{RGB}{247, 247, 247}
+\definecolor{ipython_red}{RGB}{186, 33, 33}
+\definecolor{ipython_green}{RGB}{0, 128, 0}
+\definecolor{ipython_cyan}{RGB}{64, 128, 128}
+\definecolor{ipython_purple}{RGB}{170, 34, 255}
+\definecolor{ipython_cyan2}{RGB}{0, 150, 150}
+\definecolor{ipython_orange}{RGB}{255, 93, 0}
+\definecolor{ipython_magenta}{RGB}{150, 0, 150}
+
+\lstset{
+    breaklines=true,
+    extendedchars=true,
+    stepnumber=5,
+    literate=
+    {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+    {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+    {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+    {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+    {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+    {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+    {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+    {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+    {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+    {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+    {€}{{\EUR}}1 {£}{{\pounds}}1
+}
+\iffalse%
+\lstset{
+    language=Matlab, % choose the language of the code
+    basicstyle=\fontfamily{pcr}\selectfont\footnotesize\color{black},
+    keywordstyle=\color[rgb]{0,0.6,0.6}\bfseries, % style for keywords
+    numbers=left, % where to put the line-numbers
+    backgroundcolor=\color[rgb]{0.98,0.98,0.98},
+    showspaces=false, % show spaces adding particular underscores
+    showstringspaces=false, % underline spaces within strings
+    showtabs=false, % show tabs within strings adding particular underscores
+    frame=single, % adds a frame around the code
+    tabsize=4, % sets default tabsize to 2 spaces
+    rulesepcolor=\color[RGB]{148, 150, 152},
+    rulecolor=\color[RGB]{34, 30, 31},
+    breaklines=true, % sets automatic line breaking
+    breakatwhitespace=false,
+    inputencoding=utf8,
+    extendedchars=true,
+    %commentstyle= \color[rgb]{0, 0.6, 0.6}\itshape,
+    commentstyle= \color[RGB]{255, 93, 0}\itshape,
+    firstnumber=1,  
+    numberstyle=\tiny\color{blue}, 
+    %stringstyle=\color[RGB]{148, 0, 210}\itshape,
+    stringstyle=\color[rgb]{0.6, 0, 0.6},
+    stepnumber=1 % los números van de 5 en 5
+}
+\fi
+\lstdefinelanguage{matlab}{
+    morekeywords={linspace,fftshift,cos,stem,xlim,ylim,xlabel,ylabel,fix,legend,access,and,break,class,continue,def,del,elif,else,except,exec,finally,for,from,global,if,import,in,is,lambda,not,or,pass,print,raise,return,try,while},
+    morekeywords=[2]{abs,all,any,basestring,bin,bool,bytearray,callable,chr,classmethod,cmp,compile,complex,delattr,dict,dir,divmod,enumerate,eval,execfile,file,filter,float,format,frozenset,getattr,globals,hasattr,hash,help,hex,id,input,int,isinstance,issubclass,iter,len,list,locals,long,map,max,memoryview,min,next,object,oct,open,ord,pow,property,range,raw_input,reduce,reload,repr,reversed,round,set,setattr,slice,sorted,staticmethod,str,sum,super,tuple,type,unichr,unicode,vars,xrange,zip,apply,buffer,coerce,intern},
+    sensitive=true,
+    morecomment=[l]\%,
+    morestring=[b]',
+    morestring=[b]",
+    morestring=[s]{'''}{'''},
+    morestring=[s]{"""}{"""},
+    morestring=[s]{r'}{'},
+    morestring=[s]{r"}{"},
+    morestring=[s]{r'''}{'''},
+    morestring=[s]{r"""}{"""},
+    morestring=[s]{u'}{'},
+    morestring=[s]{u"}{"},
+    morestring=[s]{u'''}{'''},
+    morestring=[s]{u"""}{"""},
+    % {replace}{replacement}{lenght of replace}
+    % *{-}{-}{1} will not replace in comments and so on
+    literate=
+    {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+    {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+    {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+    {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+    {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+    {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+    {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+    {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+    {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+    {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+    {€}{{\EUR}}1 {£}{{\pounds}}1
+    %
+    {^}{{{\color{ipython_purple}\^{}}}}1
+    {=}{{{\color{ipython_purple}=}}}1
+    %
+    {+}{{{\color{ipython_purple}+}}}1
+    {*}{{{\color{ipython_purple}$^\ast$}}}1
+    {/}{{{\color{ipython_purple}/}}}1
+    %
+    {+=}{{{+=}}}1
+    {-=}{{{-=}}}1
+    {*=}{{{$^\ast$=}}}1
+    {/=}{{{/=}}}1,
+    %
+    literate=
+    *{-}{{{\color{ipython_purple}-}}}1
+    {?}{{{\color{ipython_purple}?}}}1
+    {^}{{{\color{ipython_purple}\^{}}}}1
+    {=}{{{\color{ipython_purple}=}}}1
+    {+}{{{\color{ipython_purple}+}}}1
+    {*}{{{\color{ipython_purple}$^\ast$}}}1
+    {/}{{{\color{ipython_purple}/}}}1
+    {+=}{{{+=}}}1
+    {-=}{{{-=}}}1
+    {*=}{{{$^\ast$=}}}1
+    {/=}{{{/=}}}1,
+    %
+    identifierstyle=\color{black}\ttfamily,
+    commentstyle=\color{ipython_orange}\ttfamily,
+    stringstyle=\color{ipython_red}\ttfamily,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    rulecolor=\color{ipython_frame},
+    frame=single,
+    frameround={t}{t}{t}{t},
+    framexleftmargin=6mm,
+    numbers=left,
+    numberstyle=\tiny\color{halfgray},
+    backgroundcolor=\color{ipython_bg},
+    % extendedchars=true,
+    basicstyle=\scriptsize\ttfamily,%\footnotesize\ttfamily
+    keywordstyle=\color{ipython_cyan2}\ttfamily,
+}
+
+\lstdefinelanguage{python}{
+    morekeywords={access,and,break,class,continue,def,del,elif,else,except,exec,finally,for,from,global,if,import,in,is,lambda,not,or,pass,print,raise,return,try,while},
+    morekeywords=[2]{abs,all,any,basestring,bin,bool,bytearray,callable,chr,classmethod,cmp,compile,complex,delattr,dict,dir,divmod,enumerate,eval,execfile,file,filter,float,format,frozenset,getattr,globals,hasattr,hash,help,hex,id,input,int,isinstance,issubclass,iter,len,list,locals,long,map,max,memoryview,min,next,object,oct,open,ord,pow,property,range,raw_input,reduce,reload,repr,reversed,round,set,setattr,slice,sorted,staticmethod,str,sum,super,tuple,type,unichr,unicode,vars,xrange,zip,apply,buffer,coerce,intern},
+    sensitive=true,
+    morecomment=[l]\#,
+    morestring=[b]',
+    morestring=[b]",
+    morestring=[s]{'''}{'''},
+    morestring=[s]{"""}{"""},
+    morestring=[s]{r'}{'},
+    morestring=[s]{r"}{"},
+    morestring=[s]{r'''}{'''},
+    morestring=[s]{r"""}{"""},
+    morestring=[s]{u'}{'},
+    morestring=[s]{u"}{"},
+    morestring=[s]{u'''}{'''},
+    morestring=[s]{u"""}{"""},
+    % {replace}{replacement}{lenght of replace}
+    % *{-}{-}{1} will not replace in comments and so on
+    literate=
+    {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+    {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+    {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+    {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+    {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+    {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+    {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+    {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+    {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+    {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+    {€}{{\EUR}}1 {£}{{\pounds}}1
+    %
+    {^}{{{\color{ipython_purple}\^{}}}}1
+    {=}{{{\color{ipython_purple}=}}}1
+    %
+    {+}{{{\color{ipython_purple}+}}}1
+    {*}{{{\color{ipython_purple}$^\ast$}}}1
+    {/}{{{\color{ipython_purple}/}}}1
+    %
+    {+=}{{{+=}}}1
+    {-=}{{{-=}}}1
+    {*=}{{{$^\ast$=}}}1
+    {/=}{{{/=}}}1,
+    %
+    literate=
+    *{-}{{{\color{ipython_purple}-}}}1
+    {?}{{{\color{ipython_purple}?}}}1
+    {^}{{{\color{ipython_purple}\^{}}}}1
+    {=}{{{\color{ipython_purple}=}}}1
+    {+}{{{\color{ipython_purple}+}}}1
+    {*}{{{\color{ipython_purple}$^\ast$}}}1
+    {/}{{{\color{ipython_purple}/}}}1
+    {+=}{{{+=}}}1
+    {-=}{{{-=}}}1
+    {*=}{{{$^\ast$=}}}1
+    {/=}{{{/=}}}1,
+    %
+    identifierstyle=\color{black}\ttfamily,
+    commentstyle=\color{ipython_cyan}\ttfamily,
+    stringstyle=\color{ipython_red}\ttfamily,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    rulecolor=\color{ipython_frame},
+    frame=single,
+    frameround={t}{t}{t}{t},
+    framexleftmargin=6mm,
+    numbers=left,
+    numberstyle=\tiny\color{halfgray},
+    backgroundcolor=\color{ipython_bg},
+    extendedchars=true,
+    basicstyle=\scriptsize\ttfamily,%\scriptsize,
+    keywordstyle=\color{ipython_green}\ttfamily,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Fancy Caption Format %
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\DeclareCaptionFont{white}{ \color{white} }
+\DeclareCaptionFormat{listing}{
+  \colorbox[cmyk]{0.9, 0.35, 0.35, 0.01 }{
+    \parbox{1\linewidth}{\hspace{0pt}#1#2#3}
+  }\vskip+1pt
+}
+\captionsetup[lstlisting]{format=listing, labelfont=white, textfont=white, singlelinecheck=false, margin=15pt, font={bf,footnotesize}}
+
+
+%Para qué los subtítulos aparezcan en español
+\usepackage[spanish,es-tabla,es-noshorthands,es-nolists,es-lcroman]{babel}
+%\usepackage[spanish]{babel}
+%\usepackage[utf8]{inputenc}
+%\usepackage{sectsty}
+\usepackage{titling, lipsum}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{listings}
+%\usepackage[numbers, sort&compress]{natbib}
+\usepackage{anyfontsize}
+\usepackage{parskip}
+%\usepackage{setspace}
+
+%Herramientas matemáticas
+\usepackage{amsmath}
+\usepackage{breqn}
+\usepackage{siunitx}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{textcomp}
+\usepackage{gensymb}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% REFERENCIAS BIBLIOGRÁFICAS %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[backend=biber,datamodel=citasModeloUSM,style=ieee,citestyle=numeric-comp,natbib=true,minnames=1,maxnames=3,alldates=comp,alldatesusetime=true,alltimes=24h,dateera=christian,dateeraauto=1000,timezones=true,seconds=true,block=none,sorting=none]{biblatex}
+%\usepackage[backend=biber,style=ieee]{biblatex}
+\usepackage{citasEstiloUSM} % Estilo de citas de la USM
+\usepackage{xurl}
+
+%\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+
+\newenvironment{poliabstract}[1]
+  {%
+    \renewcommand{\abstractname}{#1}% Cambia el nombre del abstract
+    \begin{abstract}%
+      %\noindent% Elimina sangría inicial
+      \setlength{\leftskip}{0pt}% Asegura que el margen izquierdo sea cero
+      \setlength{\rightskip}{0pt}% Asegura que el margen derecho sea cero
+  }
+  {\end{abstract}}
+
+
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+\onehalfspacing
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
+
+%-------------------------------------------------------------------------------
+
+\providecommand{\keywordses}[1]
+{
+  \small	
+  \textbf{\textit{Palabras Clave: }} #1
+}
+
+\providecommand{\keywordsen}[1]
+{
+  \small	
+  \textbf{\textit{Keywords: }} #1
+}
+
+\usepackage{datetime}
+\newdateformat{monthyeardate}{%
+\monthname[\THEMONTH] \THEYEAR}
+
+\newdateformat{monthsyeardate}{%
+\monthname[\THEMONTH]-\THEYEAR}
+
+  
+
+\newdateformat{mifecha}{Valparaíso, a \THEDAY~de \monthname[\THEMONTH] de \THEYEAR}
+\makeatletter
+\renewcommand{\monthnamespanish}[1][\month]{%
+  \@orgargctr=#1\relax
+  \ifcase\@orgargctr
+    \PackageError{datetime}{Invalid Month number \the\@orgargctr}{%
+      Month numbers should go from 1 to 12}%
+    \or Enero%
+    \or Febrero%
+    \or Marzo%
+    \or Abril%
+    \or Mayo%
+    \or Junio%
+    \or Julio%
+    \or Agosto%
+    \or Septiembre%
+    \or Octubre%
+    \or Noviembre%
+    \or Diciembre%
+    \else \PackageError{datetime}{Invalid Month number \the\@orgargctr}{%
+      Month numbers should go from 1 to 12}%
+    \fi%
+}%
+\makeatother
+
+
+
+\fancyfoot[C]{}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+
+
+\newif\ifmargins
+%\marginstrue % COMENTAR CUANDO SE RELLENE EL DOCUMENTO
+
+\ifmargins
+\geometry{showframe}
+\usepackage{fgruler}
+\fi
+
+\newif\ifbib
+%\ifbibtrue
+
+\ifbib
+\renewcommand{\bibname}{Bibliografía}
+\renewcommand{\refname}{Bibliografía}
+\def\refname{Bibliografía}
+\renewcommand{\bibsection}{\section*{Bibliografía}}
+\fi
+
+
+\headheight = 1.5cm
+\textheight = 22cm
+%\headsep = 0.5cm
+%\topmargin = 1.5cm
+
+%\renewcommand{\baselinestretch}{1.5} 
+\linespread{1.5}
+\newlength\tindent
+\setlength{\tindent}{\parindent}
+\setlength{\parindent}{0pt}
+\renewcommand{\indent}{\hspace*{\tindent}}
+
+% Environment renaming
+\addto\captionsspanish{
+    \renewcommand{\contentsname}%
+        {Índice de contenidos}%
+}
+%\renewcommand{\listtablename}{Índice de tablas}
+%\renewcommand{\tablename}{Tabla}
+\renewcommand\lstlistlistingname{Índice de códigos}
+\renewcommand{\lstlistingname}{Código}
+\newcommand*\lstinputpath[1]{\lstset{inputpath=#1}}
+
+\newcommand\blfootnote[1]{%
+    \begingroup
+    \renewcommand\thefootnote{}\footnote{#1}%
+    \addtocounter{footnote}{-1}%
+    \endgroup
+}
+
+% Section number referencing
+\renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}
+\renewcommand{\thetable}{\arabic{section}.\arabic{table}}
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+%\renewcommand{\thelstlisting}{\arabic{section}.\arabic{lstlisting}}
+%\renewcommand{\thelstlisting}{\thesection.\arabic{lstlisting}}
+
+
+% Table colours
+\definecolor{LightGrey}{gray}{0.9}
+\definecolor{LightCyan}{rgb}{0.88,1,1}
+\definecolor{White}{gray}{0}
+\definecolor{colour1}{HTML}{7B84FC}
+\definecolor{colour2}{HTML}{7AD6FD}
+\definecolor{colour3}{HTML}{79FBD6}
+\definecolor{colour4}{HTML}{78F87F}
+\definecolor{colour5}{HTML}{D5FA80}
+\definecolor{colour6}{HTML}{FFFA81}
+\definecolor{colour7}{HTML}{FED37F}
+\definecolor{colour8}{HTML}{FD7F7C}
+
+% Path config
+\graphicspath{{figures/}{logos/}}
+\lstinputpath{code/}
+
+\makeatletter
+\def\include@path{{source/}}
+\def\input@path{{source/}}
+\makeatother
+
+
+% New environments
+\newenvironment{dedicatory}{
+\clearpage
+\null
+%\vspace{\fill}
+\vspace{\stretch{1}}
+\begin{flushright}\itshape}{
+\end{flushright}
+\vspace{\stretch{.1}}\null
+}
+
+
+\let\thanks\undefined
+\newenvironment{thanks}{
+	\vspace*{\fill}
+	\if@en
+	    \begin{center}
+		    \section*{Acknowledgments}
+		\end{center}
+	\else
+	    \begin{center}
+		    \centering\section*{Agradecimientos}
+		\end{center}
+	\fi
+	\vspace*{\fill}
+}
+{\vfill\null}
+
+
+\let\thanksnf\undefined
+\newenvironment{thanksnf}{
+	%\vspace*{\fill}
+	\if@en
+	    \begin{center}
+		    \section*{Acknowledgments}
+		\end{center}
+	\else
+	    \begin{center}
+		    \centering\section*{Agradecimientos}
+		\end{center}
+	\fi
+	%\vspace*{\fill}
+}
+{\vfill\null}
+
+
+\makeatletter
+\newcommand\frontmatter{%
+    \cleardoublepage
+  %\@mainmatterfalse
+  \pagenumbering{roman}}
+
+\newcommand\mainmatter{%
+    \cleardoublepage
+ % \@mainmattertrue
+  \pagenumbering{arabic}}
+
+%\newcommand\backmatter{%
+%  \if@openright
+%    \cleardoublepage
+%  \else
+%    \clearpage
+%  \fi
+%  \@mainmatterfalse
+%   }
+\makeatother
+
+\newcommand*{\makecover}{%
+    \begin{center}
+    {\fontsize{18}{18}\selectfont \textbf{\institution}}
+    \vspace{.7cm}
+
+    {\fontsize{16}{16}\selectfont \textbf{\department}}
+    \vspace{.7cm}
+
+    {\fontsize{14}{14}\selectfont \textbf{\location}}
+    \vspace{.7cm}
+
+    \includegraphics[height=33mm]{\logo}\\
+	\vspace{.7cm}
+
+	{\fontsize{20}{20}\selectfont \textbf{\say{\subject}}}\blfootnote{\disclaimer}
+	\vspace{0.7cm}
+
+	{\fontsize{14}{14}\selectfont \textbf{\authorName}}
+	\vspace{0.7cm}
+
+	{\fontsize{12}{12}\selectfont \textbf{\details}}
+    \vspace{0.7cm}
+
+	{\fontsize{12}{12}\selectfont \textbf{\advisor}}
+    \vspace{.7cm}
+
+	{\fontsize{14}{14}\selectfont \textsc{\textbf{\monthsyeardate\examdate}}}
+    \end{center}
+}
+
+
+\renewcommand{\glstextformat}[1]{\textit{#1}}
