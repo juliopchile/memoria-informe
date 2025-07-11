@@ -1,6 +1,6 @@
 {
   "latex-workshop.latex.autoClean.run": "onSucceeded",
   "latex-workshop.latex.rootFile.indicator": "\\begin{document}",
-  "latex-workshop.latex.outDir": "./out",
+  "latex-workshop.latex.outDir": "./build",
   "editor.wordWrap": "on",
 }

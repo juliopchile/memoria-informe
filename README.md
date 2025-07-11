@@ -6,4 +6,6 @@ sudo apt install texlive-full
 ```
 
 # PDF preview
-<iframe src="rout/main.pdf" width="100%" height="600px"></iframe>
+[Ver PDF](out/main.pdf)
+<embed src="out/main.pdf" type="application/pdf" width="100%" height="600px" />
+<iframe src="out/main.pdf" width="100%" height="600px"></iframe>

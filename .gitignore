@@ -1,5 +1,5 @@
 # Ignorar todo el output de compilación
-out/*
+build/*
 
 # Pero NO ignorar el archivo config/app.yml
-!out/main.pdf
+!build/main.pdf
