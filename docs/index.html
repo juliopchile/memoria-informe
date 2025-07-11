@@ -1,51 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8" />
-    <title>PDF Viewer</title>
-    <script type="module">
-      import pdfjsDist from "https://cdn.jsdelivr.net/npm/pdfjs-dist@5.3.93/+esm";
-    </script>
-    <style>
-      body {
-        font-family: sans-serif;
-        text-align: center;
-      }
-      canvas {
-        border: 1px solid #ccc;
-        margin-top: 20px;
-      }
-    </style>
+    <title>Title of the document</title>
   </head>
   <body>
-    <h1>Visor de PDF</h1>
-    <canvas id="pdf-canvas"></canvas>
-
-    <script>
-      // Ruta del PDF (debes tener el archivo en el mismo directorio)
-      const url = "main.pdf";
-
-      // Configurar PDF.js
-      pdfjsLib.GlobalWorkerOptions.workerSrc =
-        "https://cdn.jsdelivr.net/npm/pdfjs-dist@5.3.93/build/pdf.worker.min.mjs";
-
-      // Cargar el documento PDF
-      const loadingTask = pdfjsLib.getDocument(url);
-      loadingTask.promise.then((pdf) => {
-        // Obtener la primera página
-        pdf.getPage(1).then((page) => {
-          const scale = 1.5;
-          const viewport = page.getViewport({ scale });
-
-          const canvas = document.getElementById("pdf-canvas");
-          const context = canvas.getContext("2d");
-          canvas.height = viewport.height;
-          canvas.width = viewport.width;
-
-          // Renderizar la página en el canvas
-          page.render({ canvasContext: context, viewport });
-        });
-      });
-    </script>
+    <h1>PDF Example</h1>
+    <p>Open a PDF file <a href="main.pdf">example</a>.</p>
   </body>
 </html>
