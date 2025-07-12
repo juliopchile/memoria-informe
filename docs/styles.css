@@ -1,0 +1,184 @@
+/* Define CSS Classes for Each Font */
+.noto-sans {
+    font-family: "Noto Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+
+.noto-sans-sc {
+    font-family: "Noto Sans SC", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.noto-sans-tc {
+    font-family: "Noto Sans TC", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.noto-sans-jp {
+    font-family: "Noto Sans JP", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.noto-sans-hebrew {
+    font-family: "Noto Sans Hebrew", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+
+.noto-sans-arabic {
+    font-family: "Noto Sans Arabic", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+
+/* Cuerpo principal */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+    padding: 20px;
+}
+
+:root {
+    --bg-color: white;
+    --text-color: black;
+    --btn-bg: #e0e0e0;
+    --btn-text: black;
+    --link-color: blue;
+}
+
+body.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+body.dark-mode {
+    --bg-color: #121212;
+    --text-color: #f0f0f0;
+    --btn-bg: #444;
+    --btn-text: #f0f0f0;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.dark-mode a {
+    color: #66ccff;
+}
+
+/* Controles */
+.controls {
+    direction: ltr;
+    font-family: "Noto Sans", sans-serif;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* For LTR languages */
+    gap: 10px; /* Space between buttons; adjust as needed */
+}
+
+body.rtl .controls {
+    justify-content: flex-end; /* For RTL languages */
+}
+
+.lang-dropdown {
+    position: relative;
+    margin-right: 10px;
+}
+
+#lang-toggle {
+    padding: 8px 12px;
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#lang-toggle:hover {
+    opacity: 0.8;
+}
+
+#lang-menu {
+    list-style: none;
+    margin: 4px 0 0;
+    padding: 0;
+    position: absolute;
+    background: var(--bg-color);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+    z-index: 100;
+}
+
+#lang-menu li {
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#lang-menu li:hover {
+    background: #f0f0f0;
+}
+
+
+#lang-toggle,
+#dark-toggle {
+    height: 40px; /* Adjust this value as needed */
+    width: 11em; /* Adjust this value as needed */
+    display: flex;
+    align-items: center;
+    justify-content:left;
+    padding: 0 10px;
+    margin: 0;
+}
+
+/* Flags sizing */
+.fi {
+    width: 1.5em;
+    height: 1em;
+    line-height: 1;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+button#dark-toggle {
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+button#dark-toggle:hover {
+    opacity: 0.8;
+}
