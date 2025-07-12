@@ -1,4 +1,5 @@
 const translations = {
+  // Spanish
   es: {
     label: "Español",
     flag: "fi-es",
@@ -6,7 +7,7 @@ const translations = {
       "Segmentación de instancias y seguimiento basado en detección para caracterización de biomasa y salud en la salmonicultura.",
     subtitle:
       "Memoria para optar al título de Ingeniero Civil Electrónico, Mención en Computadores y Sub-Mención en Telecomunicaciones.",
-    abstractTitle: "Abstract",
+    abstractTitle: "Resumen",
     abstract1:
       "En la industria piscícola, el monitoreo constante de la salud de los peces es crucial. Gracias a los avances en visión por computadora es posible realizar esta labor de forma escalable y menos invasiva. WildSense, empresa spin-off de la UTFSM, provee servicios para la estimación de masa en salmones, donde la segmentación de instancias y seguimiento basado en detección son parte fundamental de su pipeline, pero aún presenta oportunidades de optimización.",
     abstract2:
@@ -20,6 +21,7 @@ const translations = {
     darkModeOn: "🌓 Modo oscuro",
     darkModeOff: "☀️ Modo claro",
   },
+  // English
   en: {
     label: "English",
     flag: "fi-gb",
@@ -63,7 +65,6 @@ const translations = {
     darkModeOn: "🌓 وضع الداكن",
     darkModeOff: "☀️ الوضع الفاتح",
   },
-
   // German
   de: {
     label: "Deutsch",
@@ -86,7 +87,6 @@ const translations = {
     darkModeOn: "🌓 Dunkelmodus",
     darkModeOff: "☀️ Heller Modus",
   },
-
   // French
   fr: {
     label: "Français",
@@ -109,7 +109,6 @@ const translations = {
     darkModeOn: "🌓 Mode sombre",
     darkModeOff: "☀️ Mode clair",
   },
-
   // Hebrew
   he: {
     label: "עברית",
@@ -132,7 +131,6 @@ const translations = {
     darkModeOn: "🌓 מצב כהה",
     darkModeOff: "☀️ מצב בהיר",
   },
-
   // Italian
   it: {
     label: "Italiano",
@@ -141,7 +139,7 @@ const translations = {
       "Segmentazione di istanze e tracciamento tramite rilevamento per la caratterizzazione della biomassa e della salute nell’acquacoltura di salmonidi.",
     subtitle:
       "Relazione finale del progetto per la laurea in Ingegneria Civile Elettronica con specializzazione in Informatica e sottospecializzazione in Telecomunicazioni.",
-    abstractTitle: "Abstract",
+    abstractTitle: "Riassunto",
     abstract1:
       "Nell’industria dell’acquacoltura, il monitoraggio continuo della salute dei pesci è essenziale. I progressi nella visione artificiale consentono di svolgere questo compito in modo scalabile e meno invasivo. WildSense, uno spin-off dell’UTFSM, offre servizi di stima del peso dei salmoni, in cui la segmentazione di istanze e il tracciamento basato sul rilevamento sono componenti fondamentali del pipeline, benché vi siano ancora margini di ottimizzazione.",
     abstract2:
@@ -155,7 +153,6 @@ const translations = {
     darkModeOn: "🌓 Modalità scura",
     darkModeOff: "☀️ Modalità chiara",
   },
-
   // Japanese
   ja: {
     label: "日本語",
@@ -178,7 +175,6 @@ const translations = {
     darkModeOn: "🌓 ダークモード",
     darkModeOff: "☀️ ライトモード",
   },
-
   // Portuguese
   pt: {
     label: "Português",
@@ -201,7 +197,6 @@ const translations = {
     darkModeOn: "🌓 Modo escuro",
     darkModeOff: "☀️ Modo claro",
   },
-
   // Russian
   ru: {
     label: "Русский",
@@ -210,7 +205,7 @@ const translations = {
       "Сегментация экземпляров и отслеживание на основе детекции для характеристики биомассы и здоровья в аквакультуре лососевых.",
     subtitle:
       "Выпускная работа для получения степени инженера гражданской электроники со специализацией в компьютерных технологиях и дополнительной специализацией в телекоммуникациях.",
-    abstractTitle: "Резюме",
+    abstractTitle: "Аннотацию",
     abstract1:
       "В индустрии аквакультуры постоянный мониторинг здоровья рыб имеет первостепенное значение. Прогресс в области компьютерного зрения позволяет выполнять эту задачу масштабируемо и менее инвазивно. WildSense, спин-офф компания UTFSM, предоставляет услуги по оценке веса лосося, где сегментация экземпляров и отслеживание на основе детекции — важные компоненты пайплайна, хотя есть потенциал для оптимизации.",
     abstract2:
@@ -224,7 +219,6 @@ const translations = {
     darkModeOn: "🌓 Тёмный режим",
     darkModeOff: "☀️ Светлый режим",
   },
-
   // Ukrainian
   uk: {
     label: "Українська",
