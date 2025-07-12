@@ -1,8 +1,10 @@
 {
-  "title": "Memoria para optar al título de Ingeniero Civil Electrónico, mención en Computadores.",
+  "title": "Segmentación de instancias y seguimiento basado en detección para caracterización de biomasa y salud en la salmonicultura.",
+  "subtitle": "Memoria para optar al título de Ingeniero Civil Electrónico, Mención en Computadores y Sub-Mención en Telecomunicaciones.",
   "pdf": "Leer PDF: <a href=\"main.pdf\">link</a>.",
   "code": "Código del proyecto: <a href=\"https://github.com/juliopchile/memoria\">GitHub</a>.",
   "latex": "Código LaTeX: <a href=\"https://github.com/juliopchile/memoria\">GitHub</a>.",
+  "abstract": "En la industria piscícola, el monitoreo constante de la salud de los peces es crucial. Gracias a los avances en visión por computadora es posible realizar esta labor de forma escalable y menos invasiva. WildSense, empresa spin-off de la UTFSM, provee servicios para la estimación de masa en salmones, donde la segmentación de instancias y seguimiento basado en detección son parte fundamental de su ``pipeline'', pero aún presenta oportunidades de optimización.\n\nEste proyecto perfecciona una base de datos de segmentación de instancias de salmones, al depurarla para incluir únicamente casos de interés, lo que permite entrenar modelos YOLO con rendimientos superiores a trabajos previos. Se optimizan los hiperparámetros durante el entrenamiento y se exportan los modelos a TensorRT para reducir los tiempos de inferencia.\n\nLos resultados demuestran que una base de datos más precisa mejora la calidad de los modelos, la optimización de hiperparámetros produce mejores resultados y la conversión a TensorRT reduce significativamente los tiempos de inferencia, con mínima pérdida de desempeño.",
   "btn_lang": "🌐 English",
   "btn_dark": {
     "on": "🌓 Modo oscuro",
