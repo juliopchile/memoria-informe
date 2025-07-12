@@ -4,72 +4,201 @@
 <head>
   <meta charset="UTF-8">
   <title>Memoria de titulación</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.3.2/css/flag-icons.min.css"/>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
+      padding: 20px;
+    }
+    :root {
+      --bg-color: white;
+      --text-color: black;
+      --btn-bg: #e0e0e0;
+      --btn-text: black;
+      --link-color: blue;
+    }
+    body.dark-mode {
+      --bg-color: #121212;
+      --text-color: #f0f0f0;
+      --btn-bg: #444;
+      --btn-text: #f0f0f0;
+    }
+    a { color: var(--link-color); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .dark-mode a { color: #66ccff; }
+
+    /* Controles */
+    .controls { margin-bottom: 20px; display: flex; align-items: center; }
+    .lang-dropdown { position: relative; margin-right: 10px; }
+    #lang-toggle {
+      padding: 8px 12px;
+      background-color: var(--btn-bg);
+      color: var(--btn-text);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    #lang-toggle:hover { opacity: 0.8; }
+    #lang-menu {
+      list-style: none;
+      margin: 4px 0 0;
+      padding: 0;
+      position: absolute;
+      background: var(--bg-color);
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+      z-index: 100;
+    }
+    #lang-menu li {
+      padding: 8px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #lang-menu li:hover { background: #f0f0f0; }
+
+    /* Flags sizing */
+    .fi {
+      width: 1.5em;
+      height: 1em;
+      line-height: 1;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+    button#dark-toggle {
+      padding: 8px 12px;
+      background-color: var(--btn-bg);
+      color: var(--btn-text);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    button#dark-toggle:hover { opacity: 0.8; }
+  </style>
 </head>
 
 <body>
   <div class="controls">
-    <button id="lang-btn"></button>
-    <button id="theme-btn"></button>
+    <div class="lang-dropdown">
+      <button id="lang-toggle"><span id="current-flag" class="fi"></span><span id="current-label"></span> ▼</button>
+      <ul id="lang-menu"></ul>
+    </div>
+    <button id="dark-toggle"></button>
   </div>
 
-  <h1 id="title"></h1>
-  <h2 id="title"></h2>
+  <h1 data-i18n="title"></h1>
+  <h2 data-i18n="subtitle"></h2>
   <h3>Julio Eduardo López Blanche</h3>
-  <p id="pdf"></p>
-  <p id="code"></p>
-  <p id="latex"></p>
 
-  <h2>Abstract</h2>
-  <p id="abstract"></p>
+  <h2 data-i18n="abstractTitle"></h2>
+  <p data-i18n="abstract1"></p>
+  <p data-i18n="abstract2"></p>
+  <p data-i18n="abstract3"></p>
+
+  <h2 data-i18n="linksTitle"></h2>
+  <p><a data-i18n-link="pdf" href="main.pdf"></a></p>
+  <p><a data-i18n-link="code" href="https://github.com/juliopchile/memoria"></a></p>
+  <p><a data-i18n-link="latex" href="https://github.com/juliopchile/memoria-informe"></a></p>
 
   <script>
-    // Leer preferencias
-    const savedLang = localStorage.getItem('lang') || 'es';
-    const savedDark = localStorage.getItem('darkMode') === 'true';
+    const translations = {
+      es: {
+        label: 'Español', flag: 'fi-es',
+        title: 'Segmentación de instancias y seguimiento basado en detección para caracterización de biomasa y salud en la salmonicultura.',
+        subtitle: 'Memoria para optar al título de Ingeniero Civil Electrónico, Mención en Computadores y Sub-Mención en Telecomunicaciones.',
+        abstractTitle: 'Abstract',
+        abstract1: 'En la industria piscícola, el monitoreo constante de la salud de los peces es crucial. Gracias a los avances en visión por computadora es posible realizar esta labor de forma escalable y menos invasiva. WildSense, empresa spin-off de la UTFSM, provee servicios para la estimación de masa en salmones, donde la segmentación de instancias y seguimiento basado en detección son parte fundamental de su pipeline, pero aún presenta oportunidades de optimización.',
+        abstract2: 'Este proyecto perfecciona una base de datos de segmentación de instancias de salmones, al depurarla para incluir únicamente casos de interés, lo que permite entrenar modelos YOLO con rendimientos superiores a trabajos previos. Se optimizan los hiperparámetros durante el entrenamiento y se exportan los modelos a TensorRT para reducir los tiempos de inferencia.',
+        abstract3: 'Los resultados demuestran que una base de datos más precisa mejora la calidad de los modelos, la optimización de hiperparámetros produce mejores resultados y la conversión a TensorRT reduce significativamente los tiempos de inferencia, con mínima pérdida de desempeño.',
+        linksTitle: 'Links', pdf: 'Leer PDF', code: 'Código del proyecto', latex: 'Código LaTeX',
+        darkModeOn: '🌓 Modo oscuro', darkModeOff: '☀️ Modo claro'
+      },
+      en: {
+        label: 'English', flag: 'fi-gb',
+        title: 'Instance segmentation and tracking by detection for biomass and health characterization in aquaculture of salmonids.',
+        subtitle: 'Final Project Report for the Electronic Civil Engineering degree with Minor in Computers and Secondary Minor in Telecommunications.',
+        abstractTitle: 'Abstract',
+        abstract1: 'In the aquaculture industry, the constant monitoring of fish health is crucial. Advances in computer vision now allow this task to be performed in a scalable and less invasive manner. WildSense, a spin-off company of the UTFSM, provides services for weight estimation in salmon, for which instance segmentation and detection-based tracking are integral components of its pipeline, although there remains room for optimization.',
+        abstract2: 'This project refines an instance segmentation database for salmon by filtering it to include only relevant cases, thereby enabling the training of YOLO models with performance superior to previous works. Hyperparameters are optimized during training, and the models are exported to TensorRT in order to reduce inference times.',
+        abstract3: 'The results demonstrate that a more precise database enhances the quality of the models, hyperparameter optimization yields better outcomes, and the conversion to TensorRT significantly reduces inference times with minimal performance loss.',
+        linksTitle: 'Links', pdf: 'Read PDF', code: 'Project code', latex: 'LaTeX source',
+        darkModeOn: '🌓 Dark mode', darkModeOff: '☀️ Light mode'
+      }
+    };
+    const supportedLangs = Object.keys(translations);
+    const langToggle = document.getElementById('lang-toggle');
+    const langMenu = document.getElementById('lang-menu');
+    const currentFlag = document.getElementById('current-flag');
+    const currentLabel = document.getElementById('current-label');
+    const darkToggle = document.getElementById('dark-toggle');
 
-    document.body.classList.toggle('dark-mode', savedDark);
-
-    let texts;
-
-    // Cargar JSON de idioma
-    fetch(`lang/${savedLang}.json`)
-      .then(res => res.json())
-      .then(data => {
-        texts = data;
-        renderPage();
+    function buildLangMenu() {
+      langMenu.innerHTML = '';
+      supportedLangs.forEach(lang => {
+        const meta = translations[lang];
+        const li = document.createElement('li');
+        li.dataset.lang = lang;
+        li.innerHTML = `<span class="fi ${meta.flag}"></span>${meta.label}`;
+        li.addEventListener('click', () => { setLanguage(lang); toggleLangMenu(false); });
+        langMenu.appendChild(li);
       });
-
-    // Renderizar contenido dinámico
-    function renderPage() {
-      document.getElementById('title').innerHTML = texts.title;
-      document.getElementById('subtitle').innerHTML = texts.subtitle;
-      document.getElementById('pdf').innerHTML = texts.pdf;
-      document.getElementById('code').innerHTML = texts.code;
-      document.getElementById('latex').innerHTML = texts.latex;
-      updateButtons();
     }
 
-    // Actualizar botones
-    function updateButtons() {
-      document.getElementById('lang-btn').textContent = texts.btn_lang;
-      const isDark = document.body.classList.contains('dark-mode');
-      document.getElementById('theme-btn').textContent =
-        isDark ? texts.btn_dark.off : texts.btn_dark.on;
+    function toggleLangMenu(show) {
+      langMenu.style.display = show ? 'block' : 'none';
     }
 
-    // Toggle idioma
-    document.getElementById('lang-btn').addEventListener('click', () => {
-      const newLang = savedLang === 'es' ? 'en' : 'es';
-      localStorage.setItem('lang', newLang);
-      location.reload();
+    langToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleLangMenu(langMenu.style.display !== 'block');
     });
+    document.addEventListener('click', () => toggleLangMenu(false));
 
-    // Toggle modo oscuro
-    document.getElementById('theme-btn').addEventListener('click', () => {
-      const isDark = document.body.classList.toggle('dark-mode');
-      localStorage.setItem('darkMode', isDark);
-      updateButtons();
+    function setLanguage(lang) {
+      localStorage.setItem('lang', lang);
+      applyLanguage(lang);
+    }
+
+    function applyLanguage(lang) {
+      const tx = translations[lang] || translations.es;
+      document.documentElement.lang = lang;
+      currentFlag.className = `fi ${tx.flag}`;
+      currentLabel.textContent = tx.label;
+      document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = tx[el.getAttribute('data-i18n')] || '');
+      document.querySelectorAll('[data-i18n-link]').forEach(el => el.textContent = tx[el.getAttribute('data-i18n-link')] || '');
+      updateDarkToggleText(lang);
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+      updateDarkToggleText(localStorage.getItem('lang') || 'es');
+    }
+
+    function updateDarkToggleText(lang) {
+      const tx = translations[lang] || translations.es;
+      const key = document.body.classList.contains('dark-mode') ? 'darkModeOff' : 'darkModeOn';
+      darkToggle.textContent = tx[key];
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      buildLangMenu();
+      if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+      setLanguage(localStorage.getItem('lang') || 'es');
+      darkToggle.addEventListener('click', toggleDarkMode);
     });
   </script>
 </body>
