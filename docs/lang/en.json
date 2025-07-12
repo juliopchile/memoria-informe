@@ -1,0 +1,11 @@
+{
+  "title": "Thesis to obtain the degree of Electronics Civil Engineer, Computer Sciences specialization.",
+  "pdf": "Read PDF: <a href=\"main.pdf\">link</a>.",
+  "code": "Project code: <a href=\"https://github.com/juliopchile/memoria\">GitHub</a>.",
+  "latex": "LaTeX source: <a href=\"https://github.com/juliopchile/memoria\">GitHub</a>.",
+  "btn_lang": "🌐 Español",
+  "btn_dark": {
+    "on": "🌓 Dark mode",
+    "off": "☀️ Light mode"
+  }
+}

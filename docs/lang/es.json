@@ -1,0 +1,11 @@
+{
+  "title": "Memoria para optar al título de Ingeniero Civil Electrónico, mención en Computadores.",
+  "pdf": "Leer PDF: <a href=\"main.pdf\">link</a>.",
+  "code": "Código del proyecto: <a href=\"https://github.com/juliopchile/memoria\">GitHub</a>.",
+  "latex": "Código LaTeX: <a href=\"https://github.com/juliopchile/memoria\">GitHub</a>.",
+  "btn_lang": "🌐 English",
+  "btn_dark": {
+    "on": "🌓 Modo oscuro",
+    "off": "☀️ Modo claro"
+  }
+}

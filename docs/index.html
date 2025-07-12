@@ -1,11 +1,71 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Main Page for PDF proyect</title>
-  </head>
-  <body>
-    <h1>Thesis</h1>
-    <p>Full <a href="../build/main.pdf">PDF</a>.</p>
-    <p>Code: <a href="https://github.com/juliopchile/memoria">Github</a>.</p>
-  </body>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Memoria de titulación</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="controls">
+    <button id="lang-btn"></button>
+    <button id="theme-btn"></button>
+  </div>
+
+  <h2 id="title"></h2>
+  <p id="pdf"></p>
+  <p id="code"></p>
+  <p id="latex"></p>
+
+  <script>
+    // Leer preferencias
+    const savedLang = localStorage.getItem('lang') || 'es';
+    const savedDark = localStorage.getItem('darkMode') === 'true';
+
+    document.body.classList.toggle('dark-mode', savedDark);
+
+    let texts;
+
+    // Cargar JSON de idioma
+    fetch(`lang/${savedLang}.json`)
+      .then(res => res.json())
+      .then(data => {
+        texts = data;
+        renderPage();
+      });
+
+    // Renderizar contenido dinámico
+    function renderPage() {
+      document.getElementById('title').innerHTML = texts.title;
+      document.getElementById('pdf').innerHTML = texts.pdf;
+      document.getElementById('code').innerHTML = texts.code;
+      document.getElementById('latex').innerHTML = texts.latex;
+      updateButtons();
+    }
+
+    // Actualizar botones
+    function updateButtons() {
+      document.getElementById('lang-btn').textContent = texts.btn_lang;
+      const isDark = document.body.classList.contains('dark-mode');
+      document.getElementById('theme-btn').textContent =
+        isDark ? texts.btn_dark.off : texts.btn_dark.on;
+    }
+
+    // Toggle idioma
+    document.getElementById('lang-btn').addEventListener('click', () => {
+      const newLang = savedLang === 'es' ? 'en' : 'es';
+      localStorage.setItem('lang', newLang);
+      location.reload();
+    });
+
+    // Toggle modo oscuro
+    document.getElementById('theme-btn').addEventListener('click', () => {
+      const isDark = document.body.classList.toggle('dark-mode');
+      localStorage.setItem('darkMode', isDark);
+      updateButtons();
+    });
+  </script>
+</body>
+
 </html>
