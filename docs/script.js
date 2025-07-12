@@ -385,8 +385,29 @@ function updateDarkToggleText(lang) {
 
 window.addEventListener("DOMContentLoaded", () => {
   buildLangMenu();
-  if (localStorage.getItem("darkMode") === "true")
+
+  // 1) MODO CLARO/OSCuro
+  const savedDark = localStorage.getItem("darkMode");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  if (savedDark === "true" || (savedDark === null && prefersDark)) {
     document.body.classList.add("dark-mode");
-  setLanguage(localStorage.getItem("lang") || "es");
+    localStorage.setItem("darkMode", "true");
+  } else if (savedDark === null) {
+    // Si nunca ha visitado y el sistema prefiere claro
+    localStorage.setItem("darkMode", "false");
+  }
+
+  // 2) IDIOMA
+  const savedLang = localStorage.getItem("lang");
+  let initialLang;
+  if (savedLang && supportedLangs.includes(savedLang)) {
+    initialLang = savedLang;
+  } else {
+    const browserLang = navigator.language.split("-")[0];
+    initialLang = supportedLangs.includes(browserLang) ? browserLang : "es";
+    localStorage.setItem("lang", initialLang);
+  }
+  setLanguage(initialLang);
+
   darkToggle.addEventListener("click", toggleDarkMode);
 });
