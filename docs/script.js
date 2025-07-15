@@ -341,8 +341,8 @@ function setLanguageFont(lang) {
 
 function setLanguage(lang) {
   localStorage.setItem("lang", lang);
-  applyLanguage(lang);
   setLanguageFont(lang);
+  applyLanguage(lang);
 }
 
 function applyLanguage(lang) {
@@ -360,9 +360,11 @@ function applyLanguage(lang) {
     );
   updateDarkToggleText(lang);
   if (rtlLangs.includes(lang)) {
+    document.body.classList.remove("ltr");
     document.body.classList.add("rtl");
   } else {
     document.body.classList.remove("rtl");
+    document.body.classList.add("ltr");
   }
 }
 
