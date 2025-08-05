@@ -1,7 +1,7 @@
 \part*{Anexos}\addcontentsline{toc}{part}{Anexos}
 \label{part:anexo}
-\section{Estado del arte en modelos de segmentación de instancias}
-En la presente sección se añade material suplementario relativo al estado del arte en técnicas de segmentación de instancias, material que no fue incorporada al corpus principal debido a restricciones de espacio y a su no esencialidad para la comprensión integral del proyecto. Aquí se adopta un enfoque más histórico y categórico enfocado en aspectos generales de la segmentación en visión por computadora, en contraposición a la descripción detallada de las propiedades de modelos específicos en la parte de introducción. La fuente principal de información para esta sección es el trabajo \enquote{A Survey on Instance Segmentation: State of the art} \cite[Hafiz y Bhat 2020]{Hafiz2020}.
+\section[SOTA en modelos de segmentación de instancias]{SOTA en modelos de segmentación de instancias}
+En la presente sección se añade material suplementario relativo al estado del arte en técnicas de segmentación de instancias, material que no fue incorporada al corpus principal debido a restricciones de espacio y a su no esencialidad para la comprensión integral del proyecto. Aquí se adopta un enfoque más histórico y categórico enfocado en aspectos generales de la segmentación en visión por computadora, en contraposición a la descripción detallada de las propiedades de modelos específicos en la parte de introducción \ref{sec:modelos_segmentación}. La fuente principal de información para esta sección es el trabajo \enquote{A Survey on Instance Segmentation: State of the art} \cite[Hafiz y Bhat 2020]{Hafiz2020}.
 
 \subsection{Técnicas tradicionales para segmentación de imágenes}
 Previo a la adopción de las redes neuronales, las técnicas de segmentación se fundamentaban en métodos de procesamiento de imágenes y en el análisis de características visuales. Entre las técnicas descritas en \enquote{Computer Vision: Algorithms and Applications} \cite[Szeliski 2022]{Szeliski2022}, se incluyen aquellas basadas en umbralización, detección de bordes, crecimiento de regiones y segmentación por clústeres.
@@ -63,8 +63,22 @@ Una alternativa de clasificación para modelos de segmentación es la categoriza
 \end{itemize}
 
 \subsection{Segmentación de instancias en vídeo}
-En 2019 \cite[Yang et al]{Yang2019} introducen la tarea de segmentación de instancias en video, ``Video Instance Segmentation'' (VIS), que consiste en detectar, segmentar y seguir instancias individuales de objetos en videos. Ese mismo año, \cite[Voigtlaender et al.]{Voigtlaender2019} amplian la tarea de seguimiento en múltiples objetos, ``Multi-Object Tracking'' (MOT), para incluir el seguimiento de segmentación de instancias, denominándolo ``Multi-Object Tracking and Segmentation'' (MOTS). En la literatura científica y a efectos prácticos VIS y MOTS corresponden a la misma tarea y pueden ser usados indistintamente.
+En 2019 \cite[Yang et al]{Yang2019} introducen la tarea de segmentación de instancias en video, \textit{Video Instance Segmentation} (VIS), que consiste en detectar, segmentar y seguir instancias individuales de objetos en videos. Ese mismo año, \cite[Voigtlaender et al.]{Voigtlaender2019} amplian la tarea de seguimiento en múltiples objetos, \textit{Multi-Object Tracking} (MOT), para incluir el seguimiento de segmentación de instancias, denominándolo \textit{Multi-Object Tracking and Segmentation} (MOTS). En la literatura científica y a efectos prácticos VIS y MOTS corresponden a la misma tarea y pueden ser usados indistintamente.
 
 A diferencia de la segmentación en imágenes, todas las técnicas conocidas de VIS implementan Redes Neuronales, siendo las más comunes CNNs. En un inicio se recurrió a modelos de segmentación, como Mask R-CNN, con la incorporación de capas extras, las cuales almacenaban información de cuadros anteriores, pero en la actualidad métodos más complejos existen. Las mayores innovaciones se dan en el uso Redes Convolucionales Recurrentes (RCNNs) para el manejo de datos secuenciales y captura de características temporales, Graph Neural Networks (GNNs) para modelar las relaciones entre distintas instancias para un mejor seguimiento y segmentación, y el uso de transformadores que permiten la tokenización de parches de vídeo con mecanismos de atención capaces de detección y segmentación en imágenes \cite{Zhou2023}.
 
 Estás técnicas resuelven simultáneamente el seguimiento y segmentación de instancias. Lamentablemente el mayor problema con VIS es la dificultad del etiquetado en bases de datos para su entrenamiento. Es por este inconveniente que suele preferirse un acercamiento con modelos cuadro a cuadro.
+
+\section{Filtro de profundidad (código original)}
+En primera instancia se tenía la idea de crear un filtro capaz de utilizar datos de profundidad asociadas a las imágenes de la base de datos con el fin de filtrarlas, en caso de encontrarse a una distancia mayor a la de un umbral dado. Sin embargo, al no contar con datos de profundidad asociados a las imagenes del \textit{dataset}, se optó por un filtro más sencillo que es el mostrado más arriba.
+
+Si bien no se utilizó este filtro, si estaba planeada su inclusión como material complementario de este proyecto. Lamentablemente el código se perdió en un formateo de disco duro y no se pudo recuperar. Sin embargo, se incluye una imagen que muestra el funcionamiento del filtro de profundidad como evidencia de su existencia (Fig. \ref{fig:filtro_profundiad}).
+
+\begin{figure}[htbp]
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{figures/filtro_de_profunidad.png}
+    \caption[Implementación del filtro de profundidad]{Implementación del filtro de profundiad. Como puede verse en la máscara binaria de la derecha, algunas instancias se encuentran fuera del umbral de distancia (en este caso 3 metros) y por ende son excluidos del \textit{dataset}.}
+    \label{fig:filtro_profundiad}
+\end{center}
+\end{figure}
+
