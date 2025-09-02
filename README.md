@@ -28,3 +28,7 @@ This project refines an instance segmentation database for salmon by filtering i
 The results demonstrate that a more precise database enhances the quality of the models, hyperparameter optimization yields better outcomes, and the conversion to TensorRT significantly reduces inference times with minimal performance loss.
 
 [See full PDF](build/main.pdf)
+
+# Useful hotkeys
+- From code -> to PDF: `ctrl` + `alt` + `j`
+- From PDF -> to code: `ctrl` + `click`

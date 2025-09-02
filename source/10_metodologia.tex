@@ -74,7 +74,7 @@ Para el entrenamiento de los modelos se utilizaron dos bases de datos de segment
 
 \begin{table}[htbp]
 \centering
-\caption[Detalle de la composición de las bases de datos]{Detalles con el número de imágenes y etiquetas para las bases de datos Deepfish y Salmons. Las variantes ``\_LO'' corresponden a los mismos \textit{datasets} pero sin imágenes de fondo en la tarea de entrenamiento.}
+\caption[Detalles de la composición de las bases de datos de segmentación]{Detalles con el número de imágenes y etiquetas para las bases de datos Deepfish y Salmons. Las variantes ``\_LO'' corresponden a los mismos \textit{datasets} pero sin imágenes de fondo en la tarea de entrenamiento.}
 \label{tab:datasets_combined}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
@@ -104,9 +104,21 @@ Esta base de datos de dominio público fue desarrollada como un \textit{benchmar
 \subsubsection{Salmons}
 Esta base de datos es una versión optimizada del dataset de salmones desarrollado por WildSense y es de caracter privado. Para el desarrollo de este se utilizó como punto de partida la base de datos ``Salmons_2024base'', disponible en el espacio de trabajo de WildSense en CVAT. Luego de depurar instancias de no interés, se procedió a incluir 321 imágenes de los \textit{dataset} de \textit{tracking} con segmentación llamadas ``Seguimiento_1'' y ``Seguimiento_2'', también disponibles desde el mismo espacio de trabajo en CVAT.
 
-%TODO: Aún no le pongo nombre a estos datasets
-\subsubsection{Tracking Salmones*}
-Esta base de datos corresponde a dos videos de 200 cuadros cada uno y las etiquetas están en forma de cajas englobantes. \textcolor{red}{aún no lo termino xd}
+\subsubsection{Tracking Salmones}
+Esta base de datos corresponde a dos videos de 220 cuadros cada uno y las etiquetas están en forma de cajas englobantes.
+
+\begin{table}[htbp]
+\centering
+\caption[Composición de las bases de datos de seguimiento]{Composición de las bases de datos de seguimiento.}
+\label{tab:datasets_tracking}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Dataset} & \textbf{Cuadros} & \textbf{Instancias} & \textbf{Descripción} \\ \hline
+Video\_1 & 220 & 36 & Aguas verdes con buena visibilidad. \\ \hline
+Video\_2 & 220 & 37 & Aguas azules con baja visibilidad. \\ \hline
+\end{tabular}
+\end{table}
+
 
 \section{Métricas de validación}
 Para determinar el rendimiento de un modelo es necesario obtener métricas de validación específicas para cada tarea. En el caso de la segmentación de instancias, las métricas más utilizadas son el \textit{mean average precision} (mAP) y el \textit{F1 score}. En este trabajo se priorizó la optimización de la métrica mAP@50-95, que corresponde al promedio de la precisión media calculada en umbrales de IoU desde 0.50 hasta 0.95, en pasos de 0.05.
@@ -154,7 +166,7 @@ Se define como el area de intersección, dividida por el área de la unión entr
 El uso de IoU permite clasificar el tipo de predicción realizada. Comúnmente se emplea un umbral del 50\% o 75\% para considerar una predicción como \textbf{verdadero positivo}. A partir de la matriz de confusión obtenida, es posible calcular diversas métricas de rendimiento.
 
 \subsection{Precisión y exhaustividad}
-La precisión se define como la proporción de instancias recuperadas que son realmente relevantes, mientras que la exhaustividad (también conocida como sensibilidad o \textit{recall}) corresponde a la fracción de instancias relevantes que han sido correctamente recuperadas. En el contexto del aprendizaje automático, se consideran instancias relevantes aquellas que pertenecen a la clase buscada (\textbf{verdaderos positivos} y \textbf{falsos negativos}), y como instancias recuperadas todas las predicciones realizadas (\textbf{verdaderos positivos} y \textbf{falsos positivos}). Estas relaciones se expresan en las ecuaciones \ref{eq:precision} y \ref{eq:recall}, y se ilustran en la figura \ref{fig:presicion_recall}.
+La precisión se define como la proporción de instancias recuperadas que son realmente relevantes, mientras que la exhaustividad (también conocida como sensibilidad o \textit{recall}) corresponde a la fracción de instancias relevantes que han sido correctamente recuperadas. En el contexto del aprendizaje automático, se consideran instancias relevantes aquellas que pertenecen a la clase buscada (\textbf{verdaderos positivos} y \textbf{falsos negativos}), y como instancias recuperadas todas las predicciones realizadas (\textbf{verdaderos positivos} y \textbf{falsos positivos}). Estas relaciones se expresan en las ecuaciones \ref{eq:precision} y \ref{eq:recall}.%, y se ilustran en la figura \ref{fig:presicion_recall}.
 
 
 \begin{equation}
@@ -166,13 +178,14 @@ La precisión se define como la proporción de instancias recuperadas que son re
 \label{eq:recall}
 \end{equation}
 
-\begin{figure}[htbp]
-\begin{center}
-    \includegraphics[width=0.55\textwidth]{figures/Precisionrecall_es.pdf}
-    \caption[Presición y exhaustividad]{Presición y exhaustividad (\textit{recall}).}
-    \label{fig:presicion_recall}
-\end{center}
-\end{figure}
+%\begin{figure}[htbp]
+%\begin{center}
+%    \includegraphics[width=0.55\textwidth]{figures/Precisionrecall_es.pdf}
+%    \caption[Presición y exhaustividad]{Presición y exhaustividad (\textit{recall}).}
+%    \label{fig:presicion_recall}
+%\end{center}
+%\end{figure}
+
 
 \subsection{Puntaje F1}
 El puntaje F1 es una métrica que combina la precisión y la exhaustividad en un único valor, proporcionando un equilibrio entre ambas. Se define como la media armónica de la precisión y la exhaustividad, y se calcula mediante la siguiente ecuación (Ec. \ref{eq:f1_score}). El puntaje F1 es especialmente útil en clasificación binaria, donde solo importa distinguir entre una clase y el fondo.
@@ -198,15 +211,15 @@ donde $N$ es el número de clases y $\text{AP}_i$ es la precisión media de la c
 
 
 \section{Depuración de la base de datos de salmones}
-En la presente memoria se expone una base de datos de salmones, la cual se originó a partir de la versión ``Salmons\_2024base'' disponible en el espacio de trabajo de WildSense en CVAT. Para optimizarla, se desarrolló un código en Python capaz de filtrar instancias irrelevantes mediante criterios de tamaño, forma y nitidez. Posteriormente, se realizaron pruebas de inspección visual con el fin de validar la capacidad de segmentación de los modelos entrenados con las bases de datos modificadas y seleccionar la versión final.
+En la presente memoria se expone una base de datos de salmones, la cual se originó a partir de la versión ``Salmons\_2024base'' disponible en el espacio de trabajo de WildSense en CVAT. Para optimizarla, se desarrolló un código en Python capaz de filtrar instancias irrelevantes mediante criterios de tamaño, forma y nitidez. Posteriormente, se realizaron pruebas de inspección visual con el fin de validar la capacidad de segmentación de los modelos entrenados con las bases de datos modificadas y seleccionar una versión final.
 
 \subsection{Código de filtrado}
-El código de filtrado se encarga principalmente de procesar las etiquetas de la base de datos, calculando atributos de segmentación como área, forma y nitidez. En función de estos atributos se determina si una instancia ha de ser filtrada o reasignada a otra clase. El proceso comprende tres pasos principales: la lectura de las segmentaciones, el cálculo de las métricas necesarias y, finalmente, el almacenamiento de las etiquetas resultantes en un directorio específico. Un pseudocódigo del procedimiento implementado se describe en el algoritmo~\ref{alg:filter_dataset}.
+El código de filtrado se encarga principalmente de procesar las etiquetas de la base de datos, calculando atributos de segmentación como área, forma y nitidez. En función de estos atributos se determina si una instancia ha de ser filtrada o reasignada a otra clase. El proceso comprende tres pasos principales: la lectura de las segmentaciones, el cálculo de las métricas necesarias y, finalmente, el almacenamiento de las etiquetas depuradas en un directorio específico. Un pseudocódigo del procedimiento implementado se describe en el algoritmo~\ref{alg:filter_dataset}.
 
 \begin{algorithm}[H]
   \DontPrintSemicolon
   \SetAlgoLined
-  \KwIn{Lista de polígonos (segmentaciones)}
+  \KwIn{Lista de polígonos (segmentaciones por imagen)}
   \KwOut{Etiquetas filtradas o reasignadas}
   % Paso 1: Leer segmentaciones
   Cargar polígonos desde la base de datos\;
@@ -214,7 +227,7 @@ El código de filtrado se encarga principalmente de procesar las etiquetas de la
   \ForEach{polígono $p$ en lista}{
     Calcular métricas de $p$ (área, forma, nitidez, etc.)\;
     $c \leftarrow$ \textsc{DecidirClase}(
-      métricas de $p$
+      ¿métricas de $p$
     )\;
     \If{$c$ es clase válida}{
       Incluir o reasignar etiqueta de $p$ a clase $c$\;
@@ -224,20 +237,90 @@ El código de filtrado se encarga principalmente de procesar las etiquetas de la
   }
   % Paso 3: Guardar resultados
   Guardar etiquetas resultantes\;
-  \caption{Proceso de filtrado de dataset}
+  \caption[Algoritmo para filtrado de base de datos]{Algoritmo para filtrado de base de datos.}
   \label{alg:filter_dataset}
 \end{algorithm}
 
-La lista completa de métricas soportadas es: \textbf{área}, \textbf{perímetro}, \textbf{relación de aspecto}, \textbf{circularidad}, \textbf{compactación}, \textbf{eccentricidad}, \textbf{elongación}, \textbf{rectangularidad} y \textbf{nitidez}. El código también permite filtrar las etiquetas por clase, lo que resulta útil para depurar bases de datos con múltiples clases.
+La lista completa de métricas soportadas es: \textbf{área}, \textbf{perímetro}, \textbf{relación de aspecto}, \textbf{circularidad}, \textbf{compactación}, \textbf{eccentricidad}, \textbf{elongación}, \textbf{rectangularidad} y \textbf{nitidez}. Se normalizan las métricas asumiendo una imagen de 640x640 pixeles. El código también permite filtrar las etiquetas por clase, lo que resulta útil para depurar bases de datos con múltiples clases.
 
-Además, el código incluye funcionalidades para convertir bases de datos en formato CVAT (XML) a formato YOLO y, de forma inversa, exportar bases de datos YOLO en archivos ZIP aptos para su importación en CVAT.
+Para la nitidez se utiliza una media logarítmica ponderada entre la nitidez de borde y nitidez interna. La nitidez de borde se obtiene con el promedio de la magnitud del gradiente de Sobel dentro de una banda que rodea el borde la segmentación, mientras que la nitidez interna se calcula con la varianza del filtro Laplaciano aplicado a los pixeles dentro de la segmentación.
 
-El código de filtrado se encuentra disponible de forma pública en un repositorio GitHub bajo el nombre \enquote{filter\_dataset} \cite{Lopez2025-Filter}.
+Además, el código incluye funcionalidades para convertir bases de datos en formato CVAT (XML) a formato YOLO y, de forma inversa, exportar bases de datos YOLO en archivos ZIP aptos para su importación a CVAT. El código de filtrado se encuentra disponible de forma pública en un repositorio GitHub bajo el nombre \enquote{filter\_dataset} \cite{Lopez2025-Filter}.
+
+\subsection{Filtrado}
+En primera instancia se mejoran a mano las etiquetas dentro de la base de datos de Salmons_2024base, mejorando los contornos, combinando segmentaciones divididas en múltiples instancias o extendiendo poligonos incompletos. Luego se crea una copia local con la cual se crean las distinitas variaciones.
+\begin{enumerate}% Reducir el spacing de los items
+  \setlength{\itemsep}{0pt}%
+  \setlength{\parskip}{0pt}%
+  \setlength{\parsep}{0pt}%
+  \item \textbf{SalmonesV1}: Corresponde a la base de datos original guardada localmente, sin más modificaciones que la de mejora de etiquetas.
+  \item \textbf{SalmonesV2}: Se aplica un filtro basado en área, nitidez, perímetro y relación de aspecto (Código \ref{lst:snippet_filter_salmones_v2}). Luego del filtrado automático se realiza un filtrado manual, revisando la base de datos imagen por imagen, eliminando instancias borrosas y con mala visibilidad.
+  \item \textbf{SalmonesV3}: Se aplica un filtro basado en solo área y perímetro (Código \ref{lst:snippet_filter_salmones_v3_v4}). También se realiza un filtrado manual a posteriori.
+  \item \textbf{SalmonesV4}: Se aplica el mismo filtro que en la versión anterior, pero sin filtrado manual.
+\end{enumerate}
+
+\begin{listing}[htbp]
+\caption[Criterio de filtrado usado en SalmonesV2]{\textit{Snippet} con el criterio de filtrado utilizado en la versión SalmonesV2.}
+\label{lst:snippet_filter_salmones_v2}
+\begin{minted}{python}
+# Área pequeña
+if area <= 3950:
+    if nitidez <= 1.3: return False
+    elif (nitidez >= 1.7) and (perimeter >= 300): return True
+    else: return False
+# Área mediana
+elif 3950 < area <= 6500:   
+    if nitidez <= 1.2: return False
+    else: return True
+# Área grande
+else:
+    if (nitidez < 1) and (aspect_ratio <= 0.15): return False
+    else: return True
+\end{minted}
+\end{listing}
+
+\begin{listing}[htbp]
+\caption[Criterio de filtrado usado en SalmonesV3 y SalmonesV4]{\textit{Snippet} con el criterio de filtrado utilizado en las versiones SalmonesV3 y SalmonesV4.} % Necesito reducir el espaciado entre el Caption y el Listing
+\label{lst:snippet_filter_salmones_v3_v4}
+\begin{minted}{python}
+# Área pequeña
+elif 1700 < area <= 4200:
+    if perimeter >= 425: return True
+    else: return False
+# Área mediana
+elif 4200 < area <= 7500: return True
+# Área grande
+else: return True
+\end{minted}
+\end{listing}
+
+\subsection{Validación de base de datos}
+Como el filtrado de la base de datos de salmones implica la alteración del conjunto de validación del mismo, no es posible comparar directamente el rendimiento en segmentación entre los modelos entrenados con la base de datos original y las nuevas versiones. Se opta entonces por realizar una comparación en seguimiento para los modelos entrenados en las distintas versiones de la base de datos, la comparación se lleva a cabo usando modelos YOLOv8l-seg. Debido a que en este punto de la memoria las bases de datos de seguimiento no se econtraban terminadas, se decide realizar una evaluación cualitativa con los videos ``Seguimiento_1'' y ``Seguimiento_2'' donde la ``métrica de validación'' utilizada es el número de instancias detectadas, donde menos es mejor, de esta forma se busca el modelo con menos parpadeo. Igualmente se consideró la calidad de las segmentaciones obtenidas, y para esto pero se inspeccionaron visualmente las segmentaciones en los videos.
+
+\begin{table}[htbp]
+\centering
+\caption[Evaluación entre distintas versiones de la base de datos de salmones]{Comparación del número de instancias seguidas por modelos YOLOv8l de segmentación entrenados con diferentes versiones de la base de datos de salmones.}
+\label{tab:seguimientos_versiones_dataset}
+\begin{tabular}{|c|r|r|c|}
+\hline
+\textbf{Dataset} & \multicolumn{1}{c|}{\textbf{Seguimiento\_1}} & \multicolumn{1}{c|}{\textbf{Seguimiento\_2}} & \textbf{Formato} \\ \hline
+\multirow{2}{*}{SalmonesV1} & 323.0 & 252.0 & Pytorch \\ \cline{2-4} 
+ & 188.0 & 185.5 & TensorRT \\ \hline
+\multirow{2}{*}{SalmonesV2} & 94.5 & 263.5 & Pytorch \\ \cline{2-4} 
+ & 51.5 & 94.0 & TensorRT \\ \hline
+\multirow{2}{*}{SalmonesV3} & 106.5 & 176.5 & Pytorch \\ \cline{2-4} 
+ & 69.0 & 106.0 & TensorRT \\ \hline
+\multirow{2}{*}{SalmonesV4} & 99.0 & 149.0 & Pytorch \\ \cline{2-4} 
+ & 58.0 & 78.5 & TensorRT \\ \hline
+\end{tabular}
+\end{table}
+
+Se termina eligiendo SalmonesV4 debido a la reducción en el número de instancias detectadas y la buena calidad de segmentaciones observadas. Además, al ser una versión sin filtrado manual, se considera que es más robusta y generalizable ante los criterios de tamaño buscados en este proyecto.
 
 \subsection{Evolución}
 \begin{table}[htbp]
 \centering
-\caption{Composición de las bases de datos de salmones elaboradas, previas a la versión final.}
+\caption[Composición de las bases de datos de salmones filtradas]{Composición de las bases de datos de salmones elaboradas, previas a la definitiva.}
 \label{tab:salmones_evolution}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
