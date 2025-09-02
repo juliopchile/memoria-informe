@@ -65,6 +65,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{caption}
 \usepackage{listings}
+\captionsetup[listing]{aboveskip=4pt, belowskip=2pt}
 \usepackage{float}
 \usepackage{csquotes}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -85,6 +86,32 @@
 \definecolor{ipython_cyan2}{RGB}{0, 150, 150}
 \definecolor{ipython_orange}{RGB}{255, 93, 0}
 \definecolor{ipython_magenta}{RGB}{150, 0, 150}
+%%% COLORES
+\definecolor{ConsoleGray}{RGB}{51, 51, 51}
+\definecolor{ConsoleOrange}{RGB}{252, 192, 30}
+\definecolor{ConsoleBlack}{RGB}{0,0,0}
+\definecolor{ConsoleWhite}{RGB}{255,255,255}
+\definecolor{MatlabBG}{rgb}{0.95,0.95,0.95}
+\definecolor{codeBg}{rgb}{0,0,0}
+\definecolor{mygray}{rgb}{0.85,0.85,0.85}
+
+% Obtenidos del esquema por defecto de ansi2html (python)
+\definecolor{ansi30}{HTML}{000316} % #000316 - Azul muy oscuro (casi negro)
+\definecolor{ansi31}{HTML}{AA0000} % #AA0000 - Rojo oscuro
+\definecolor{ansi32}{HTML}{00AA00} % #00AA00 - Verde medio
+\definecolor{ansi33}{HTML}{AA5500} % #AA5500 - Naranja/marrón
+\definecolor{ansi34}{HTML}{0000AA} % #0000AA - Azul oscuro
+\definecolor{ansi35}{HTML}{E850A8} % #E850A8 - Rosa fuerte
+\definecolor{ansi36}{HTML}{00AAAA} % #00AAAA - Cian medio
+\definecolor{ansi37}{HTML}{F5F1DE} % #F5F1DE - Beige muy claro
+\definecolor{ansi38}{HTML}{7F7F7F} % #7F7F7F - Gris medio
+\definecolor{ansi39}{HTML}{FF0000} % #FF0000 - Rojo brillante
+\definecolor{ansi310}{HTML}{00FF00} % #00FF00 - Verde brillante
+\definecolor{ansi311}{HTML}{FFFF00} % #FFFF00 - Amarillo brillante
+\definecolor{ansi312}{HTML}{5C5CFF} % #5C5CFF - Azul violáceo
+\definecolor{ansi313}{HTML}{FF00FF} % #FF00FF - Magenta
+\definecolor{ansi314}{HTML}{00FFFF} % #00FFFF - Cian brillante
+\definecolor{ansi315}{HTML}{FFFFFF} % #FFFFFF - Blanco
 
 \lstset{
     breaklines=true,
@@ -292,6 +319,102 @@
 }
 \captionsetup[lstlisting]{format=listing, labelfont=white, textfont=white, singlelinecheck=false, margin=15pt, font={bf,footnotesize}}
 
+% CMD (DOS)
+\lstdefinestyle{DOS} {
+    backgroundcolor=\color{black},
+    basicstyle=\footnotesize\color{white}\ttfamily
+}
+% Consola Putty usada por GNS3
+\lstdefinestyle{SolarPutty} {
+    backgroundcolor=\color{ConsoleGray},
+    basicstyle=\footnotesize\color{ConsoleOrange}\ttfamily
+}
+% Consola Putty usada por GNS3 (más chico)
+\lstdefinestyle{SolarPutty2} {
+    backgroundcolor=\color{ConsoleGray},
+    basicstyle=\scriptsize\color{ConsoleOrange}\ttfamily,
+    columns=flexible,
+    %breaklines=true,
+    %breakatwhitespace=true,
+    %postbreak=\mbox{\textcolor{ConsoleOrange}{$\hookrightarrow$}\space}
+}
+
+%%% MOSTRAR CODIGO (Usando minted)
+\usepackage[newfloat,outputdir=out]{minted}
+% newfloat para que cuente como lstlisting en la tabla de contenidos
+% outputdir=out para que compile correctamente
+% IMPORTANTE!! Invocar LaTeX con -shell-escape
+\usemintedstyle[python]{monokai}
+\usemintedstyle[c]{manni}
+\setminted[python] {
+    breaklines=true,
+    encoding=utf8,
+    fontsize=\footnotesize,
+    bgcolor=codeBg
+}
+\setminted[c] {
+    breaklines=true,
+    encoding=utf8,
+    fontsize=\footnotesize
+}
+\setminted[matlab] {
+    bgcolor=MatlabBG,
+    linenos=true,
+    fontsize=\footnotesize
+}
+
+
+%%% MOSTRAR CODIGO (Con Verbatim y colorbox)
+\usepackage[most]{tcolorbox}
+\usepackage{verbatim}
+\usepackage{fancyvrb}
+\fvset{commandchars=\\\{\}} % Permite escapar códigos de LaTex
+% Mostrar código como en la consola con coloreado ANSI
+\newtcolorbox{customText}[1][]{
+  colback=ConsoleBlack,        % Color de fondo
+  coltext=ConsoleWhite,        % Color del texto
+  boxrule=0pt,         % Sin borde
+  sharp corners,       % Esquinas rectas
+  breakable,           % Permite romper el bloque en varias páginas si es largo
+  left=2mm, right=2mm, top=2mm, bottom=2mm, % Márgenes internos
+  fontupper=\ttfamily\scriptsize % Fuente y tamaño del texto
+}
+\newtcolorbox{customText2}[1][]{
+  colback=ConsoleGray,        % Color de fondo
+  coltext=ConsoleOrange,        % Color del texto
+  boxrule=0pt,         % Sin borde
+  sharp corners,       % Esquinas rectas
+  breakable,           % Permite romper el bloque en varias páginas si es largo
+  left=0mm, right=0mm, top=0mm, bottom=0mm, % Márgenes internos
+  fontupper=\ttfamily\footnotesize % Fuente y tamaño del texto
+}
+\newtcolorbox{customText3}[1][]{
+  colback=ConsoleBlack,        % Color de fondo
+  coltext=ConsoleWhite,        % Color del texto
+  boxrule=0pt,         % Sin borde
+  sharp corners,       % Esquinas rectas
+  breakable,           % Permite romper el bloque en varias páginas si es largo
+  left=2mm, right=2mm, top=2mm, bottom=2mm, % Márgenes internos
+  fontupper=\ttfamily\tiny % Fuente y tamaño del texto
+}
+% Código en linea con fondo gris en un cuadrado con bordes redondos
+\newtcbox{\lsti}[1][]{
+    on line,
+    box align=base,
+    enhanced,
+    colback=mygray,
+    colframe=mygray,
+    boxrule=0pt,
+    arc=2mm,
+    left=1pt,
+    right=1pt,
+    top=-1pt,
+    bottom=-1pt,
+    fontupper=\ttfamily,
+    nobeforeafter,
+    #1
+}
+
 
 %Para qué los subtítulos aparezcan en español
 \usepackage[spanish,es-tabla,es-noshorthands,es-nolists,es-lcroman]{babel}
@@ -418,7 +541,6 @@
 \renewcommand{\bibsection}{\section*{Bibliografía}}
 \fi
 
-
 \headheight = 1.5cm
 \textheight = 22cm
 %\headsep = 0.5cm
@@ -438,7 +560,16 @@
 }
 %\renewcommand{\listtablename}{Índice de tablas}
 %\renewcommand{\tablename}{Tabla}
-\renewcommand\lstlistlistingname{Índice de códigos}
+\makeatletter
+\AtBeginDocument{%
+\renewcommand\lstlistlistingname{Índice de códigos y algoritmos}
+ \let\c@algocf\c@lstlisting
+}
+\renewcommand{\algocf@list}{lol}%
+\renewcommand*\l@algocf{\@dottedtocline{1}{1.5em}{2.3em}}
+\makeatother
+
+\renewcommand{\listingname}{Código}
 \renewcommand{\lstlistingname}{Código}
 \newcommand*\lstinputpath[1]{\lstset{inputpath=#1}}
 
