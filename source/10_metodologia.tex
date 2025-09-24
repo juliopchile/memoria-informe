@@ -61,16 +61,14 @@ SAM2 \cite{SAM2} & \checkmark\hspace{3px} Asistida & \checkmark\hspace{3px} Asis
 }
 \end{table}
 
-%TODO: Revisar la readacción de esta parte con ChatGPT
 \subsubsection{CVAT}
 \textit{Computer Vision Annotation Tool} (CVAT) \cite{CVAT} es una herramienta de código abierto diseñada para facilitar la anotación de imágenes y videos. Soporta la creación de cajas englobantes, polígonos, y \textit{keypoints} de manera manual, así como la segmentación de instancias y seguimiento de objetos en videos, de forma manual y asistida. CVAT es conocido por su simplicidad y velocidad, lo que lo convierte en una opción ideal para proyectos que requieren anotaciones precisas.
 
 \subsubsection{Roboflow}
 Roboflow \cite{Roboflow} es una plataforma de anotación de imágenes para tareas de inteligencia artifical con especial enfoque en la facilidad de despliegue y exportación. Lamentablemente no posee utilidades para el etiquetado en \textit{tracking} y por defecto sus bases de datos son públicas, con la alternativa privada requiriendo un pago anual fuera de cualquier presupuesto razonable para esta memoria.
 
-%TODO: Revisar redacción con ChatGPT.
 \subsection{Bases de datos}
-Para el entrenamiento de los modelos se utilizaron dos bases de datos de segmentación de instancias. El primero de carácter público y con la finalidad de replicación de resultados. El segundo de carácter privado, que además es depurado en una versión más refinada para lograr mejores modelos. Finalmente se utilizó una base de datos de seguimiento para la validación en esa tarea de los modelos entrenados para salmones.
+Para el entrenamiento de los modelos se utilizaron dos bases de datos de segmentación de instancias. El primero de carácter público y con la finalidad de replicación de resultados. El segundo de carácter privado, que además es depurado en una versión más refinada para lograr mejores modelos.
 
 \begin{table}[htbp]
 \centering
@@ -98,6 +96,41 @@ Para el entrenamiento de los modelos se utilizaron dos bases de datos de segment
 \end{tabular}
 \end{table}
 
+Finalmente se utilizó una base de datos de seguimiento para la validación en esa tarea de los modelos entrenados para salmones.
+
+\begin{table}[htbp]
+\centering
+\caption[Composición de las bases de datos de seguimiento]{Composición de las bases de datos de seguimiento.}
+\label{tab:datasets_tracking}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\textbf{Dataset} & \textbf{Cuadros} & \textbf{IDs} & \textbf{Bboxes} & \textbf{Descripción} \\ \hline
+Video\_1 & 220 & 36 & 2039 & Aguas verdes con buena visibilidad. \\ \hline
+Video\_2 & 220 & 37 & 1855 & Aguas azules con baja visibilidad. \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+    \centerline{
+    \includegraphics[width=.9\linewidth]{figures/deepfish_muestra.jpg}}
+    \caption[Muestra de la base de datos Deepfish]{Muestra de imágenes de la base de datos Deepfish.}
+    \label{deepfish_muestra}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centerline{
+    \includegraphics[width=.9\linewidth]{figures/salmon_muestra.jpg}}
+    \caption[Muestra de la base de datos Salmons]{Muestra de imágenes de la base de datos Salmons.}
+    \label{salmon_muestra}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centerline{
+    \includegraphics[width=.9\linewidth]{figures/Muestras_video.png}}
+    \caption[Muestra de la base de datos de seguimiento]{Muestra de imágenes de la base de datos de seguimiento.}
+    \label{tracking_muestra}
+\end{figure}
+
 \subsubsection{Deepfish}
 Esta base de datos de dominio público fue desarrollada como un \textit{benchmark} para tareas de clasificación con peces, etiquetando en variados contextos y habitats \cite{Deepfish}. Para este trabajo solo se utilizaron las etiquetas e imágenes en la tarea de segmentación de instancias, pero el \textit{dataset} completo también contempla otras tareas de clasificación. Para el despliegue del mismo se utilizó una versión trabajada con anterioridad disponible desde Roboflow \cite{DeepfishRoboflow}.
 
@@ -107,23 +140,12 @@ Esta base de datos es una versión optimizada del dataset de salmones desarrolla
 \subsubsection{Tracking Salmones}
 Esta base de datos corresponde a dos videos de 220 cuadros cada uno y las etiquetas están en forma de cajas englobantes.
 
-\begin{table}[htbp]
-\centering
-\caption[Composición de las bases de datos de seguimiento]{Composición de las bases de datos de seguimiento.}
-\label{tab:datasets_tracking}
-\begin{tabular}{|l|l|l|l|}
-\hline
-\textbf{Dataset} & \textbf{Cuadros} & \textbf{Instancias} & \textbf{Descripción} \\ \hline
-Video\_1 & 220 & 36 & Aguas verdes con buena visibilidad. \\ \hline
-Video\_2 & 220 & 37 & Aguas azules con baja visibilidad. \\ \hline
-\end{tabular}
-\end{table}
-
-
 \section{Métricas de validación}
 Para determinar el rendimiento de un modelo es necesario obtener métricas de validación específicas para cada tarea. En el caso de la segmentación de instancias, las métricas más utilizadas son el \textit{mean average precision} (mAP) y el \textit{F1 score}. En este trabajo se priorizó la optimización de la métrica mAP@50-95, que corresponde al promedio de la precisión media calculada en umbrales de IoU desde 0.50 hasta 0.95, en pasos de 0.05.
 
-En la tarea de seguimiento de objetos, las métricas más relevantes en la literatura actual son el \textit{Multiple Object Tracking Accuracy} (MOTA) y el \textit{Multiple Object Tracking Precision} (MOTP). MOTA evalúa la precisión global del seguimiento considerando errores de asignación, falsos positivos y falsos negativos, mientras que MOTP mide la precisión espacial de las predicciones en relación a las posiciones reales de los objetos. Adicionalmente, se consideran métricas como el número de \textit{ID switches} (cambios de identidad), el \textit{track fragmentation} y el \textit{Recall} para obtener una evaluación integral del desempeño del modelo en seguimiento.
+ En la tarea de seguimiento existen varias métricas bien establecidas en la literatura. Las más tradicionales son MOTA y MOTP, pero en los últimos años han surgido métricas (p. ej. HOTA, AssA, IDF1) que descomponen el rendimiento en detección y asociación, por lo que resultan más informativas para problemas donde la conservación de identidad y la continuidad del track son prioritarias ---como en este trabajo.
+
+ En consecuencia, aunque en la literatura se reporta con frecuencia MOTA, en este trabajo se priorizan métricas que directamente miden la calidad de la asociación (AssA / IDF1) y la continuidad de tracks (MT / MT\%), y se utiliza HOTA (y sus subcomponentes) para obtener una visión balanceada entre detección y asociación. MOTA se calcula y se muestra por completitud pero no es la métrica de decisión principal, porque puede enmascarar mejoras en la asociación cuando el detector cambia el balance FP/FN.
 
 \subsection{Matriz de confusión}
 La matriz de confusión ---también conocida como matriz de errores o matriz de coincidencias--- es una representación tabular que muestra, de forma simultánea, los aciertos y errores de un clasificador. Cada fila corresponde a la clase real de los ejemplos y cada columna a la clase predicha, lo que permite evaluar de un vistazo la capacidad del modelo para distinguir entre \textbf{verdaderos positivos}, \textbf{falsos positivos}, \textbf{falsos negativos} y \textbf{verdaderos negativos}.
@@ -198,7 +220,7 @@ El puntaje F1 es una métrica que combina la precisión y la exhaustividad en un
 \subsection{Mean average precision (mAP)}
 La \textit{mean average precision} (mAP) es el promedio de la precisión media de cada clase para una tarea de clasificación y es comúnmente utilizada para evaluar el rendimiento de modelos de detección de objetos y segmentación de instancias, ya que proporciona una medida global del rendimiento del modelo en todas las clases \cite{v7labs-mAP}.
 
-Aunque en esta memoria se trabajó con bases de datos mono-clase, lo que implica que los puntajes mAP y F1 pueden arrojar resultados similares al validar los modelos entrenados, el mAP ofrece una ventaja adicional al considerar la curva precisión-recall completa a diferentes umbrales. Además Ultralytics no calcula el puntaje F1 y este debe ser obtenido manualmente utilizando los valores de \textit{precision} y \textit{recall} que fueron obtenidos con un umbral IoU fijo del 60\%.
+Aunque en esta memoria se trabajó con bases de datos mono-clase, lo que implica que los puntajes mAP y F1 pueden arrojar resultados similares al validar los modelos entrenados, el mAP ofrece una ventaja adicional al considerar la curva precisión-exhaustividad completa a diferentes umbrales. Además Ultralytics no calcula el puntaje F1 y este debe ser obtenido manualmente utilizando los valores de \textit{precision} y \textit{recall} que fueron obtenidos con un umbral IoU fijo del 60\%.
 
 Se calcula mediante la siguiente ecuación (Ec. \ref{eq:map}):
 
@@ -207,14 +229,74 @@ Se calcula mediante la siguiente ecuación (Ec. \ref{eq:map}):
 \label{eq:map}
 \end{equation}
 
-donde $N$ es el número de clases y $\text{AP}_i$ es la precisión media de la clase $i$. La precisión media se calcula como el área bajo la curva de precisión-recall (PR) para cada clase, y se define como el promedio de la precisión en diferentes puntos de \textit{recall}. 
+donde $N$ es el número de clases y $\text{AP}_i$ es la precisión media de la clase $i$. La precisión media se calcula como el área bajo la curva de precisión-exhaustividad (PR) para cada clase, y se define como el promedio de la precisión en diferentes puntos de \textit{recall}. 
+
+% TODO: Falta agregar fuentes y citas para las métricas de tracking.
+\subsection{HOTA, DetA, AssA y LocA}
+HOTA (\textit{Higher Order Tracking Accuracy}) es una métrica que busca equilibrar detección y asociación. HOTA y sus subcomponentes se obtienen emparejando detecciones y ground-truths por frame (usualmente por IoU) y calculando las razones TP/FP/FN y medidas de asociación por umbral. Es habitual reportar HOTA como AUC sobre distintos umbrales IoU. En la práctica se reporta:
+\begin{itemize}
+  \item \textbf{DetA (Detection Accuracy)}: métrica de detección (combina TP/FP/FN) en un punto de coincidencia dado.
+  \item \textbf{AssA (Association Accuracy)}: mide la calidad con la que el \textit{tracker} conserva identidades a lo largo de los cuadros.
+  \item \textbf{LocA (Localization Accuracy)}: refleja la precisión espacial (IoU / distancia) de las correspondencias verdaderas positivas.
+\end{itemize}
+
+\subsection{AssA y AssA\_AUC}
+AssA (\textit{Association Accuracy}) mide la calidad de la asociación (capacidad de mantener la misma ID a lo largo del tiempo). Se obtiene para cada par detección-GT correctamente emparejado y se evalúa la consistencia de la identidad; se calcula el puntaje de asociación y, para robustez frente a diferentes umbrales de IoU, se reporta el área bajo la curva (AssA\_AUC).  
+%Se utiliza porque captura directamente el objetivo esencial de este trabajo —reducir el ``parpadeo'' y conservar identidades de peces que interesa medir.
+
+\subsection{IDF1}
+Es el \textit{F1-score} entre las correspondencias de identidad (ID verdadero positivos, ID falsos positivos, ID falsos negativos). Se computan coincidencias de identidad cuadro-a-cuadro y se calcula precisión/\textit{recall} a nivel de ID. Se calcula con la siguiente fórmula (Ec. \ref{eq:idf1}):
+\begin{equation}
+\text{IDF1} = \frac{2 \cdot \text{IDTP}}{2\cdot\text{IDTP} + \text{IDFP} + \text{IDFN}}
+\label{eq:idf1}
+\end{equation}
+
+Se utiliza por ser un indicador directo de la calidad global de las IDs, complementario a AssA y fácil de interpretar.
+
+\subsection{MT, PT, ML (Mostly/Partly/Lost tracked) y MT\%}
+Por cada GT (\textit{Ground Truth}) se clasifica su seguimiento como:
+\begin{itemize}
+  \item \textbf{MT:} \textit{mostly tracked} ---el GT fue detectado en la mayor parte de sus \textit{frames} (p. ej. $>80\%$).
+  \item \textbf{PT:} \textit{partly tracked} ---detectado en una fracción intermedia.
+  \item \textbf{ML:} \textit{mostly lost} ---detectado en muy pocos \textit{frames}.
+\end{itemize}
+
+MT\% es la fracción de GTs que son \textit{mostly tracked}. Se obtiene comparando, para cada GT, el número de cuadros donde existe una correspondencia válida con detecciones; se aplica un umbral de fracción (p. ej. 0.8) para clasificar. Se utiliza por ser una medida de continuidad a lo largo de múltiples cuadros.
+
+\subsection{IDSW (ID switches) y Fragmentación (Frag)}
+IDSW cuenta cuántas veces un mismo GT cambia de ID asignada por el \textit{tracker} (indicador de pérdida de identidad). Frag cuenta las rupturas de un seguimiento (un GT aparecía, desaparecía y luego reaparecía como nuevo track). Se obtienen a partir del seguimiento cuadro-a-cuadro tras el emparejamiento; cada cambio de ID o separación de continuidas se suma. Se usan por ser medidas directas del ``parpadeo'' y de la calidad práctica del seguimiento.
+
+\subsection{MOTA y MOTP}
+MOTA y MOTP son métricas clásicas en seguimiento. MOTA combina errores de falsos negativos, falsos positivos y cambios de identidad (IDSW) en un solo puntaje, reflejando la precisión global del seguimiento (Ec. \ref{eq:mota}). MOTP mide la precisión espacial de las detecciones emparejadas, reflejando qué tan cerca están las predicciones de las posiciones reales. En esencia, MOTA resume la capacidad del sistema para detectar y seguir objetos correctamente, mientras que MOTP evalúa la exactitud de las posiciones predichas.
+
+\begin{equation}
+\text{MOTA} = 1 - \dfrac{\text{FN} + \text{FP} + \text{IDSW}}{\text{Total GT detections}}
+\label{eq:mota}
+\end{equation}
+
+%\textbf{Limitación:} MOTA agrega errores distintos en un solo número; un detector muy conservador (baja FP) puede mejorar MOTA aunque empeore la asociación. Por ello MOTA es útil como resumen pero \emph{no} suficientemente diagnóstica para decidir en problemas donde la continuidad e identidad son críticas.  
+%Se reporta MOTA/MOTP por completitud, pero la selección de modelo se basa principalmente en AssA/IDF1/MT\% y HOTA (y en el análisis por componente de HOTA).
+
+%\subsection{Detección: Precisión, Recall y curvas AUC}
+%Las métricas clásicas de detección (Precision, Recall, AP/mAP) siguen siendo %relevantes para verificar que no se sacrifica demasiado recall al mejorar %asociación.  
+%\begin{itemize}
+%  \item \textbf{Precision / Recall:} fórmulas estándar (Ec. \ref{eq:precision}, %\ref{eq:recall} en este documento).
+%  \item \textbf{AP / mAP:} área bajo la curva precision–recall; se usa para %comprobar la capacidad detectora en distintos umbrales.
+%\end{itemize}
+%\textbf{Por qué se mantienen:} si la asociación mejora pero el detector deja de %encontrar consistentemente los peces de interés, el pipeline de masa/volumen se %vería afectado; por eso se usan conjuntamente con las métricas de tracking.
 
 
 \section{Depuración de la base de datos de salmones}
-En la presente memoria se expone una base de datos de salmones, la cual se originó a partir de la versión ``Salmons\_2024base'' disponible en el espacio de trabajo de WildSense en CVAT. Para optimizarla, se desarrolló un código en Python capaz de filtrar instancias irrelevantes mediante criterios de tamaño, forma y nitidez. Posteriormente, se realizaron pruebas de inspección visual con el fin de validar la capacidad de segmentación de los modelos entrenados con las bases de datos modificadas y seleccionar una versión final.
+En la presente memoria se expone una base de datos de salmones, la cual se origina a partir de la versión ``Salmons\_2024base'' disponible en el espacio de trabajo de WildSense en CVAT. Para optimizarla, se desarrolló un código en Python capaz de filtrar instancias irrelevantes mediante criterios de tamaño, forma y nitidez. Posteriormente, se realizaron pruebas de inspección visual con el fin de validar la capacidad de segmentación y seguimiento de los modelos entrenados con las bases de datos modificadas y determinar una versión final.
 
 \subsection{Código de filtrado}
 El código de filtrado se encarga principalmente de procesar las etiquetas de la base de datos, calculando atributos de segmentación como área, forma y nitidez. En función de estos atributos se determina si una instancia ha de ser filtrada o reasignada a otra clase. El proceso comprende tres pasos principales: la lectura de las segmentaciones, el cálculo de las métricas necesarias y, finalmente, el almacenamiento de las etiquetas depuradas en un directorio específico. Un pseudocódigo del procedimiento implementado se describe en el algoritmo~\ref{alg:filter_dataset}.
+
+La lista completa de métricas soportadas es: \textbf{área}, \textbf{perímetro}, \textbf{relación de aspecto}, \textbf{circularidad}, \textbf{compactación}, \textbf{eccentricidad}, \textbf{elongación}, \textbf{rectangularidad} y \textbf{nitidez}. Se normalizan las métricas asumiendo una imagen de 640x640 pixeles. El código también permite filtrar las etiquetas por clase, lo que resulta útil para depurar bases de datos con múltiples clases.
+
+Para la nitidez se utiliza una media logarítmica ponderada entre la nitidez de borde y nitidez interna. La nitidez de borde se obtiene con el promedio de la magnitud del gradiente de Sobel dentro de una banda que rodea el borde la segmentación, mientras que la nitidez interna se calcula con la varianza del filtro Laplaciano aplicado a los pixeles dentro de la segmentación.
+
+Además, el código incluye funcionalidades para convertir bases de datos en formato CVAT (XML) a formato YOLO y, de forma inversa, exportar bases de datos YOLO en archivos ZIP aptos para su importación a CVAT. El código de filtrado se encuentra disponible de forma pública en un repositorio GitHub bajo el nombre \enquote{filter\_dataset} \cite{Lopez2025-Filter}.
 
 \begin{algorithm}[H]
   \DontPrintSemicolon
@@ -241,12 +323,6 @@ El código de filtrado se encarga principalmente de procesar las etiquetas de la
   \label{alg:filter_dataset}
 \end{algorithm}
 
-La lista completa de métricas soportadas es: \textbf{área}, \textbf{perímetro}, \textbf{relación de aspecto}, \textbf{circularidad}, \textbf{compactación}, \textbf{eccentricidad}, \textbf{elongación}, \textbf{rectangularidad} y \textbf{nitidez}. Se normalizan las métricas asumiendo una imagen de 640x640 pixeles. El código también permite filtrar las etiquetas por clase, lo que resulta útil para depurar bases de datos con múltiples clases.
-
-Para la nitidez se utiliza una media logarítmica ponderada entre la nitidez de borde y nitidez interna. La nitidez de borde se obtiene con el promedio de la magnitud del gradiente de Sobel dentro de una banda que rodea el borde la segmentación, mientras que la nitidez interna se calcula con la varianza del filtro Laplaciano aplicado a los pixeles dentro de la segmentación.
-
-Además, el código incluye funcionalidades para convertir bases de datos en formato CVAT (XML) a formato YOLO y, de forma inversa, exportar bases de datos YOLO en archivos ZIP aptos para su importación a CVAT. El código de filtrado se encuentra disponible de forma pública en un repositorio GitHub bajo el nombre \enquote{filter\_dataset} \cite{Lopez2025-Filter}.
-
 \subsection{Filtrado}
 En primera instancia se mejoran a mano las etiquetas dentro de la base de datos de Salmons_2024base, mejorando los contornos, combinando segmentaciones divididas en múltiples instancias o extendiendo poligonos incompletos. Luego se crea una copia local con la cual se crean las distinitas variaciones.
 \begin{enumerate}% Reducir el spacing de los items
@@ -265,37 +341,48 @@ En primera instancia se mejoran a mano las etiquetas dentro de la base de datos 
 \begin{minted}{python}
 # Área pequeña
 if area <= 3950:
-    if nitidez <= 1.3: return False
-    elif (nitidez >= 1.7) and (perimeter >= 300): return True
-    else: return False
+    if nitidez <= 1.3:
+      return False
+    elif (nitidez >= 1.7) and (perimeter >= 300):
+      return True
+    else:
+      return False
 # Área mediana
 elif 3950 < area <= 6500:   
-    if nitidez <= 1.2: return False
-    else: return True
+    if nitidez <= 1.2:
+      return False
+    else:
+      return True
 # Área grande
 else:
-    if (nitidez < 1) and (aspect_ratio <= 0.15): return False
-    else: return True
+    if (nitidez < 1) and (aspect_ratio <= 0.15):
+      return False
+    else:
+      return True
 \end{minted}
 \end{listing}
 
 \begin{listing}[htbp]
-\caption[Criterio de filtrado usado en SalmonesV3 y SalmonesV4]{\textit{Snippet} con el criterio de filtrado utilizado en las versiones SalmonesV3 y SalmonesV4.} % Necesito reducir el espaciado entre el Caption y el Listing
+\caption[Criterio de filtrado usado en SalmonesV3 y SalmonesV4]{\textit{Snippet} con el criterio de filtrado utilizado en las versiones SalmonesV3 y SalmonesV4.} 
 \label{lst:snippet_filter_salmones_v3_v4}
 \begin{minted}{python}
 # Área pequeña
 elif 1700 < area <= 4200:
-    if perimeter >= 425: return True
-    else: return False
+    if perimeter >= 425:
+      return True
+    else:
+      return False
 # Área mediana
-elif 4200 < area <= 7500: return True
+elif 4200 < area <= 7500:
+    return True
 # Área grande
-else: return True
+else:
+  return True
 \end{minted}
 \end{listing}
 
 \subsection{Validación de base de datos}
-Como el filtrado de la base de datos de salmones implica la alteración del conjunto de validación del mismo, no es posible comparar directamente el rendimiento en segmentación entre los modelos entrenados con la base de datos original y las nuevas versiones. Se opta entonces por realizar una comparación en seguimiento para los modelos entrenados en las distintas versiones de la base de datos, la comparación se lleva a cabo usando modelos YOLOv8l-seg. Debido a que en este punto de la memoria las bases de datos de seguimiento no se econtraban terminadas, se decide realizar una evaluación cualitativa con los videos ``Seguimiento_1'' y ``Seguimiento_2'' donde la ``métrica de validación'' utilizada es el número de instancias detectadas, donde menos es mejor, de esta forma se busca el modelo con menos parpadeo. Igualmente se consideró la calidad de las segmentaciones obtenidas, y para esto pero se inspeccionaron visualmente las segmentaciones en los videos.
+Como el filtrado modifica el conjunto de validación, no es posible comparar directamente el rendimiento en segmentación entre modelos entrenados con la base original y las versiones filtradas. Por ello se evalúan los \textit{datasets} en la tarea de seguimiento, usando los videos ``Seguimiento_1'' y ``Seguimiento_2''. Dado que las bases de seguimiento no estaban completas, la evaluación fue cualitativa: la métrica principal fue el número de instancias detectadas (menos es mejor al indicar menor ``parpadeo'') y se inspeccionó visualmente la calidad de las segmentaciones. Se utilizaron modelos YOLOv8l-seg para las pruebas, tanto en formato PyTorch como TensorRT.
 
 \begin{table}[htbp]
 \centering
@@ -315,12 +402,14 @@ Como el filtrado de la base de datos de salmones implica la alteración del conj
 \end{tabular}
 \end{table}
 
-Se termina eligiendo SalmonesV4 debido a la reducción en el número de instancias detectadas y la buena calidad de segmentaciones observadas. Además, al ser una versión sin filtrado manual, se considera que es más robusta y generalizable ante los criterios de tamaño buscados en este proyecto.
+Se selecciona SalmonesV4 por ofrecer una disminución notable en el número de instancias detectadas junto con una buena calidad de segmentación. Al prescindir de filtrado manual, esta versión es además menos sesgada y, por tanto, más robusta y generalizable frente a los criterios de tamaño considerados en el proyecto.
 
 \subsection{Evolución}
+Al depurar la base de datos se eliminan numerosas etiquetas sin retirar las imágenes, con el fin de mejorar la calidad de las segmentaciones y el rendimiento en detección. Una consecuencia de esta limpieza es un aumento en la proporción de imágenes de fondo; aunque aportan contexto valioso sobre escenas sin salmones de interés, también puede introducir ruido irrelevante que, en exceso, perjudique la capacidad de generalización del modelo entrenado.
+
 \begin{table}[htbp]
 \centering
-\caption[Composición de las bases de datos de salmones filtradas]{Composición de las bases de datos de salmones elaboradas, previas a la definitiva.}
+\caption[Composición de las bases de datos de salmones filtradas]{Composición de las bases de datos de salmones elaboradas, sin filtrado manual.}
 \label{tab:salmones_evolution}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
@@ -343,3 +432,162 @@ Se termina eligiendo SalmonesV4 debido a la reducción en el número de instanci
  & \textbf{Total} & \textbf{961} & \textbf{1928} & \textbf{550} \\ \hline
 \end{tabular}
 \end{table}
+
+\subsection{Elaboración final de la base de datos de salmones}
+Como se explica en la sección de Bases de datos, a la base de datos filtrada ``SalmonesV4'' se le incluyeron imágenes y etiquetas adicionales pertenecientes a los videos ``Seguimiento_1'' y ``Seguimiento_2''. Las etiquetas fueron revisadas manualmente, se removieron aquellas instancias que no cumplían con los criterios de calidad establecidos y se incluyeron cientos más para secciones de los videos que estaban sin etiquetar. Se combinaron las imágenes y etiquetas de forma aleatoria con la siguiente distribución según la tarea: 65\% para entrenamiento, 30\% en validación y 5\% para pruebas. El resultado final es la base de datos ``Salmons'' descrita anteriormente (tabla \ref{tab:datasets_combined}).
+
+\section{Entrenamiento con Deepfish}
+Esta sección detalla el proceso de entrenamiento de modelos de segmentación utilizando la base de datos Deepfish. Se emplearon modelos preentrenados en la base de datos COCO, disponibles en la plataforma Ultralytics, y se ajustaron mediante re-entrenamiento para adaptarlos a la tarea específica de segmentación de peces en el entorno marino.
+
+\subsection{Entrenamiento inicial}
+El objetivo de este entrenamiento es evaluar el rendimiento de los modelos al aplicarlos directamente a la base de datos Deepfish, sin realizar ajustes adicionales. Esto permite establecer una línea base para encaminar los entrenamientos posteriores con búsqueda de hiperparámetros y optimización.
+
+Se entrenaron modelos YOLO de segmentación en diferentes tamaños y versiones, los modelos entrenados son: YOLOv8n, YOLOv8s, YOLOv8m, YOLOv8l, YOLOv8x, YOLOv9c, YOLOv9e, YOLO11n, YOLO11s, YOLO11m, YOLO11l y YOLO1x. Para cada modelo se utilizaron las versiones completa y ``_LO'' de la base de datos Deepfish, con el objetivo de evaluar el impacto de las imágenes de fondo en el rendimiento del modelo. Se realizaron entrenamientos completos (sin congelar capas) y entrenamientos con TL \textit{(Transfer Learning)} (congelando capas del \textit{backbone} según se ve en la tabla \ref{tab:models_summary_freeze}). Además para cada variante de entrenamiento se realizó una versión utilizando el optimizador AdamW y otra con SGD. Cada entrenamiento fue de 80 épocas y se utilizaron hiperparámetros por defecto de Ultralytics. En total se realizaron 48 entrenamientos.
+
+\begin{table}[htbp]
+\centering
+\caption[Sumario de modelos YOLO a entrenar]{Resumen de cada modelo: capas totales, parámetros, gradients, GFLOPs y número de capas del \textit{backbone} congeladas al realizar TL.}
+\label{tab:models_summary_freeze}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|l|r|r|r|r|c|}
+\hline
+\textbf{Modelo} & \textbf{Capas} & \textbf{Parámetros} & \textbf{Gradients} & \textbf{GFLOPs} & \textbf{Backbone} \\ \hline
+yolov8n-seg  & 151 & 3,263,811  & 3,263,795  & 12.1  & 10 \\ \hline
+yolov8s-seg  & 151 & 11,790,483 & 11,790,467 & 42.7  & 10 \\ \hline
+yolov8m-seg  & 191 & 27,240,227 & 27,240,211 & 110.4 & 10 \\ \hline
+yolov8l-seg  & 231 & 45,936,819 & 45,936,803 & 220.8 & 10 \\ \hline
+yolov8x-seg  & 231 & 71,751,811 & 71,751,795 & 344.5 & 10 \\ \hline
+yolov9c-seg  & 380 & 27,836,211 & 27,836,195 & 159.1 & 10 \\ \hline
+yolov9e-seg  & 743 & 60,451,891 & 60,451,875 & 248.1 & 30 \\ \hline
+yolo11n-seg  & 203 & 2,842,803  & 2,842,787  & 10.4  & 11 \\ \hline
+yolo11s-seg  & 203 & 10,082,675 & 10,082,659 & 35.6  & 11 \\ \hline
+yolo11m-seg  & 253 & 22,359,987 & 22,359,971 & 123.6 & 11 \\ \hline
+yolo11l-seg  & 379 & 27,617,459 & 27,617,443 & 142.7 & 11 \\ \hline
+yolo11x-seg  & 379 & 62,051,411 & 62,051,395 & 319.7 & 11 \\ \hline
+\end{tabular}
+}
+\end{table}
+
+\subsubsection{Efecto del tamaño del modelo}
+Se observa que en métricas como F1 y mAP@50 el aumento de tamaño no garantiza mejora (fig. \ref{fig:deepfish_yolov8_metrics_stacked}): los modelos pequeños (n, s) rinden peor, la ganancia se atenúa a partir de los tamaños medianos-grandes (m, l) ---probablemente por la complejidad limitada de Deepfish y el riesgo de sobreajuste. En cambio, usando la métrica más exigente mAP@50-95 (fig. \ref{fig:deepfish_yolov8_metrics_stacked} y \ref{fig:deepfish_yolo9_yolo11_metrics_map50_95}) los modelos grandes sí muestran una mejora consistente, indicando mejor captura de detalles finos en la segmentación.
+
+Para este análisis se excluyeron \textit{outliers} de muy bajo rendimiento ($\text{F1} < 0.6$) atribuidos a entrenamientos puntuales con AdamW, esto se analiza más adelante.
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[b]{\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/DeepFish-sizeComparison-YOLOv9-mAP50-95(M).pdf}
+    \caption{Puntaje mAP@50-95 promedio obtenido por modelos YOLOv9 en Deepfish.}
+    \label{fig:deepfish_yolov9_map50_95}
+  \end{subfigure}
+
+  \begin{subfigure}[b]{\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/DeepFish-sizeComparison-YOLO11-mAP50-95(M).pdf}
+    \caption{Puntaje mAP@50-95 promedio obtenido por distintos modelos YOLOv9 en Deepfish.}
+    \label{fig:deepfish_yolo11_map50_95}
+  \end{subfigure}
+  \caption[Puntaje mAP@50-95 de los modelos YOLOv9 y YOLO11 para Deepfish]{Comparación del puntaje mAP@50-95 para distintos tamaños de modelos YOLOv9 y YOLO11 en Deepfish.}
+  \label{fig:deepfish_yolo9_yolo11_metrics_map50_95}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[b]{\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/DeepFish-sizeComparison-YOLOv8-F1_score(M).pdf}
+    \caption{Puntaje F1 promedio obtenido por distintos modelos YOLOv8 en Deepfish.}
+    \label{fig:deepfish_yolov8_f1}
+  \end{subfigure}
+
+  \begin{subfigure}[b]{\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/DeepFish-sizeComparison-YOLOv8-mAP50(M).pdf}
+    \caption{Puntaje mAP@50 promedio obtenido por distintos modelos YOLOv8 en Deepfish.}
+    \label{fig:deepfish_yolov8_map50}
+  \end{subfigure}
+
+  \begin{subfigure}[b]{\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/DeepFish-sizeComparison-YOLOv8-mAP50-95(M).pdf}
+    \caption{Puntaje mAP@50-95 promedio obtenido por distintos modelos YOLOv8 en Deepfish.}
+    \label{fig:deepfish_yolov8_map50_95}
+  \end{subfigure}
+
+  \caption[Comparación de métricas por tamaño de modelo YOLOv8 en Deepfish]{Comparación vertical de las métricas F1_score, mAP@50 y mAP@50-95 para distintos tamaños de modelos YOLOv8 en Deepfish.}
+  \label{fig:deepfish_yolov8_metrics_stacked}
+\end{figure}
+
+\subsubsection{Efecto del Transfer Learning}
+Entrenar por medio de TL resulta en promedio en mejoras marginales en F1 y mAP@50 pero demuestra un peor rendimiento en mAP@50-95 (fig. \ref{fig:deepfish_yolo_TL_metrics_stacked}). Esto sugiere que congelar el \textit{backbone} limita la capacidad del modelo para adaptarse a los detalles específicos de la segmentación de peces, afectando negativamente la precisión en umbrales más estrictos pero sin impactar significativamente en métricas más generales. Se ignoraron \textit{outliers} para este análisis.
+
+Además ---como se ve más adelante--- el entrenamiento con TL mostró una mayor caída en el rendimiento al utilizar modelos exportados con TensorRT.
+
+\subsubsection{Efecto del optimizador}
+El uso de diferentes optimizadores puede influir en el rendimiento del modelo. En este estudio, se compararon los optimizadores AdamW y SGD, encontrando que SGD consistentemente supera a AdamW en todas las métricas evaluadas (fig. \ref{fig:deepfish_yolo_optimizer_map50_95}). AdamW mostró un rendimiento ligeramente más bajo en múltiples entrenamientos, con varios casos \textit{outliers} que sugieren problemas de convergencia o ajuste inadecuado a la tarea específica de segmentación para esta base de datos. Estas diferencias se acrecentan aún más para modelos exportados con TensorRT y cuantización numerica INT8.
+
+\begin{table}[htbp]
+\centering
+\caption[Factor de mejora entre SGD y AdamW en Deepfish]{Factor de mejora entre SGD y AdamW, por formato de exportación, con y sin incluir casos \textit{outliers}. El factor de mejora se calcula como la relación entre la métrica obtenida con SGD y la métrica obtenida con AdamW. Valores mayores a 1 indican que SGD supera a AdamW.}
+\label{tab:deepfish_factorMejora_optimizer}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+\textbf{Precision} & \textbf{Recall} & \textbf{F1\_score} & \textbf{mAP50} & \textbf{mAP50-95} & \textbf{Format} & \textbf{Outliers} \\ \hline
+1.001500 & 1.004742 & 1.003064 & 1.002672 & 1.018452 & Pytorch & False \\ \hline
+0.998262 & 1.004581 & 1.001264 & 1.002028 & 1.017949 & TensorRT-F32 & False \\ \hline
+0.997701 & 1.004935 & 1.001163 & 1.001703 & 1.017562 & TensorRT-F16 & False \\ \hline
+1.029502 & 1.058339 & 1.043069 & 1.025606 & 1.050564 & TensorRT-INT8 & False \\ \hline
+1.006372 & 1.017498 & 1.011638 & 1.007717 & 1.025736 & Promedio & False \\ \hline
+1.016525 & 1.022879 & 1.019664 & 1.023022 & 1.065295 & Pytorch & True \\ \hline
+1.015045 & 1.022715 & 1.018741 & 1.021350 & 1.064378 & TensorRT-F32 & True \\ \hline
+1.014581 & 1.023062 & 1.018684 & 1.021035 & 1.064082 & TensorRT-F16 & True \\ \hline
+1.166342 & 1.221879 & 1.197823 & 1.312258 & 1.629470 & TensorRT-INT8 & True \\ \hline
+1.053123 & 1.072634 & 1.063728 & 1.094416 & 1.205806 & Promedio & True \\ \hline
+\end{tabular}
+}
+\end{table}
+
+Estos resultados indican que SGD es una opción más robusta y efectiva para este tipo de tareas en comparación con AdamW.
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[b]{\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/DeepFish-TransferLearningComparison-YOLO-F1_score(M).pdf}
+    \caption{Puntaje F1 promedio obtenido por distintos modelos YOLO en Deepfish con y sin TL.}
+    \label{fig:deepfish_yolo_TL_f1}
+  \end{subfigure}
+
+  \begin{subfigure}[b]{\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/DeepFish-TransferLearningComparison-YOLO-mAP50(M).pdf}
+    \caption{Puntaje mAP@50 promedio obtenido por distintos modelos YOLO en Deepfish con y sin TL.}
+    \label{fig:deepfish_yolo_TL_map50}
+  \end{subfigure}
+
+  \begin{subfigure}[b]{\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/DeepFish-TransferLearningComparison-YOLO-mAP50-95(M).pdf}
+    \caption{Puntaje mAP@50-95 promedio obtenido por distintos modelos YOLO en Deepfish con y sin TL.}
+    \label{fig:deepfish_yolo_TL_map50_95}
+  \end{subfigure}
+
+  \caption[Comparación de métricas por modelo YOLO en Deepfish con y sin Transfer Learning]{Comparación vertical de las métricas F1_score, mAP@50 y mAP@50-95 para distintos modelos YOLO en Deepfish, con y sin el uso de Transfer Learning.}
+  \label{fig:deepfish_yolo_TL_metrics_stacked}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/DeepFish-OptimizerComparison-YOLO-mAP50-95(M).pdf}
+  \caption[Puntaje mAP@50-95 de los modelos YOLO con distintos optimizadores]{Comparación del puntaje mAP@50-95 para distintos modelos YOLO en Deepfish, utilizando los optimizadores AdamW y SGD.}
+  \label{fig:deepfish_yolo_optimizer_map50_95}
+\end{figure}
+
+\subsubsection{Efecto del dataset (Full vs ``LO'')}
+
+\subsubsection{Efecto del formato (PyTorch vs TensorRT)}
+
+\subsubsection{Efecto del }
+
