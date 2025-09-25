@@ -21,3 +21,16 @@ Para entender la motivación detrás de este proyecto es importante conocer el p
 Cabe mencionar que las etapas de seguimiento y filtrado de detecciones resultan computacionalmente costosas y dado que muchas predicciones son eventualmente descartadas, sería preferible excluirlas desde un principio evitando segmentarlas del todo. Otro problema que existe es el “parpadeo”, que consiste en instancias segmentadas de forma intermitente a lo largo de un video, resultando en seguimientos truncados, lo que hace que sean excluidos de las estimaciones o, en caso de no serlo, reducen la información disponible por estimación, deteriorando su calidad.
 
 Estos problemas justifican la creación de una base de datos que contenga únicamente instancias de interés, con el fin de disminuir el costo computacional en la etapa de post-procesado. Se espera además, que los modelos entrenados se especialicen en segmentar exclusivamente los peces de interés, reduciendo la omisión de instancias relevantes, en consecuencia, minimizando el “parpadeo”, mejorando la calidad del seguimiento y finalmente las estimaciones.
+
+
+\input{source/9-1_metodologia}
+
+\input{source/9-2_tools}
+
+\input{source/9-3_metricasValidacion}
+
+\input{source/9-4_depuracionSalmones}
+
+\input{source/9-5_trainDeepfish}
+
+\input{source/9-6_trainSalmones}
