@@ -1,7 +1,7 @@
 \section{Métricas de validación}
 Para determinar el rendimiento de un modelo es necesario obtener métricas de validación específicas para cada tarea. En el caso de la segmentación de instancias, las métricas más utilizadas son el \textit{mean average precision} (mAP) y el \textit{F1 score}. En este trabajo se priorizó la optimización de la métrica mAP@50-95, que corresponde al promedio de la precisión media calculada en umbrales de IoU desde 0.50 hasta 0.95, en pasos de 0.05.
 
- En la tarea de seguimiento existen varias métricas bien establecidas en la literatura. Las más tradicionales son MOTA y MOTP, pero en los últimos años han surgido métricas (p. ej. HOTA, AssA, IDF1) que descomponen el rendimiento en detección y asociación, por lo que resultan más informativas para problemas donde la conservación de identidad y la continuidad del track son prioritarias ---como en este trabajo.
+ En la tarea de seguimiento existen varias métricas bien establecidas en la literatura. Las más tradicionales son MOTA y MOTP, pero en los últimos años han surgido métricas (p. ej. HOTA, AssA, IDF1) que descomponen el rendimiento en detección y asociación, por lo que resultan más informativas para problemas donde la conservación de identidad y la continuidad del seguimiento son prioritarias ---como en este trabajo.
 
  En consecuencia, aunque en la literatura se reporta con frecuencia MOTA, en este trabajo se priorizan métricas que directamente miden la calidad de la asociación (AssA / IDF1) y la continuidad de tracks (MT / MT\%), y se utiliza HOTA (y sus subcomponentes) para obtener una visión balanceada entre detección y asociación. MOTA se calcula y se muestra por completitud pero no es la métrica de decisión principal, porque puede enmascarar mejoras en la asociación cuando el detector cambia el balance FP/FN.
 
@@ -90,7 +90,7 @@ donde $N$ es el número de clases y $\text{AP}_i$ es la precisión media de la c
 
 % TODO: Falta agregar fuentes y citas para las métricas de tracking.
 \subsection{HOTA, DetA, AssA y LocA}
-HOTA (\textit{Higher Order Tracking Accuracy}) es una métrica que busca equilibrar detección y asociación. HOTA y sus subcomponentes se obtienen emparejando detecciones y ground-truths por frame (usualmente por IoU) y calculando las razones TP/FP/FN y medidas de asociación por umbral. Es habitual reportar HOTA como AUC sobre distintos umbrales IoU. En la práctica se reporta:
+HOTA \cite{HOTA} (\textit{Higher Order Tracking Accuracy}) es una métrica de seguimiento que busca equilibrar detección y asociación. HOTA y sus subcomponentes se obtienen emparejando detecciones y \textit{ground-truths} por cuadro (usualmente por IoU) y calculando las razones TP/FP/FN y medidas de asociación por umbral. Es habitual reportar HOTA como AUC (\textit{Area Under the Curve}) sobre distintos umbrales IoU. En la práctica se reporta:
 \begin{itemize}
   \item \textbf{DetA (Detection Accuracy)}: métrica de detección (combina TP/FP/FN) en un punto de coincidencia dado.
   \item \textbf{AssA (Association Accuracy)}: mide la calidad con la que el \textit{tracker} conserva identidades a lo largo de los cuadros.

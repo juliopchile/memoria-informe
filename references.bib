@@ -394,15 +394,6 @@
   abstract  = {Object detection is a crucial task in computer vision that has its application in various fields like robotics, medical imaging, surveillance systems, and autonomous vehicles. The newest version of the YOLO model, YOLOv8 is an advanced real-time object detection framework, which has attracted the attention of the research community. Of all the popular object identification methods and machine-learning models such as Faster RCNN, SSD, and RetinaNet, YOLO is the most popularly known method in terms of accuracy, speed, and efficiency. This research study provides an analysis of YOLO v8 by highlighting its innovative features, improvements, applicability in different environments, and a detailed comparison of its performance metrics to other versions and models.}
 }
 
-@article{Raytune,
-  title   = {Tune: A Research Platform for Distributed Model Selection and Training},
-  date    = {2018},
-  author  = {Liaw, Richard and Liang, Eric and Nishihara, Robert
-             and Moritz, Philipp and Gonzalez, Joseph E and Stoica, Ion},
-  journal = {ArXiv},
-  doi     = {10.48550/arXiv.1807.05118}
-}
-
 @article{YOLOv9,
   title    = {YOLOv9: Learning What You Want to Learn Using Programmable Gradient Information},
   author   = {Wang, Chien-Yao and Liao, Hong-Yuan Mark},
@@ -725,7 +716,6 @@
   keywords  = {Convolution;Training data;Neural networks;Quantization (signal);Convolutional codes;Computational modeling;Machine learning}
 }
 
-
 @article{Breuel2015,
   author  = {Breuel, Thomas},
   year    = {2015},
@@ -829,7 +819,6 @@
   abstract  = {Kalman filter (KF) based methods for multi-object tracking (MOT) make an assumption that objects move linearly. While this assumption is acceptable for very short periods of occlusion, linear estimates of motion for prolonged time can be highly inaccurate. Moreover, when there is no measurement available to update Kalman filter parameters, the standard convention is to trust the priori state estimations for posteriori update. This leads to the accumulation of errors during a period of occlusion. The error causes significant motion direction variance in practice. In this work, we show that a basic Kalman filter can still obtain state-of-the-art tracking performance if proper care is taken to fix the noise accumulated during occlusion. Instead of relying only on the linear state estimate (i.e., estimation-centric approach), we use object observations (i.e., the measurements by object detector) to compute a virtual trajectory over the occlusion period to fix the error accumulation of filter parameters. This allows more time steps to correct errors accumulated during occlusion. We name our method Observation-Centric SORT (OC-SORT). It remains Simple, Online, and Real-Time but improves robustness during occlusion and non-linear motion. Given off-the-shelf detections as input, OC-SORT runs at 700+ FPS on a single CPU. It achieves state-of-the-art on multiple datasets, including MOT17, MOT20, KITTI, head tracking, and especially DanceTrack where the object motion is highly non-linear. The code and models are available at \url{https://github.com/noahcao/OC_SORT}.},
   keywords  = {Target tracking;Detectors;Nonlinear filters;Real-time systems;Robustness;Trajectory;Pattern recognition;Vision applications and systems}
 }
-
 
 @inproceedings{SORT,
   author    = {Bewley, Alex and Ge, Zongyuan and Ott, Lionel and Ramos, Fabio and Upcroft, Ben},
@@ -938,7 +927,6 @@
   abstract  = {This paper introduces two extensions to the popular PyTorch machine learning framework, TorchDynamo and TorchInductor, which implement the torch.compile feature released in PyTorch 2. TorchDynamo is a Python-level just-in-time (JIT) compiler that enables graph compilation in PyTorch programs without sacrificing the flexibility of Python. It achieves this by dynamically modifying Python bytecode before execution and extracting sequences of PyTorch operations into an FX graph, which is then JIT compiled using one of many extensible backends. TorchInductor is the default compiler backend for TorchDynamo, which translates PyTorch programs into OpenAI's Triton for GPUs and C++ for CPUs. Results show that TorchDynamo is able to capture graphs more robustly than prior approaches while adding minimal overhead, and TorchInductor is able to provide a 2.27\texttimes{} inference and 1.41\texttimes{} training geometric mean speedup on an NVIDIA A100 GPU across 180+ real-world models, which outperforms six other compilers. These extensions provide a new way to apply optimizations through compilers in eager mode frameworks like PyTorch.}
 }
 
-
 @online{Supergradients,
   doi       = {10.5281/ZENODO.7789328},
   author    = {Aharon,  Shay and {Louis-Dupont} and {Ofri Masad} and Yurkova,  Kate and {Lotem Fridman} and {Lkdci} and Khvedchenya,  Eugene and Rubin,  Ran and Bagrov,  Natan and Tymchenko,  Borys and Keren,  Tomer and Zhilko,  Alexander and {Eran-Deci}},
@@ -956,6 +944,15 @@
   url     = {https://github.com/ultralytics/ultralytics},
   version = {8.0.0},
   date    = {2023-01}
+}
+
+@article{Raytune,
+  title   = {Tune: A Research Platform for Distributed Model Selection and Training},
+  date    = {2018},
+  author  = {Liaw, Richard and Liang, Eric and Nishihara, Robert
+             and Moritz, Philipp and Gonzalez, Joseph E and Stoica, Ion},
+  journal = {ArXiv},
+  doi     = {10.48550/arXiv.1807.05118}
 }
 
 
@@ -1053,6 +1050,15 @@
   urldate = {2025-07-18}
 }
 
+@article{HOTA,
+  title     = {HOTA: A Higher Order Metric for Evaluating Multi-Object Tracking},
+  author    = {Luiten, Jonathon and Osep, Aljosa and Dendorfer, Patrick and Torr, Philip and Geiger, Andreas and Leal-Taix{\'e}, Laura and Leibe, Bastian},
+  journal   = {International Journal of Computer Vision},
+  pages     = {1--31},
+  year      = {2020},
+  publisher = {Springer}
+}
+
 @article{v7labs-mAP,
   author       = {Shah, Deval},
   date         = {2022-03-07},
@@ -1070,4 +1076,46 @@
   date    = {2024-05-13},
   url     = {https://github.com/juliopchile/filter_dataset},
   urldate = {2025-07-18}
+}
+
+@online{Lopez2025-YoloMOT,
+  author  = {López Blanche, Julio Eduardo},
+  title   = {YoloMOT},
+  type    = {Software},
+  date    = {2025},
+  url     = {https://github.com/juliopchile/YoloMOT.git},
+  urldate = {2025-09-27}
+}
+
+@online{TrackEval,
+  author = {Jonathon Luiten, Arne Hoffhues},
+  title  = {TrackEval},
+  date   = {2020},
+  url    = {https://github.com/JonathonLuiten/TrackEval}
+}
+
+@article{MOTChallenge,
+  title      = {{MOT}16: {A} Benchmark for Multi-Object Tracking},
+  author     = {Milan, A. and Leal-Taix\'{e}, L. and Reid, I. and Roth, S. and Schindler, K.},
+  shorttitle = {MOT16},
+  journal    = {ArXiv},
+  date       = {2016-03},
+  doi        = {10.48550/arXiv.1603.00831},
+  keywords   = {Computer Science - Computer Vision and Pattern Recognition}
+}
+
+@inproceedings{MOTSChallenge,
+  author    = {Paul Voigtlaender and Michael Krause and Aljo\u{s}a O\u{s}ep and Jonathon Luiten
+               and Berin Balachandar Gnana Sekar and Andreas Geiger and Bastian Leibe},
+  title     = {{MOTS}: Multi-Object Tracking and Segmentation},
+  booktitle = {CVPR},
+  date      = {2019}
+}
+
+@media{TrackVideo,
+  author  = {López Blanche, Julio Eduardo},
+  title   = {Memoria de Titulo - Tracking de salmones},
+  type    = {Video Playlist},
+  url     = {https://www.youtube.com/playlist?list=PLaAjsJBsA0URWDOikrYxCpzvQq5GBPnlO},
+  urldate = {2025-09-28}
 }

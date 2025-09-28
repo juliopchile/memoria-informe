@@ -238,6 +238,7 @@ if __name__ == "__main__":
     input_dirs = [
         "figures_without_watermark/results",
         "figures_without_watermark/filter_examples",
+        "figures_without_watermark/frames_guardados"
     ]
     out_root = "figures"
     total = 0

@@ -1,11 +1,246 @@
 \section{Seguimiento de salmones}
-Para probar la capacidad de los modelos resultantes y corroborar la hipótesis planteada, se realizaron tareas de segmentación y seguimiento en videos de salmones con las bases de datos Tracking Salmones (ver sección \ref{sec:datasets}).
+Para validar la capacidad de los modelos obtenidos y comprobar la hipótesis planteada, se realizaron tareas de segmentación y seguimiento en videos de salmones utilizando las bases de datos Tracking Salmones (ver sección \ref{sec:datasets}).
 
-<<<<<<< HEAD
-Los modelos a probar son los 5 modelos resultantes de los entrenamientos con la base de datos Salmons, además de sus exportaciones en TensorRT-FP16 y TensorRT-INT8. Se incluye también un modelo YOLOv8l-seg entrenado con la versión original de la base de datos Salmons (sin depurar), igual con exportaciones en TensorRT. Para realizar seguimiento se utiliza la opción de seguimiento incorporado en Ultralytics, que emplea los algoritmos ByteTrack \cite{ByteTrack} y BotSORT \cite{BotSORT}.
+Se evaluaron los cinco mejores modelos entrenados con la base de datos Salmons, junto con sus exportaciones en TensorRT-FP16 y TensorRT-INT8. Además, se incluyó un modelo YOLOv8l-seg ---aquí llamado Salmones2024--- entrenado sobre la versión original del \textit{dataset}, también con sus exportaciones a TensorRT. Este es el modelo utilizado actualmente por WildSense.
 
-Para 
-=======
-Los modelos probados son los 5 modelos resultantes de los entrenamientos con la base de datos Salmons, además de sus exportaciones en TensorRT-FP16 y TensorRT-INT8. Se incluye además un modelo YOLOv8l-seg entrenado con la versión original de la base de datos Salmons (sin depurar) también con exportaciones en TensorRT. Para realizar seguimiento se utiliza la opción de seguimiento incorporado en Ultralytics, que emplea los algoritmos ByteTrack \cite{ByteTrack} y BotSORT \cite{BotSORT}.
->>>>>>> d665d72e1c3bfffdcdf3f523ede49081c3434a42
+El seguimiento se realizó mediante la opción integrada en Ultralytics, que implementa los algoritmos ByteTrack y BotSORT.
 
+Para la evaluación se utilizó el repositorio TrackEval \cite{TrackEval}, que implementa diversas métricas para tareas de seguimiento. Como referencia se utilizó el \textit{benchmark} MOTChallenge \cite{MOTChallenge}. 
+
+Se desarrolló además un código en Python que convierte predicciones de segmentación y detección con seguimiento en formato YOLO a los formatos MOTChallenge y MOTS \cite{MOTSChallenge}. Este código, disponible en el repositorio YoloMOT \cite{Lopez2025-YoloMOT}, también permite: (i) análisis cuantitativo de resultados, (ii) generación de gráficos, (iii) visualización de trayectorias y máscaras a lo largo de un seguimiento, y (iv) creación automática de \textit{datasets} de seguimiento a partir de inferencia con modelos YOLO con el fin de realizar pruebas.
+
+\subsection{Comparación por modelo}
+En el promedio de las ambas secuencias (tabla \ref{tab:tracking_promedio_model} y figs. \ref{fig:tracking_metricas_clave_modelo_promedio} y \ref{fig:tracking_metricas_consistencia_modelo_promedio}), el modelo Salmones2024 obtiene los mejores valores de recuperación con las métricas IDF1, AssA, HOTA y MT\%. Sin embargo registra el mayor número de cambios de identidad y fragmentación (IDSW y Frag).
+
+El dominio de Salmones2024 se explica casi por completo por su rendimiento en la secuencia ``Video\_2'' (tabla \ref{tab:tracking_tracking2_model} y figs. \ref{fig:tracking_metricas_clave_modelo_tracking2} y \ref{fig:tracking_metricas_consistencia_modelo_tracking2}). Aquí supera con amplio margen a todos los demás (56, 22, 43 y 280 porciento superior a los segundos lugares en IDF1, AssA, HOTA y MT\% respectivamente). Aun así, Salmones2024 incurre en más IDSW y mantiene una fragmentación relativamente alta, evidenciando inestabilidad temporal y ``parpadeo'' pese a su mayor cobertura de detecciones. Este comportamiento se da pues los nuevos modelos no consideran a los peces con baja visibilidad como ``instancias de interés'', resultando en un número muy bajo de detecciones, afectando al seguimiento. Pero esto es un comportamiento esperado, ya que los nuevos modelos fueron entrenados para detectar solo peces en buenas condiciones de visibilidad.
+
+En la secuencia ``Video\_1'' (tabla \ref{tab:tracking_tracking1_model} y figs. \ref{fig:tracking_metricas_clave_modelo_tracking1} y \ref{fig:tracking_metricas_consistencia_modelo_tracking1}) las diferencias se estrechan: YOLO11m logra el mayor IDF1, superando ligeramente a Salmones2024. No obstante, Salmones2024 conserva el mejor AssA, HOTA y MT\%. En esta secuencia se observa además que los modelos nuevos (especialmente YOLO11l) reducen de forma marcada IDSW y Frag, mostrando trayectorias más estables cuando las condiciones son favorables.
+
+\begin{table}[htbp]
+\centering
+\caption[Resultados de seguimiento promedio entre ambos videos, por modelo]{Resultados de seguimiento promedio entre ambos videos, por modelo.}
+\label{tab:tracking_promedio_model}
+\begin{tabular}{|r|r|r|r|r|r|r|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Model}} & \multicolumn{1}{c|}{\textbf{IDF1}} & \multicolumn{1}{c|}{\textbf{AssA}} & \multicolumn{1}{c|}{\textbf{HOTA}} & \multicolumn{1}{c|}{\textbf{MT\%}} & \multicolumn{1}{c|}{\textbf{IDSW}} & \multicolumn{1}{c|}{\textbf{Frag}} \\ \hline
+Salmones2024 & 0.611493 & 0.535746 & 0.475164 & 0.255443 & 9.750000 & 32.750000 \\ \hline
+yolov8m & 0.467223 & 0.438214 & 0.357711 & 0.055430 & 4.916667 & 33.833333 \\ \hline
+yolov8l & 0.461423 & 0.451658 & 0.361336 & 0.098849 & 5.916667 & 27.000000 \\ \hline
+yolov9c & 0.428773 & 0.441637 & 0.337276 & 0.059935 & 5.583333 & 23.166667 \\ \hline
+yolo11m & 0.503846 & 0.484028 & 0.395953 & 0.103291 & 5.250000 & 24.250000 \\ \hline
+yolo11l & 0.410226 & 0.441352 & 0.326266 & 0.045295 & 3.916667 & 21.833333 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption[Resultados de seguimiento para Video\_1, por modelo]{Resultados de seguimiento para Video\_1, por modelo.}
+\label{tab:tracking_tracking1_model}
+\begin{tabular}{|r|r|r|r|r|r|r|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Model}} & \multicolumn{1}{c|}{\textbf{IDF1}} & \multicolumn{1}{c|}{\textbf{AssA}} & \multicolumn{1}{c|}{\textbf{HOTA}} & \multicolumn{1}{c|}{\textbf{MT\%}} & \multicolumn{1}{c|}{\textbf{IDSW}} & \multicolumn{1}{c|}{\textbf{Frag}} \\ \hline
+Salmones2024 & 0.580162 & 0.536908 & 0.461761 & 0.236111 & 8.166667 & 36.500000 \\ \hline
+yolov8m & 0.556868 & 0.513088 & 0.427624 & 0.101852 & 4.333333 & 38.000000 \\ \hline
+yolov8l & 0.532857 & 0.512021 & 0.418244 & 0.148148 & 6.000000 & 28.000000 \\ \hline
+yolov9c & 0.543896 & 0.515437 & 0.417346 & 0.101852 & 5.500000 & 31.166667 \\ \hline
+yolo11m & 0.595931 & 0.529950 & 0.450462 & 0.143519 & 5.666667 & 31.666667 \\ \hline
+yolo11l & 0.447337 & 0.485410 & 0.353381 & 0.018519 & 1.166667 & 23.666667 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption[Resultados de seguimiento para Video\_2, por modelo]{Resultados de seguimiento para Video\_2, por modelo.}
+\label{tab:tracking_tracking2_model}
+\begin{tabular}{|r|r|r|r|r|r|r|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Model}} & \multicolumn{1}{c|}{\textbf{IDF1}} & \multicolumn{1}{c|}{\textbf{AssA}} & \multicolumn{1}{c|}{\textbf{HOTA}} & \multicolumn{1}{c|}{\textbf{MT\%}} & \multicolumn{1}{c|}{\textbf{IDSW}} & \multicolumn{1}{c|}{\textbf{Frag}} \\ \hline
+Salmones2024 & 0.642824 & 0.534584 & 0.488566 & 0.274775 & 11.333333 & 29.000000 \\ \hline
+yolov8m & 0.377577 & 0.363339 & 0.287797 & 0.009009 & 5.500000 & 29.666667 \\ \hline
+yolov8l & 0.389989 & 0.391296 & 0.304429 & 0.049550 & 5.833333 & 26.000000 \\ \hline
+yolov9c & 0.313651 & 0.367838 & 0.257206 & 0.018018 & 5.666667 & 15.166667 \\ \hline
+yolo11m & 0.411761 & 0.438106 & 0.341444 & 0.063063 & 4.833333 & 16.833333 \\ \hline
+yolo11l & 0.373115 & 0.397294 & 0.299152 & 0.072072 & 6.666667 & 20.000000 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{figures/validation/tracking/metricas_clave_modelo_Average.pdf}
+        \caption{Métricas de seguimiento promedio entre ambas secuencias, por modelo.}
+        \label{fig:tracking_metricas_clave_modelo_promedio}
+    \end{subfigure}
+
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{figures/validation/tracking/metricas_clave_modelo_Tracking1.pdf}
+        \caption{Métricas de seguimiento para la secuencia Video_1, por modelo.}
+        \label{fig:tracking_metricas_clave_modelo_tracking1}
+    \end{subfigure}
+
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{figures/validation/tracking/metricas_clave_modelo_Tracking2.pdf}
+        \caption{Métricas de seguimiento para la secuencia Video_2, por modelo.}
+        \label{fig:tracking_metricas_clave_modelo_tracking2}
+    \end{subfigure}
+
+    \caption[Métricas de seguimiento, por modelo]{Métricas de seguimiento clave (IDF1, AssA_AUC, HOTA_AUC y MT\%), por modelo: (a) promedio de ambas secuencias, (b) secuencia Video\_1 y (c) secuencia Video\_2.}
+    \label{fig:tracking_metricas_clave_modelo}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{figures/validation/tracking/idsw_frag_modelo_Average.pdf}
+        \caption{Métricas de estabilidad temporal promedio entre ambas secuencias, por modelo.}
+        \label{fig:tracking_metricas_consistencia_modelo_promedio}
+    \end{subfigure}
+
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{figures/validation/tracking/idsw_frag_modelo_Tracking1.pdf}
+        \caption{Métricas de estabilidad temporal para la secuencia Video_1, por modelo.}
+        \label{fig:tracking_metricas_consistencia_modelo_tracking1}
+    \end{subfigure}
+
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{figures/validation/tracking/idsw_frag_modelo_Tracking2.pdf}
+        \caption{Métricas de estabilidad temporal para la secuencia Video_2, por modelo.}
+        \label{fig:tracking_metricas_consistencia_modelo_tracking2}
+    \end{subfigure}
+
+    \caption[Métricas de estabilidad temporal, por modelo]{Métricas de estabilidad temporal (IDSW y Frag), por modelo: (a) promedio de ambas secuencias, (b) Video\_1 y (c) Video\_2.}
+    \label{fig:tracking_metricas_consistencia_modelo}
+\end{figure}
+
+\subsection{Comparación por formato de exportación}
+El efecto de la exportación es el esperado: TensorRT-FP16 reproduce casi en su totalidad el rendimiento del modelo en PyTorch (o incluso puede mejorar como en Video\_1), mientras que TensorRT-INT8 introduce una degradación sistemática en las métricas seguimiento y \textit{reacall} (IDF1, AssA, HOTA y MT\%).
+
+Las métricas donde valores menores son mejores (IDSW y Frag) disminuyen tanto para FP16 (ligeramente) como para INT8 (de forma marcada). Sin embargo, esta reducción no debe interpretarse automáticamente como mejora: la cuantización INT8 provoca pérdida de detecciones (menor \textit{recall} efectivo), reduciendo el número de trayectorias activas y, con ello, las oportunidades de incurrir en cambios de identidad o fragmentaciones.
+
+En general este patrón se repite para ambas secuencias, solo mencionar que la degradación esperada bajo INT8 es más severa para la secuencia Video\_2 (tabla \ref{tab:tracking_tracking2_format} y figs. \ref{fig:tracking_metricas_clave_formato_tracking2}).
+
+\begin{table}[htbp]
+\centering
+\caption[Resultados de seguimiento promedio entre ambos videos, por formato de exportación]{Resultados de seguimiento promedio entre ambos videos, por formato de exportación.}
+\label{tab:tracking_average_format}
+\begin{tabular}{|r|r|r|r|r|r|r|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Export}} & \multicolumn{1}{c|}{\textbf{IDF1}} & \multicolumn{1}{c|}{\textbf{AssA}} & \multicolumn{1}{c|}{\textbf{HOTA}} & \multicolumn{1}{c|}{\textbf{MT\%}} & \multicolumn{1}{c|}{\textbf{IDSW}} & \multicolumn{1}{c|}{\textbf{Frag}} \\ \hline
+Pytorch & 0.508483 & 0.474002 & 0.395226 & 0.124781 & 6.833333 & 31.583333 \\ \hline
+TensorRT-FP16 & 0.508120 & 0.473535 & 0.395252 & 0.115616 & 6.625000 & 31.583333 \\ \hline
+TensorRT-INT8 & 0.424889 & 0.448780 & 0.336375 & 0.068725 & 4.208333 & 18.250000 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption[Resultados de seguimiento para Video\_1, por formato de exportación]{Resultados de seguimiento para Video\_1, por formato de exportación.}
+\label{tab:tracking_tracking1_format}
+\begin{tabular}{|r|r|r|r|r|r|r|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Export}} & \multicolumn{1}{c|}{\textbf{IDF1}} & \multicolumn{1}{c|}{\textbf{AssA}} & \multicolumn{1}{c|}{\textbf{HOTA}} & \multicolumn{1}{c|}{\textbf{MT\%}} & \multicolumn{1}{c|}{\textbf{IDSW}} & \multicolumn{1}{c|}{\textbf{Frag}} \\ \hline
+Pytorch & 0.564891 & 0.524666 & 0.438185 & 0.150463 & 5.833333 & 36.500000 \\ \hline
+TensorRT-FP16 & 0.563576 & 0.525178 & 0.438500 & 0.138889 & 5.750000 & 36.416667 \\ \hline
+TensorRT-INT8 & 0.500058 & 0.496562 & 0.387724 & 0.085648 & 3.833333 & 21.583333 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption[Resultados de seguimiento en Video\_2, por formato de exportación]{Resultados de seguimiento en Video\_2, por formato de exportación.}
+\label{tab:tracking_tracking2_format}
+\begin{tabular}{|r|r|r|r|r|r|r|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Export}} & \multicolumn{1}{c|}{\textbf{IDF1}} & \multicolumn{1}{c|}{\textbf{AssA}} & \multicolumn{1}{c|}{\textbf{HOTA}} & \multicolumn{1}{c|}{\textbf{MT\%}} & \multicolumn{1}{c|}{\textbf{IDSW}} & \multicolumn{1}{c|}{\textbf{Frag}} \\ \hline
+Pytorch & 0.452075 & 0.423338 & 0.352266 & 0.099099 & 7.833333 & 26.666667 \\ \hline
+TensorRT-FP16 & 0.452663 & 0.421892 & 0.352005 & 0.092342 & 7.500000 & 26.750000 \\ \hline
+TensorRT-INT8 & 0.349720 & 0.400998 & 0.285026 & 0.051802 & 4.583333 & 14.916667 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{figures/validation/tracking/metricas_clave_formato_Average.pdf}
+        \caption{Métricas de seguimiento promedio entre ambas secuencias, por formato.}
+        \label{fig:tracking_metricas_clave_formato_promedio}
+    \end{subfigure}
+
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{figures/validation/tracking/metricas_clave_formato_Tracking1.pdf}
+        \caption{Métricas de seguimiento para la secuencia Video_1, por formato.}
+        \label{fig:tracking_metricas_clave_formato_tracking1}
+    \end{subfigure}
+
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{figures/validation/tracking/metricas_clave_formato_Tracking2.pdf}
+        \caption{Métricas de seguimiento para la secuencia Video_2, por formato.}
+        \label{fig:tracking_metricas_clave_formato_tracking2}
+    \end{subfigure}
+
+    \caption[Métricas de seguimiento, por formato]{Métricas de seguimiento clave (IDF1, AssA_AUC, HOTA_AUC y MT\%), por formato: (a) promedio de ambas secuencias, (b) secuencia Video\_1 y (c) secuencia Video\_2.}
+    \label{fig:tracking_metricas_clave_formato}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{figures/validation/tracking/idsw_frag_formato_Average.pdf}
+        \caption{Métricas de estabilidad temporal promedio entre ambas secuencias, por formato.}
+        \label{fig:tracking_metricas_consistencia_formato_promedio}
+    \end{subfigure}
+
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{figures/validation/tracking/idsw_frag_formato_Tracking1.pdf}
+        \caption{Métricas de estabilidad temporal para la secuencia Video_1, por formato.}
+        \label{fig:tracking_metricas_consistencia_formato_tracking1}
+    \end{subfigure}
+
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{figures/validation/tracking/idsw_frag_formato_Tracking2.pdf}
+        \caption{Métricas de estabilidad temporal para la secuencia Video_2, por formato.}
+        \label{fig:tracking_metricas_consistencia_formato_tracking2}
+    \end{subfigure}
+
+    \caption[Métricas de estabilidad temporal, por formato]{Métricas de estabilidad temporal (IDSW y Frag), por formato: (a) promedio de ambas secuencias, (b) Video\_1 y (c) Video\_2.}
+    \label{fig:tracking_metricas_consistencia_formato}
+\end{figure}
+
+\subsection{Inspección visual}
+Para complementar el análisis cuantitativo, se efectuó una inspección visual de las segmentaciones en las secuencias de seguimiento (fig. \ref{fig:tracking_muestra_segmentaciones}). Se observa que Salmones2024 detecta más instancias, mientras que YOLO11m genera máscaras algo más precisas y con menos errores. Esta sutil diferencia es difícil de notar con pocos cuadros, pero se aprecia al revisar las predicciones en video. Una lista de videos complementarios puede encontrarse en YouTube \cite{TrackVideo}.
+
+\begin{figure}[htbp]
+  \centering
+  % encabezados de columna
+  \begin{tabular}{cc}
+    % Video1 - frame 1
+    \includegraphics[width=0.38\linewidth]{figures/frames_guardados/Video1_Salmones2024_1.jpg} &
+    \includegraphics[width=0.38\linewidth]{figures/frames_guardados/Video1_YOLO11m_1.jpg} \\[6pt]
+
+    % Video1 - frame 2
+    \includegraphics[width=0.38\linewidth]{figures/frames_guardados/Video1_Salmones2024_2.jpg} &
+    \includegraphics[width=0.38\linewidth]{figures/frames_guardados/Video1_YOLO11m_2.jpg} \\[12pt]
+
+    % Video2 - frame 1
+    \includegraphics[width=0.38\linewidth]{figures/frames_guardados/Video2_Salmones2024_1.jpg} &
+    \includegraphics[width=0.38\linewidth]{figures/frames_guardados/Video2_YOLO11m_1.jpg} \\[6pt]
+
+    % Video2 - frame 2
+    \includegraphics[width=0.38\linewidth]{figures/frames_guardados/Video2_Salmones2024_2.jpg} &
+    \includegraphics[width=0.38\linewidth]{figures/frames_guardados/Video2_YOLO11m_2.jpg} \\
+  \end{tabular}
+\caption[Muestra de segmentaciones en las secuencias de seguimiento]{Muestra de segmentaciones en las secuencias de seguimiento. A la izquierda, modelo Salmones2024; a la derecha, modelo YOLO11m. Arriba Video\_1; abajo Video\_2.}
+\label{fig:tracking_muestra_segmentaciones}
+\end{figure}
