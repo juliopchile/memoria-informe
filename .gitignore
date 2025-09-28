@@ -1,2 +1,4 @@
 # Ignorar el output de compilación
 out/*
+# Ignorar imágenes sin marca de agua
+figures_without_watermark/
