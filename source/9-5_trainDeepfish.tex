@@ -1,5 +1,5 @@
 \section{Entrenamiento con Deepfish}
-Esta sección detalla el proceso de entrenamiento de modelos de segmentación utilizando la base de datos Deepfish. Se emplearon modelos preentrenados en la base de datos COCO, disponibles en la plataforma Ultralytics, y se ajustaron mediante re-entrenamiento para adaptarlos a la tarea específica de segmentación de peces en el entorno marino. Además este entrenamiento sirve como plantilla para los entrenamientos posteriores con la base de datos de salmones.
+Esta sección detalla el proceso de entrenamiento de modelos de segmentación utilizando la base de datos Deepfish. Se emplearon modelos pre-entrenados en la base de datos COCO, disponibles en la plataforma Ultralytics, y se ajustaron mediante re-entrenamiento para adaptarlos a la tarea específica de segmentación de peces en el entorno marino. Además este entrenamiento sirve como plantilla para los entrenamientos posteriores con la base de datos de salmones.
 
 \subsection{Entrenamiento inicial}
 \label{sec:entrenamientoDeepfish}
@@ -38,14 +38,14 @@ Para este análisis se excluyeron \textit{outliers} de muy bajo rendimiento ($\t
   \centering
   \begin{subfigure}[b]{\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/DeepFish-sizeComparison-YOLOv9-mAP50-95(M).pdf}
+    \includegraphics[width=0.9\textwidth]{figures/validation/DeepFish-sizeComparison-YOLOv9-mAP50-95(M).pdf}
     \caption{Puntaje mAP@50-95 promedio obtenido por modelos YOLOv9 en Deepfish.}
     \label{fig:deepfish_yolov9_map50_95}
   \end{subfigure}
 
   \begin{subfigure}[b]{\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/DeepFish-sizeComparison-YOLO11-mAP50-95(M).pdf}
+    \includegraphics[width=0.9\textwidth]{figures/validation/DeepFish-sizeComparison-YOLO11-mAP50-95(M).pdf}
     \caption{Puntaje mAP@50-95 promedio obtenido por distintos modelos YOLOv9 en Deepfish.}
     \label{fig:deepfish_yolo11_map50_95}
   \end{subfigure}
@@ -57,21 +57,21 @@ Para este análisis se excluyeron \textit{outliers} de muy bajo rendimiento ($\t
   \centering
   \begin{subfigure}[b]{\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/DeepFish-sizeComparison-YOLOv8-F1_score(M).pdf}
+    \includegraphics[width=0.9\textwidth]{figures/validation/DeepFish-sizeComparison-YOLOv8-F1_score(M).pdf}
     \caption{Puntaje F1 promedio obtenido por distintos modelos YOLOv8 en Deepfish.}
     \label{fig:deepfish_yolov8_f1}
   \end{subfigure}
 
   \begin{subfigure}[b]{\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/DeepFish-sizeComparison-YOLOv8-mAP50(M).pdf}
+    \includegraphics[width=0.9\textwidth]{figures/validation/DeepFish-sizeComparison-YOLOv8-mAP50(M).pdf}
     \caption{Puntaje mAP@50 promedio obtenido por distintos modelos YOLOv8 en Deepfish.}
     \label{fig:deepfish_yolov8_map50}
   \end{subfigure}
 
   \begin{subfigure}[b]{\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/DeepFish-sizeComparison-YOLOv8-mAP50-95(M).pdf}
+    \includegraphics[width=0.9\textwidth]{figures/validation/DeepFish-sizeComparison-YOLOv8-mAP50-95(M).pdf}
     \caption{Puntaje mAP@50-95 promedio obtenido por distintos modelos YOLOv8 en Deepfish.}
     \label{fig:deepfish_yolov8_map50_95}
   \end{subfigure}
@@ -117,21 +117,21 @@ Estos resultados indican que SGD es una opción más robusta y efectiva para est
   \centering
   \begin{subfigure}[b]{\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/DeepFish-TransferLearningComparison-YOLO-F1_score(M).pdf}
+    \includegraphics[width=0.9\textwidth]{figures/validation/DeepFish-TransferLearningComparison-YOLO-F1_score(M).pdf}
     \caption{Puntaje F1 promedio obtenido por distintos modelos YOLO en Deepfish con y sin TL.}
     \label{fig:deepfish_yolo_TL_f1}
   \end{subfigure}
 
   \begin{subfigure}[b]{\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/DeepFish-TransferLearningComparison-YOLO-mAP50(M).pdf}
+    \includegraphics[width=0.9\textwidth]{figures/validation/DeepFish-TransferLearningComparison-YOLO-mAP50(M).pdf}
     \caption{Puntaje mAP@50 promedio obtenido por distintos modelos YOLO en Deepfish con y sin TL.}
     \label{fig:deepfish_yolo_TL_map50}
   \end{subfigure}
 
   \begin{subfigure}[b]{\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/DeepFish-TransferLearningComparison-YOLO-mAP50-95(M).pdf}
+    \includegraphics[width=0.9\textwidth]{figures/validation/DeepFish-TransferLearningComparison-YOLO-mAP50-95(M).pdf}
     \caption{Puntaje mAP@50-95 promedio obtenido por distintos modelos YOLO en Deepfish con y sin TL.}
     \label{fig:deepfish_yolo_TL_map50_95}
   \end{subfigure}
@@ -142,7 +142,7 @@ Estos resultados indican que SGD es una opción más robusta y efectiva para est
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.9\textwidth]{figures/DeepFish-OptimizerComparison-YOLO-mAP50-95(M).pdf}
+  \includegraphics[width=0.9\textwidth]{figures/validation/DeepFish-OptimizerComparison-YOLO-mAP50-95(M).pdf}
   \caption[Puntaje mAP@50-95 por modelo YOLO en Deepfish (AdamW vs SGD)]{Comparación del puntaje mAP@50-95 para distintos modelos YOLO en Deepfish, utilizando los optimizadores AdamW y SGD.}
   \label{fig:deepfish_yolo_optimizer_map50_95}
 \end{figure}
@@ -179,14 +179,14 @@ Otro aspecto relevante a mencionar es que la omisión de imágenes de fondo incr
   \centering
   \begin{subfigure}[b]{\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/DeepFish-DatasetComparison-YOLO-mAP50-95(M).pdf}
+    \includegraphics[width=0.9\textwidth]{figures/validation/DeepFish-DatasetComparison-YOLO-mAP50-95(M).pdf}
     \caption{Comparación del puntaje mAP@50-95 entre los \textit{datasets} Full y ``LO'' de Deepfish.}
     \label{fig:deepfish_yolo_dataset_comparison_map50_95}
   \end{subfigure}
 
   \begin{subfigure}[b]{\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/DeepFish-DatasetFactorMejora-YOLO-mAP50-95(M).pdf}
+    \includegraphics[width=0.9\textwidth]{figures/validation/DeepFish-DatasetFactorMejora-YOLO-mAP50-95(M).pdf}
     \caption{Factor de mejora promedio entre los \textit{datasets} Full y ``LO'' de Deepfish, por modelo. Valores mayores a 1 indican que la versión Full supera a ``LO''.}
     \label{fig:deepfish_yolo_dataset_factor_mejora_by_model}
   \end{subfigure}
@@ -219,7 +219,7 @@ Respecto a tiempos de inferencia, el uso de TensorRT suele mejorar el rendimient
 
 \begin{figure}[htbp]
 \begin{center}
-    \includegraphics[width=0.9\textwidth]{figures/DeepFish-FormatComparison-YOLO-mAP50-95(M).pdf}
+    \includegraphics[width=0.9\textwidth]{figures/validation/DeepFish-FormatComparison-YOLO-mAP50-95(M).pdf}
     \caption[Comparación del rendimiento entre formatos de exportación en Deepfish]{Comparación del rendimiento entre los formatos de exportación (PyTorch vs TensorRT) en Deepfish.}
     \label{fig:deepfish_yolo_format_comparison}
 \end{center}
@@ -227,7 +227,7 @@ Respecto a tiempos de inferencia, el uso de TensorRT suele mejorar el rendimient
 
 \begin{figure}[htbp]
 \begin{center}
-    \includegraphics[width=0.9\textwidth]{figures/Deepfish-SpeedComparison-Time-inference.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/validation/Deepfish-SpeedComparison-Time-inference.pdf}
     \caption[Comparación en tiempos de inferencia entre formatos de exportación]{Comparación de los tiempos de inferencia entre los formatos de exportación (PyTorch vs TensorRT).}
     \label{fig:deepfish_yolo_inference_time_comparison}
 \end{center}
@@ -261,21 +261,21 @@ Otro aspecto relevante es la acentuación en la caída de rendimiento al exporta
 \begin{center}
   \begin{subfigure}[b]{\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/DeepFish-TransferLearningFactorMejora-Format-mAP50-95(M).pdf}
+    \includegraphics[width=0.9\textwidth]{figures/validation/DeepFish-TransferLearningFactorMejora-Format-mAP50-95(M).pdf}
     \caption{Factor de mejora de usar TransferLearning en Deepfish, por formato de exportación.}
     \label{fig:deepfish_yolo_transfer_learning_factor_mejora}
   \end{subfigure}
 
   \begin{subfigure}[b]{\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/DeepFish-FormatFactorMejora_TransferLearning-YOLO-mAP50-95(M).pdf}
+    \includegraphics[width=0.9\textwidth]{figures/validation/DeepFish-FormatFactorMejora_TransferLearning-YOLO-mAP50-95(M).pdf}
     \caption{Factor de mejora de exportar a TensorRT por modelo en Deepfish, con Transfer Learning.}
     \label{fig:deepfish_yolo_format_factor_mejora_transfer_learning}
   \end{subfigure}
 
   \begin{subfigure}[b]{\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/DeepFish-FormatFactorMejora_FullLearning-YOLO-mAP50-95(M).pdf}
+    \includegraphics[width=0.9\textwidth]{figures/validation/DeepFish-FormatFactorMejora_FullLearning-YOLO-mAP50-95(M).pdf}
     \caption{Factor de mejora de exportar a TensorRT por modelo en Deepfish, sin Transfer Learning.}
     \label{fig:deepfish_yolo_format_factor_mejora_full_learning}
   \end{subfigure}
@@ -287,7 +287,7 @@ Otro aspecto relevante es la acentuación en la caída de rendimiento al exporta
 
 \begin{figure}[htbp]
 \begin{center}
-    \includegraphics[width=0.9\textwidth]{figures/DeepFish-DatasetFactorMejora-Format-mAP50-95(M).pdf}
+    \includegraphics[width=0.9\textwidth]{figures/validation/DeepFish-DatasetFactorMejora-Format-mAP50-95(M).pdf}
     \caption[Factor de mejora entre los \textit{datasets} Full y ``LO'' de Deepfish, por formato]{Factor de mejora entre los \textit{datasets} Full y ``LO'' de Deepfish, por formato de exportación. Valores mayores a 1 indican que la versión Full supera a ``LO''.}
     \label{fig:deepfish_yolo_dataset_factor_mejora_by_format}
 \end{center}
@@ -450,7 +450,7 @@ A continuación se muestran ejemplos de segmentación obtenidos con los modelos 
         \centering
         \includegraphics[width=\linewidth]{figures/results/deepfish/predict/9908_Acanthopagrus_palmaris_f000030_pescado_jpg.rf.17d16ac01a1ea50c9621b7f7e33b8ce9.jpg}
     \end{subfigure}
-    \caption[Ejemplos de segmentación obtenidos en Deepfish]{Ejemplos de segmentación obtenidos con el modelo YOLOv8l-seg entrenado en Deepfish. De izquierda a derecha: imagen original, máscaras etiquetadas (\textit{Ground Truth}) en rojo y predicción del modelo en azul.}
+    \caption[Ejemplos de segmentación obtenidos en Deepfish]{Ejemplos de segmentación obtenidos con el modelo YOLOv8l-seg entrenado en Deepfish. De izquierda a derecha: imagen original; máscaras etiquetadas (\textit{Ground Truth}) en rojo; predicción del modelo en azul.}
     \label{fig:deepfish_segmentation_examples}
 \end{center}
 \end{figure}
