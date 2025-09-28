@@ -52,6 +52,7 @@ SAM2 \cite{SAM2} & \checkmark\hspace{3px} Asistida & \checkmark\hspace{3px} Asis
 Roboflow \cite{Roboflow} es una plataforma de anotación de imágenes para tareas de inteligencia artifical con especial enfoque en la facilidad de despliegue y exportación. Lamentablemente no posee utilidades para el etiquetado en \textit{tracking} y por defecto sus bases de datos son públicas, con la alternativa privada requiriendo un pago anual fuera de cualquier presupuesto razonable para esta memoria.
 
 \subsection{Bases de datos}
+\label{sec:datasets}
 Para el entrenamiento de los modelos se utilizaron dos bases de datos de segmentación de instancias. El primero de carácter público y con la finalidad de replicación de resultados. El segundo de carácter privado, que además es depurado en una versión más refinada para lograr mejores modelos.
 
 \begin{table}[htbp]
@@ -122,4 +123,4 @@ Esta base de datos de dominio público fue desarrollada como un \textit{benchmar
 Esta base de datos es una versión optimizada del dataset de salmones desarrollado por WildSense y es de caracter privado. Para el desarrollo de este se utilizó como punto de partida la base de datos ``Salmons_2024base'', disponible en el espacio de trabajo de WildSense en CVAT. Luego de depurar instancias de no interés, se procedió a incluir 321 imágenes de los \textit{dataset} de \textit{tracking} con segmentación llamadas ``Seguimiento_1'' y ``Seguimiento_2'', también disponibles desde el mismo espacio de trabajo en CVAT.
 
 \subsubsection{Tracking Salmones}
-Esta base de datos corresponde a dos videos de 220 cuadros cada uno y las etiquetas están en forma de cajas englobantes.
+Esta base de datos corresponde a dos videos de 220 cuadros cada uno y las etiquetas están en forma de cajas englobantes. El etiquetado se realizó en CVAT y a mano.

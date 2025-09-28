@@ -11,7 +11,7 @@ Igual que con Deepfish, los modelos más pequeños (n, s) mostraron un rendimien
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.9\textwidth]{figures/Salmons-sizeComparison-YOLO-mAP50-95(M).pdf}
+  \includegraphics[width=0.9\textwidth]{figures/validation/Salmons-sizeComparison-YOLO-mAP50-95(M).pdf}
   \caption[Puntaje mAP@50-95 en Salmons, por modelo]{Puntaje mAP@50-95 en Salmons, por modelo.}
   \label{fig:salmons_yolo_size_comparison}
 \end{figure}
@@ -24,7 +24,7 @@ Similar a los entrenamientos con Deepfish, el uso de TL mostró un peor rendimie
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.9\textwidth]{figures/Salmons-TransferLearningComparison-YOLO-mAP50-95(M).pdf}
+  \includegraphics[width=0.9\textwidth]{figures/validation/Salmons-TransferLearningComparison-YOLO-mAP50-95(M).pdf}
   \caption[Comparación de métricas por modelo YOLO en Salmons con y sin Transfer Learning]{Comparación de rendimiento mAP@50-95 por modelo YOLO en Salmons con y sin Transfer Learning.}
   \label{fig:salmons_yolo_transfer_Learning_comparison}
 \end{figure}
@@ -57,7 +57,7 @@ Similar a como ocurre con Deepfish, SGD supera marginalmente a AdamW en la mayor
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.9\textwidth]{figures/Salmons-OptimizerComparison-YOLO-mAP50-95(M).pdf}
+  \includegraphics[width=0.9\textwidth]{figures/validation/Salmons-OptimizerComparison-YOLO-mAP50-95(M).pdf}
   \caption[Puntaje mAP@50-95 por modelo YOLO en Salmons (AdamW vs SGD)]{Comparación del puntaje mAP@50-95 para distintos modelos YOLO en Salmons, utilizando los optimizadores AdamW y SGD.}
   \label{fig:salmons_yolo_optimizer_map50_95}
 \end{figure}
@@ -96,14 +96,14 @@ Otra alternativa se haya en como está definida la base de datos de validación.
   \centering
   \begin{subfigure}[b]{\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/Salmons-DatasetComparison-YOLO-mAP50-95(M).pdf}
+    \includegraphics[width=0.9\textwidth]{figures/validation/Salmons-DatasetComparison-YOLO-mAP50-95(M).pdf}
     \caption{Comparación del puntaje mAP@50-95 entre los \textit{datasets} Full y ``LO'' de Salmons.}
     \label{fig:salmons_yolo_dataset_comparison_map50_95}
   \end{subfigure}
 
   \begin{subfigure}[b]{\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/Salmons-DatasetFactorMejora-YOLO-mAP50-95(M).pdf}
+    \includegraphics[width=0.9\textwidth]{figures/validation/Salmons-DatasetFactorMejora-YOLO-mAP50-95(M).pdf}
     \caption{Factor de mejora promedio entre los \textit{datasets} Full y ``LO'' de Salmons, por modelo. Valores mayores a 1 indican que la versión Full supera a ``LO''.}
     \label{fig:salmons_yolo_dataset_factor_mejora_by_model}
   \end{subfigure}
@@ -134,7 +134,7 @@ El incremento en velocidad de inferencia depende del formato de exportación y m
 
 \begin{figure}[htbp]
 \begin{center}
-    \includegraphics[width=0.9\textwidth]{figures/Salmons-FormatComparison-YOLO-mAP50-95(M).pdf}
+    \includegraphics[width=0.9\textwidth]{figures/validation/Salmons-FormatComparison-YOLO-mAP50-95(M).pdf}
     \caption[Comparación del rendimiento entre formatos de exportación en Salmons]{Comparación del rendimiento entre los formatos de exportación (PyTorch vs TensorRT) en Salmons.}
     \label{fig:salmons_yolo_format_comparison}
 \end{center}
@@ -159,14 +159,14 @@ De manera similar, la caida en rendimiento al optimizar el modelo se incrementa 
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.9\textwidth]{figures/Salmons-TransferLearningFactorMejora-Format-mAP50-95(M).pdf}
+  \includegraphics[width=0.9\textwidth]{figures/validation/Salmons-TransferLearningFactorMejora-Format-mAP50-95(M).pdf}
   \caption[Factor de mejora de usar TransferLearning en Salmons, por formato]{Factor de mejora de usar TransferLearning en Salmons, por formato de exportación. Valores menores a 1 indican caída en rendimiento al usar Transfer Learning.}
   \label{fig:salmons_yolo_transfer_learning_factor_mejora_by_format}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.9\textwidth]{figures/Salmons-DatasetFactorMejora-Format-mAP50-95(M).pdf}
+  \includegraphics[width=0.9\textwidth]{figures/validation/Salmons-DatasetFactorMejora-Format-mAP50-95(M).pdf}
   \caption[Factor de mejora entre los \textit{datasets} Full y ``LO'' de Salmons, por formato]{Factor de mejora entre los \textit{datasets} Full y ``LO'' de Salmons, por formato de exportación. Valores mayores a 1 indican que la versión Full supera a ``LO''.}
   \label{fig:salmons_yolo_dataset_factor_mejora_by_format}
 \end{figure}
@@ -220,9 +220,9 @@ Al ser esta versión de Salmons una base de datos nueva y con un subconjunto de 
 A continuación se muestran ejemplos de segmentación obtenidos con los modelos entrenados en Salmons (fig. \ref{fig:salmons_segmentation_examples}). Para estos ejemplos se usó el modelo YOLOv8l-seg.
 
 \subsubsection{Consideraciones y conclusiones}
-Los resultados obtenidos con Salmons son satisfactorios al demostrar que depurar la base de datos y aumentar su tamaño permite entrenar modelos más precisos en la detección y segmentación de instancias de interes. Sin embargo, hay un aspecto que merecen ser discutidos y es que al ser una base de datos donde no todas las instancias de salmones están etiquetadas, el modelo puede aprender a ignorar ciertas instancias que en la práctica deberían ser detectadas y viceversa. Esto significa que el \textit{dataset} en si no está bien definido y cualquier análisis cuantitativo de sus resultados debe ser tomado con pinzas pues esto no refleja su verdadero rendimiento.
+Los resultados obtenidos con Salmons son satisfactorios al demostrar que depurar la base de datos y aumentar su tamaño permite entrenar modelos más precisos en la detección y segmentación de instancias de interes. Sin embargo, hay un aspecto que merece ser discutido y es que al ser una base de datos donde no todas las instancias de salmones están etiquetadas, el modelo puede aprender a ignorar ciertas instancias que en la práctica deberían ser detectadas y viceversa. Esto significa que el \textit{dataset} en si no está ``bien definido'' y cualquier análisis cuantitativo de sus resultados debe ser tomado con pinzas pues esto no refleja su verdadero rendimiento.
 
-\begin{figure}[h!]
+\begin{figure}[htbp]
 \begin{center}
     % ====== Ejemplo 1 ======
     \begin{subfigure}{0.27\textwidth}
@@ -299,7 +299,7 @@ Los resultados obtenidos con Salmons son satisfactorios al demostrar que depurar
         \centering
         \includegraphics[width=\linewidth]{figures/results/salmones/predict/Sep25_270_png.rf.afa3b720cb52b7b4e34639773be3a4b7.jpg}
     \end{subfigure}
-    \caption[Ejemplos de segmentación obtenidos en Salmons]{Ejemplos de segmentación obtenidos con el modelo YOLOv8l-seg entrenado en Salmons. De izquierda a derecha: imagen original, máscaras etiquetadas (\textit{Ground Truth}) en rojo y predicción del modelo en azul.}
+    \caption[Ejemplos de segmentación obtenidos en Salmons]{Ejemplos de segmentación obtenidos con el modelo YOLOv8l-seg entrenado en Salmons. De izquierda a derecha: imagen original; máscaras etiquetadas (\textit{Ground Truth}) en rojo; predicción del modelo en azul.}
     \label{fig:salmons_segmentation_examples}
 \end{center}
 \end{figure}

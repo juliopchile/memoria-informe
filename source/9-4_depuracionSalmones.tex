@@ -94,34 +94,63 @@ else:
 \end{listing}
 
 \subsubsection{Ejemplo de segmentaciones filtradas}
-A continuación se muestran imagenes de ejemplo de la base de datos Salmons. En rojo se muestran las segmentaciones consideradas ``pequeñas'', en amarillo las ``medianas'' y en verde las ``grandes''. El texto blanco corresponde a el área en pixeles de cada segmentación, normalizada a una imagen de 640x640 pixeles. Dependiendo del criterio de filtrado, las segmentaciones pequeñas y medianas pueden ser eliminadas o reasignadas a otra clase, igualmente se podría con algún criterio de nitidez o forma.
+A continuación se muestran algunas imagenes de la base de datos Salmons_2024base y sus etiquetadas, clasificadas por área de segmentación.
 
-\begin{figure}[htbp]
-    \centering
-    \begin{subfigure}[b]{0.45\textwidth}
+\begin{figure}[h!]
+\begin{center}
+    % ====== Fila 1 ======
+    \begin{subfigure}{0.31\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{figures/filter1.jpg}
+        \includegraphics[width=\linewidth]{figures/filter_examples/filter1.jpg}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}{0.31\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{figures/filter2.jpg}
-    \end{subfigure}
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{figures/filter3.jpg}
+        \includegraphics[width=\linewidth]{figures/filter_examples/filter2.jpg}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}{0.31\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{figures/filter4.jpg}
+        \includegraphics[width=\linewidth]{figures/filter_examples/filter3.jpg}
     \end{subfigure}
-
-    \caption[Ejemplo de uso del código de filtrado de base de datos]{Ejemplo de uso del código de filtrado de base de datos.}
+    % ====== Fila 2 ======
+    \begin{subfigure}{0.31\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/filter_examples/filter4.jpg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.31\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/filter_examples/filter5.jpg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.31\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/filter_examples/filter6.jpg}
+    \end{subfigure}
+    % ====== Fila 3 ======
+    \begin{subfigure}{0.31\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/filter_examples/filter7.jpg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.31\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/filter_examples/filter8.jpg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.31\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/filter_examples/filter9.jpg}
+    \end{subfigure}
+    \caption[Ejemplo de uso del código de filtrado de base de datos]{Ejemplo de uso del código de filtrado de base de datos. En rojo se muestran las segmentaciones consideradas ``pequeñas'', en amarillo las ``medianas'' y en verde las ``grandes''. El texto blanco corresponde a el área en pixeles de cada segmentación, normalizada a una imagen de 640x640 pixeles. Dependiendo del criterio de filtrado, las segmentaciones pequeñas y medianas pueden ser eliminadas o reasignadas a otra clase, igualmente se podría aplicar algún criterio de nitidez o forma.}
+    \label{fig:filtered_examples}
+\end{center}
 \end{figure}
 
+
 \subsection{Validación de base de datos}
-Como el filtrado modifica el conjunto de validación, no es posible comparar directamente el rendimiento en segmentación entre modelos entrenados con la base original y las versiones filtradas. Por ello se evalúan los \textit{datasets} en la tarea de seguimiento, usando los videos ``Seguimiento_1'' y ``Seguimiento_2''. Dado que las bases de seguimiento no estaban completas, la evaluación fue cualitativa: la métrica principal fue el número de instancias detectadas (menos es mejor al indicar menor ``parpadeo'') y se inspeccionó visualmente la calidad de las segmentaciones. Se utilizaron modelos YOLOv8l-seg para las pruebas, tanto en formato PyTorch como TensorRT.
+Como el filtrado modifica el conjunto de validación, no es posible comparar directamente el rendimiento en segmentación entre modelos entrenados con la base original y las versiones filtradas. Por ello se evalúan los \textit{datasets} usando los videos ``Seguimiento_1'' y ``Seguimiento_2''. Dado que las bases de datos de seguimiento no estaban completas, la evaluación fue cualitativa: la métrica principal fue el número de instancias detectadas (menos es mejor al indicar menor ``parpadeo'') y se inspeccionó visualmente la calidad de las segmentaciones. Se utilizaron modelos YOLOv8l-seg para las pruebas, tanto en formato PyTorch como TensorRT.
 
 \begin{table}[htbp]
 \centering
@@ -173,4 +202,4 @@ Al depurar la base de datos se eliminan numerosas etiquetas sin retirar las imá
 \end{table}
 
 \subsection{Elaboración final de la base de datos de salmones}
-Como se explica en la sección de Bases de datos, a la base de datos filtrada ``SalmonesV4'' se le incluyeron imágenes y etiquetas adicionales pertenecientes a los videos ``Seguimiento_1'' y ``Seguimiento_2''. Las etiquetas fueron revisadas manualmente, se removieron aquellas instancias que no cumplían con los criterios de calidad establecidos y se incluyeron cientos más para secciones de los videos que estaban sin etiquetar. Se combinaron las imágenes y etiquetas de forma aleatoria con la siguiente distribución según la tarea: 65\% para entrenamiento, 30\% en validación y 5\% para pruebas. El resultado final es la base de datos ``Salmons'' descrita anteriormente (tabla \ref{tab:datasets_combined}).
+Como se explica en la sección \ref{sec:datasets}, a la base de datos filtrada ``SalmonesV4'' se le incluyeron imágenes y etiquetas adicionales pertenecientes a los videos ``Seguimiento_1'' y ``Seguimiento_2''. Las etiquetas fueron revisadas manualmente, se removieron aquellas instancias que no cumplían con los criterios de calidad establecidos y se incluyeron cientos más para secciones de los videos que estaban sin etiquetar. Se combinaron las imágenes y etiquetas de forma aleatoria con la siguiente distribución según la tarea: 65\% para entrenamiento, 30\% en validación y 5\% para pruebas. El resultado final es la base de datos ``Salmons'' descrita anteriormente (tabla \ref{tab:datasets_combined}).
