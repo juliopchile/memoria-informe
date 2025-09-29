@@ -1,3 +1,11 @@
 \section{Conclusión}
+La depuración de la base de datos mejoró los modelos entrenados, aumentando su rendimiento en tareas de seguimiento y superando ligeramente la versión desplegada por WildSense en condiciones de buena visibilidad. Incluso cuando no se igualó totalmente a la versión anterior, se alcanzaron métricas competitivas con un menor número de instancias seguidas, lo que indica mayor selectividad del modelo y potencial reducción de la carga computacional en uso real.
 
-\subsection{Trabajo Futuro}
+La búsqueda de hiperparámetros contribuyó a optimizar el entrenamiento y permitió que modelos como Deepfish alcanzaran su máximo rendimiento, llegando a superar el SOTA reportado en trabajos previos.
+
+La inclusión de imágenes de fondo aporta información útil pero en escasa medida, además, puede ser contraproducente al aumentar el coste de entrenamiento por mejoras marginales. Además, es crucial definir con precisión el conjunto de validación para evaluar si las imágenes de fondo realmente mejoran el desempeño, como se observó en el caso de Salmons.
+
+Complementariamente, el \textit{Transfer Learning} puede ser una alternativa efectiva ante limitaciones de hardware o tiempo, aunque suele implicar una ligera pérdida de rendimiento. En estas tareas, SGD tiende a ofrecer mayor estabilidad y robustez frente a AdamW. Respecto a la exportación con TensorRT, FP16 es un compromiso equilibrado que acelera la inferencia sin sacrificar demasiado rendimiento, mientras que INT8 solo es recomendable en escenarios con restricciones computacionales severas o si la velocidad de inferencia es una prioridad.
+
+\subsection{Trabajo futuro}
+Queda por explorar si realmente los nuevos modelos son más eficientes en producción, midiendo su rendimiento en un entorno real y evaluando la calidad de las estimaciones de masa y volumen realizadas con sus predicciones. Se recomienda explorar otros algoritmos de seguimiento además de DeepSORT y ByteTrack, cosa que podría dar luces sobre hasta qué punto las detecciones de los modelos entrenados permiten un mejor \textit{tracking}. También es prioritario definir de forma rigurosa qué se considera una "instancia de interés" para salmones y documentar un protocolo de etiquetado que minimice ambigüedades y facilite la reproducibilidad al momento de entrenar y evaluar los modelos.

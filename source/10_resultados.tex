@@ -1,2 +1,13 @@
 \section{Resultados}
+\subsection{Segmentación de instancias}
+En Deepfish: F1=0.987081 (YOLOv8l) supera a versiones YOLO previas, aunque todavía por debajo de Mask-RCNN, MS-RCNN y SOLOv2; mAP@50=0.990494 (YOLO11x) supera a todos los modelos comparados; mAP@50-95=0.866947 (YOLOv9e) posiciona a YOLO de forma competitiva (tabla \ref{tab:deepfish_resultados_finales}). En Salmons, YOLOv8l logra simultáneamente los máximos: F1=0.920745, mAP@50=0.964219 y mAP@50-95=0.855048 (tabla \ref{tab:salmons_resultados_finales}).
+
+Agregar imágenes de fondo mejora Deepfish (1-5\%) pero degrada Salmons (0.12-3\%). El \textit{Transfer Learning} reduce ligeramente el rendimiento en ambos \textit{datasets} (pero es marginal en Deepfish). SGD supera consistentemente a AdamW en estabilidad y métricas finales.
+
+En exportación: TensorRT-FP16 $\sim$2x velocidad con $\sim$2\% de caída; TensorRT-INT8 hasta $\sim$3x con $\sim$5\% de degradación, más notable en mAP@50-95. FP16 resulta el mejor equilibrio; INT8 recomendable bajo fuertes restricciones de cómputo.
+
+\subsection{Seguimiento}
+En la tarea de seguimiento, el mejor desempeño se obtuvo con YOLO11m donde logra superar a la versión desplegada por WildSense, pero solo en la secuencia de buena visibilidad (Video\_1). Para secuencias de mala visibilidad los modelos entrenados no pueden competir con el modelo de WildSense. Las mejores métricas obtenidas son IDF1=0.595931; AssA=0.529950; HOTA=0.450462; MT\%=0.143519 (tabla \ref{tab:tracking_tracking1_model}).
+
+\subsection{Especificaciones}
 Todos los experimentos de entrenamiento se realizaron de forma remota en una estación de trabajo proporcionada por el equipo de WildSense. El sistema dispone de un procesador Intel Core i9-10900 (2.80 GHz), 32 GB de RAM y una GPU NVIDIA GeForce RTX 3060 con 12 GB de memoria, ejecutando Ubuntu 20.04.6 LTS. Salvo algunas inferencias para visualizar ejemplos, todos los resultados reportados se obtuvieron bajo esta configuración.
