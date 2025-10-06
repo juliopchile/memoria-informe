@@ -1,5 +1,7 @@
 % Introducción
 \section{Estado del arte}
+% TODO Corrección [7]: Este archivo debe integrarse como sección 2.2 Herramientas y Métodos (actual "Estado del arte" pasará a ser parte del Capítulo 2 reestructurado). Incluir encabezado adecuado y ajustar numeración tras mover 7_MarcoTeorico a 2.1.
+% TODO Corrección [7]: Al final de este capítulo agregar subsección 2.3 Discusión (contrastar solución propuesta vs. soluciones existentes; justificar elección de tracking-by-detection con métricas HOTA, AssA, IDF1, MOTA; destacar contribución de depuración de dataset y exportación eficiente).
 En la presente sección se exponen los avances recientes y las técnicas predominantes en tareas de visión por computadora, enfocándose en la segmentación de instancias, el seguimiento de objetos y la optimización del entrenamiento de modelos. Se abordan además las técnicas actuales de optimización y las consideraciones en validación y despliegue.
 
 % Segmentación en Visión por computadora
@@ -164,6 +166,7 @@ Los ajustadores de la tasa de aprendizaje ---en inglés \textit{learning rate sc
 Estudios recientes han indicado que el tamaño del lote, si bien no afecta significativamente el rendimiento final, debe ajustarse en conjunto con otros hiperparámetros (como la tasa de aprendizaje) para optimizar el entrenamiento. En la búsqueda de hiperparámetros, se ha evidenciado que lotes de tamaño intermedio facilitan un ajuste más rápido y eficiente \cite{Shallue2018, Breuel2015}.
 
 \subsection{Técnicas de optimización}
+% TODO Corrección [8]: Corregir redacción "reducción en consumo energéticos" -> "reducción en consumo energético" en el párrafo siguiente.
 Diversas técnicas se han desarrollado para optimizar modelos de aprendizaje automático, ya sea mediante la reducción del costo computacional, la disminución del tiempo de inferencia o la reducción en consumo energéticos. Entre las técnicas más populares se destacan:
 
 \subsubsection{Pruning (poda)}
@@ -191,6 +194,7 @@ En grandes modelos de lenguaje se observa que el impacto negativo de la cuantiza
 Esta técnica implica entrenar un modelo más pequeño y eficiente (llamado modelo estudiante) utilizando las predicciones de un modelo más grande y preciso (modelo maestro). El estudiante aprende a imitar el comportamiento del maestro, lo que permite reducir el tamaño del modelo manteniendo un buen rendimiento \cite{Cheng2018}.
 
 \subsection{Seguimiento}
+% TODO Corrección [8]: En la subsección 3.5.1 (equivalente tras reordenar) enfatizar explícitamente que dada la utilización de modelos de detección y segmentación de instancia, tracking-by-detection es el enfoque adecuado (agregar párrafo de enlace con objetivos y validación).
 En su forma más simple, el seguimiento puede definirse como el problema de estimar la trayectoria de un objeto en el plano de la imagen a medida que se desplaza por una escena. En otras palabras, un \textit{tracker} asigna etiquetas coherentes a los objetos rastreados en diferentes fotogramas de un vídeo. Además, dependiendo del dominio de seguimiento, un \textit{tracker} también puede proporcionar información centrada en el objeto, como la orientación, el área o la forma de un objeto \cite{Yilmaz2006}.
 
 Según \cite[Yilmaz et al.]{Yilmaz2006} es posible clasificar taxonómicamente el seguimiento según el método empleado, donde distinguen basado en el modelo de representación utilizado para el objeto de interés.

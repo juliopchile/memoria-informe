@@ -1,4 +1,6 @@
 \section{Seguimiento de salmones}
+% TODO Corrección [14]: Parte analítica (tablas y comparación métricas) mover al Capítulo 4 Validación (sección Resultados de tracking) y agregar subsección Discusión final allí.
+% TODO Corrección [2]: Referenciar explícitamente el marco conjunto de validación (segmentación + tracking-by-detection) al inicio.
 Para validar la capacidad de los modelos obtenidos y comprobar la hipótesis planteada, se realizaron tareas de segmentación y seguimiento en videos de salmones utilizando las bases de datos Tracking Salmones (ver sección \ref{sec:datasets}).
 
 Se evaluaron los cinco mejores modelos entrenados con la base de datos Salmons, junto con sus exportaciones en TensorRT-FP16 y TensorRT-INT8. Además, se incluyó un modelo YOLOv8l-seg ---aquí llamado Salmones2024--- entrenado sobre la versión original del \textit{dataset}, también con sus exportaciones a TensorRT. Este es el modelo utilizado actualmente por WildSense.
@@ -11,8 +13,10 @@ Se desarrolló además un código en Python que convierte predicciones de segmen
 
 \subsection{Comparación por modelo}
 En el promedio de las ambas secuencias (tabla \ref{tab:tracking_promedio_model} y figs. \ref{fig:tracking_metricas_clave_modelo_promedio} y \ref{fig:tracking_metricas_consistencia_modelo_promedio}), el modelo Salmones2024 obtiene los mejores valores de recuperación con las métricas IDF1, AssA, HOTA y MT\%. Sin embargo registra el mayor número de cambios de identidad y fragmentación (IDSW y Frag).
+% TODO Corrección [13]: Incluir columna MOTA / MOTP en tablas y marcar mejores valores en negrita. Añadir frase comparativa sobre MOTA.
 
 El dominio de Salmones2024 se explica casi por completo por su rendimiento en la secuencia ``Video\_2'' (tabla \ref{tab:tracking_tracking2_model} y figs. \ref{fig:tracking_metricas_clave_modelo_tracking2} y \ref{fig:tracking_metricas_consistencia_modelo_tracking2}). Aquí supera con amplio margen a todos los demás (56, 22, 43 y 280 porciento superior a los segundos lugares en IDF1, AssA, HOTA y MT\% respectivamente). Aun así, Salmones2024 incurre en más IDSW y mantiene una fragmentación relativamente alta, evidenciando inestabilidad temporal y ``parpadeo'' pese a su mayor cobertura de detecciones. Este comportamiento se da pues los nuevos modelos no consideran a los peces con baja visibilidad como ``instancias de interés'', resultando en un número muy bajo de detecciones, afectando al seguimiento. Pero esto es un comportamiento esperado, ya que los nuevos modelos fueron entrenados para detectar solo peces en buenas condiciones de visibilidad.
+% TODO Corrección [12]: Cambiar "porciento" -> "%".
 
 En la secuencia ``Video\_1'' (tabla \ref{tab:tracking_tracking1_model} y figs. \ref{fig:tracking_metricas_clave_modelo_tracking1} y \ref{fig:tracking_metricas_consistencia_modelo_tracking1}) las diferencias se estrechan: YOLO11m logra el mayor IDF1, superando ligeramente a Salmones2024. No obstante, Salmones2024 conserva el mejor AssA, HOTA y MT\%. En esta secuencia se observa además que los modelos nuevos (especialmente YOLO11l) reducen de forma marcada IDSW y Frag, mostrando trayectorias más estables cuando las condiciones son favorables.
 
@@ -122,6 +126,7 @@ yolo11l & 0.373115 & 0.397294 & 0.299152 & 0.072072 & 6.666667 & 20.000000 \\ \h
 El efecto de la exportación es el esperado: TensorRT-FP16 reproduce casi en su totalidad el rendimiento del modelo en PyTorch (o incluso puede mejorar como en Video\_1), mientras que TensorRT-INT8 introduce una degradación sistemática en las métricas seguimiento y \textit{reacall} (IDF1, AssA, HOTA y MT\%).
 
 Las métricas donde valores menores son mejores (IDSW y Frag) disminuyen tanto para FP16 (ligeramente) como para INT8 (de forma marcada). Sin embargo, esta reducción no debe interpretarse automáticamente como mejora: la cuantización INT8 provoca pérdida de detecciones (menor \textit{recall} efectivo), reduciendo el número de trayectorias activas y, con ello, las oportunidades de incurrir en cambios de identidad o fragmentaciones.
+% TODO Corrección [11]: Evaluar si debe mencionarse que MOTA también captura parte de esta degradación y ajustar discusión.
 
 En general este patrón se repite para ambas secuencias, solo mencionar que la degradación esperada bajo INT8 es más severa para la secuencia Video\_2 (tabla \ref{tab:tracking_tracking2_format} y figs. \ref{fig:tracking_metricas_clave_formato_tracking2}).
 

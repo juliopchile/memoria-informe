@@ -1,9 +1,12 @@
 \section{Métricas de validación}
+% TODO Corrección [2]: Añadir párrafo introductorio resaltando el marco integrado: segmentación (F1, mAP@50, mAP@50-95) + tracking (HOTA, AssA, IDF1, MOTA, MT%, IDSW, Frag) como contribución metodológica.
+% TODO Corrección [14]: Esta sección se moverá / referenciará dentro del nuevo Capítulo 4 (Validación) tras reestructuración.
 Para determinar el rendimiento de un modelo es necesario obtener métricas de validación específicas para cada tarea. En el caso de la segmentación de instancias, las métricas más utilizadas son el \textit{mean average precision} (mAP) y el \textit{F1 score}. En este trabajo se priorizó la optimización de la métrica mAP@50-95, que corresponde al promedio de la precisión media calculada en umbrales de IoU desde 0.50 hasta 0.95, en pasos de 0.05.
 
  En la tarea de seguimiento existen varias métricas bien establecidas en la literatura. Las más tradicionales son MOTA y MOTP, pero en los últimos años han surgido métricas (p. ej. HOTA, AssA, IDF1) que descomponen el rendimiento en detección y asociación, por lo que resultan más informativas para problemas donde la conservación de identidad y la continuidad del seguimiento son prioritarias ---como en este trabajo.
 
  En consecuencia, aunque en la literatura se reporta con frecuencia MOTA, en este trabajo se priorizan métricas que directamente miden la calidad de la asociación (AssA / IDF1) y la continuidad de tracks (MT / MT\%), y se utiliza HOTA (y sus subcomponentes) para obtener una visión balanceada entre detección y asociación. MOTA se calcula y se muestra por completitud pero no es la métrica de decisión principal, porque puede enmascarar mejoras en la asociación cuando el detector cambia el balance FP/FN.
+% TODO Corrección [11]: Matizar este párrafo: reconocer valor de MOTA para medir calidad global de asociaciones y justificar uso complementario en lugar de restarle importancia.
 
 \subsection{Matriz de confusión}
 La matriz de confusión ---también conocida como matriz de errores o matriz de coincidencias--- es una representación tabular que muestra, de forma simultánea, los aciertos y errores de un clasificador. Cada fila corresponde a la clase real de los ejemplos y cada columna a la clase predicha, lo que permite evaluar de un vistazo la capacidad del modelo para distinguir entre \textbf{verdaderos positivos}, \textbf{falsos positivos}, \textbf{falsos negativos} y \textbf{verdaderos negativos}.
@@ -89,6 +92,7 @@ Se calcula mediante la siguiente ecuación (Ec. \ref{eq:map}):
 donde $N$ es el número de clases y $\text{AP}_i$ es la precisión media de la clase $i$. La precisión media se calcula como el área bajo la curva de precisión-exhaustividad (PR) para cada clase, y se define como el promedio de la precisión en diferentes puntos de \textit{recall}. 
 
 % TODO: Falta agregar fuentes y citas para las métricas de tracking.
+% TODO Corrección [13]: Completar referencias formales para IDF1, MOTA/MOTP, MT/PT/ML, IDSW, Frag y AssA (además de HOTA ya citada). Incluir resultados de MOTA en tablas de resultados.
 \subsection{HOTA, DetA, AssA y LocA}
 HOTA \cite{HOTA} (\textit{Higher Order Tracking Accuracy}) es una métrica de seguimiento que busca equilibrar detección y asociación. HOTA y sus subcomponentes se obtienen emparejando detecciones y \textit{ground-truths} por cuadro (usualmente por IoU) y calculando las razones TP/FP/FN y medidas de asociación por umbral. Es habitual reportar HOTA como AUC (\textit{Area Under the Curve}) sobre distintos umbrales IoU. En la práctica se reporta:
 \begin{itemize}

@@ -1,13 +1,20 @@
 \part*{Introducción}\addcontentsline{toc}{part}{Introducción}
 \section{Contexto general}
+% TODO Corrección [2]: Destacar explícitamente el framework de validación (segmentación + tracking-by-detection) aquí o al final del contexto general. Añadir 1–2 frases resaltando que la contribución incluye un marco de validación conjunto de métricas de precisión (F1, mAP@50-95) y métricas de asociación (HOTA, AssA, IDF1, MOTA) integradas para evaluar mejoras.
+% TODO Corrección [3]: Ahondar en la relevancia de mejorar precisión para estimación de biomasa y detección de lesiones; explicar cómo mejor tracking reduce remuestreo y aumenta muestras por pez mejorando estimaciones individuales.
+% TODO Corrección [4]: Insertar subsecciones antes de Objetivos: 1.2 Problema a Resolver (detallar ineficiencias actuales: descarte masivo, parpadeo, costos cómputo); 1.3 Acercamiento a la Solución (resumen: depuración dataset, entrenamiento YOLO multi-versión, búsqueda hiperparámetros, optimización TensorRT, validación tracking-by-detection); 1.4 Hipótesis (p.ej.: “La depuración especializada del dataset + optimización de hiperparámetros y exportación eficiente mejora simultáneamente la precisión de segmentación y la estabilidad de seguimiento reduciendo parpadeo y costo computacional”).
+% TODO Corrección [6]: Después de la Hipótesis agregar sección "Estructura de la Memoria" explicando brevemente cada capítulo (Introducción, Soluciones existentes, Herramientas y Métodos, Validación, Desarrollo de la Solución, Resultados, Discusión, Conclusiones, Referencias, Anexos) tras la reestructuración solicitada.
 WildSense, empresa spin-off de la UTFSM, entre sus muchas actividades provee servicios de estimación de biomasa con análisis de profundidad estéreo \cite{wildsense-1}. Es en este ámbito que la visión por computadora juega un rol fundamental, donde la segmentación de instancias y el seguimiento funcionan como etapas iniciales en la caracterización biométrica de salmones \cite{wildsense-2} (Fig. \ref{fig:workflow_wildsense}).
 
 Previo a la estimación de masa se descartan las muestras que presentan deficiencias, las cuales constituyen una mayoría de los casos. Esta situación es una clara ineficiencia en el flujo de procesamiento. En consecuencia, se plantea el desarrollo de una base de datos especializada que permita entrenar modelos de segmentación orientados únicamente a identificar los peces de interés, reduciendo así los tiempos de procesamiento en las etapas de seguimiento y posteriores. Además, se busca ampliar y explorar aspectos poco abordados en trabajos previos. Se llevarán a cabo entrenamientos con búsqueda exhaustiva de hiperparámetros en modelos tales como YOLOv8, YOLOv9 y YOLOv11, además de experimentar con el despliegue en Tensor-RT.
 
 \subsection{Objetivo general}
 Entrenar modelos de segmentación de instancias YOLO para una base de datos de salmones mejorada y validar los modelos resultantes en las tareas de segmentación y seguimiento.
+% TODO Corrección [5]: Reformular objetivo general al contexto de jaulas de cultivo en salmonicultura. Ejemplo sugerido (no reemplazado automáticamente):
+% "Mejorar la calidad de la segmentación y el seguimiento de instancias de salmones en jaulas de cultivo acuícola mediante la depuración especializada del dataset, optimización de hiperparámetros y validación integrada de métricas de segmentación y tracking." Sustituir el texto actual por formulación equivalente.
 
 \subsection{Objetivos específicos}
+% TODO Corrección [5]: Revisar que objetivos específicos reflejen mejora de calidad (precisión + estabilidad de seguimiento) y no solo entrenamiento. Ajustar redacción: incluir reducción de parpadeo, eficiencia cómputo, validación con marco integral.
 \begin{itemize}
     \item Optimizar una base de datos de salmones para adecuarla al caso de uso de WildSense.
     \item Evaluar y buscar hiperparámetros que potencien el rendimiento de modelos entrenados.
