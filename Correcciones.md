@@ -1,58 +1,77 @@
-## Correcciones Memoria Julio López
+## Correcciones Memoria Julio López + Changelogs
 
-1) [DONE] piscícola: si bien es un término preciso y correcto, no se usa mucho en la práctica… se utiliza más el término acuícola, aunque como digo está bien, puedes elegir con cuál quedarte.
+1) _piscícola: si bien es un término preciso y correcto, no se usa mucho en la práctica… se utiliza más el término acuícola, aunque como digo está bien, puedes elegir con cuál quedarte._
 
-2) Destaca en la memoria (incluido el Resumen) también el framework de validación de precisión en conjunto con métricas de tracking by detection.
+Decidí cambiar piscícola por acuícola como me recomendó.
 
-3) Ahonda en el contexto acerca de la relevancia en la mejora en precisión para tareas específicas como la estimación de biomasa y detección de lesiones, junto con la relevancia del seguimiento de instancias para reducir el remuestreo y aumentar la cantiddad de muestras por pez, lo cual permite mejorar la estimación de cada instancia en particular.
+2) _Destaca en la memoria (incluido el Resumen) también el framework de validación de precisión en conjunto con métricas de tracking by detection._
 
-4) En la introducción debes agregar antes de los objetivos 3 secciones:
+Cambié el abstract para reflejar que las mejoras buscadas y obtenidas son en calidad de segmentación y mejor tracking. Pero no mostré números ni dije cuales son las métricas de validación usadas. Esto lo hice para no hacer el abstract más largo y no ocupe más de una página.
 
-    1.2 Problema a Resolver: explica el problema a resolver con el mayor detalle posible.
+3) _Ahonda en el contexto acerca de la relevancia en la mejora en precisión para tareas específicas como la estimación de biomasa y detección de lesiones, junto con la relevancia del seguimiento de instancias para reducir el remuestreo y aumentar la cantidad de muestras por pez, lo cual permite mejorar la estimación de cada instancia en particular._
 
-    1.3 Acercamiento a la Solución: Resume para el lector la solución implementada.
+Moví la sección de "Trabajo realizado por WildSense y motivación de mejoras" que se encontraba en la parte de "Trabajo a realizar" a la sección de “Contexto general” en la parte de “Introducción”. De esa manera explico en la introducción cómo funciona el proceso de estimación de biomasa de WildSense para luego indicar bien cuál es el problema (en la subsección siguiente) y como esto es relevante para la calidad de las estimaciones y el uso de muestras en detección de lesiones.
+Además, incluí una figura que muestra un ejemplo de detección de enfermedades implementada por WildSense.
 
-    1.4 Hipótesis: describe la hipótesis a validar en la memoria (se valida en el capítulo de Validación); también se describen preguntas de trabajo, que son aspectos de interés más específicos a validar (también en Validación).
 
-5) En el objetivo general debes poner que es en el contexto de jaulas de cultivo de la salmonicultura (o acuicultura). El objetivo no es entrenar modelos, sino que mejorar la calidad de la segmentación y el seguimiento de instancias de peces (o de salmones siendo especifico), a través de lo que hiciste.
+4) _En la introducción debes agregar antes de los objetivos 3 secciones:_
 
-6) Luego de la Hipótesis, agrega una sección “Estructura de la Memoria” que explique brevemente el contenido de cada capítulo posterior.
+    _1.2 Problema a Resolver: explica el problema a resolver con el mayor detalle posible._
 
-7) Estructura el Estado del Arte como capítulo de la memoria de la siguiente forma: 
-    2.1 Soluciones existentes (Competidores): describe las soluciones existentes al problema o aquellas que más se acercan a resolver el problema. Se deben citar in situ y referenciar al final.
+    _1.3 Acercamiento a la Solución: Resume para el lector la solución implementada._
 
-    2.2 Herramientas y Métodos (Marco Teórico): explica las técnicas y componentes de interés para resolver el problema, pudiendo ser tanto del estado del arte como del estado de la técnica. Se deben citar in situ y referenciar al final.
+    _1.4 Hipótesis: describe la hipótesis a validar en la memoria (se valida en el capítulo de Validación); también se describen preguntas de trabajo, que son aspectos de interés más específicos a validar (también en Validación)._
 
-    2.3 Discusión: Un par de párrafos indicando desde las soluciones existentes en qué se diferencia la solución propuesta en la memoria (contribuciones), describiendo en detalle utilizando los elementos del marco teórico cómo se estructura la solución, enfatizando las diferencias con lo existente.
+Creadas las subsecciones indicadas (“Problema a resolver”, “Acercamiento a la solución” e “Hipótesis”).
 
-La sección 2.1 que escribiste (Visión por computadora y su uso en la acuicultura) es 2.1 Soluciones existentes. El capítulo 3 de Estado del Arte que escribiste debiese ser 2.2 Herramientas y Métodos (ó Marco Teórico). 
+**1.2 Problema a resolver**: conecto la explicación previa en “Contexto general” indicando de forma general y también puntual cuales son los problemas principales con el flujo de trabajo actual. También indico por qué estos problemas nacen de la base de datos usada.
 
-8) En el marco teórico que desarrollaste (que en realidad es “Soluciones Existentes”):
-- En el segundo párrafo destaca también la relevancia de la estimación de biomasa.
-- “modelos tridimensionales generados en Blender, para la estimación de volumen y masa en peces”: ya no utilizamos Blender por lento, así que basta que digas: “modelos tridimensionales para la estimación de volumen y masa en peces”.
-- Si encuentras más técnicas que resuelven los problemas de la acuicultura incluso de forma parcial, debieses agregarlos en esta sección.
-En el estado del arte que desarrollaste (que en realidad es “Marco Teórico”):
-- reducción en consumo energéticos. → reducción en consumo energético.
-- en la 3.5.1 creo relevante hacer el punto con lo previamente mencionado, que en el marco de esta memoria, dada la utilización de modelos de detección y segmentación de instancia, resulta adecuada la consideración de técnicas de tracking-by-detection, que es lo que finalmente presentas en esta sección.
+**1.3 Acercamiento a la solución**: explico brevemente la solución implementada en la memoria.
 
-9) El título “Trabajo a realizar” desbiese ser el Capítulo 3 – Desarrollo de la Solución.
+5) _En el objetivo general debes poner que es en el contexto de jaulas de cultivo de la salmonicultura (o acuicultura). El objetivo no es entrenar modelos, sino que mejorar la calidad de la segmentación y el seguimiento de instancias de peces (o de salmones siendo especifico), a través de lo que hiciste._
 
-10) En 6.3 (base de datos):
-“El primero de carácter público y con la finalidad de replicación de resultados. El segundo de carácter privado, que además es depurado en una versión más refinada para lograr mejores modelos.” 
-→ debieses hablar de dataset dado el caracter de información anotada para entrenamiento y validación. Así esta frase puede ser en “masculino”, pues hablas del “dataset” y no de la base de datos.
+6) _Luego de la Hipótesis, agrega una sección “Estructura de la Memoria” que explique brevemente el contenido de cada capítulo posterior._
 
-11) Cuidado con lo que dices en la sección 7, pues MOTA es de las mejoras métricas en representar directamente la calidad de las asociaciones al tener un énfasis en métricas de coincidencia de tamaño y número de tracks, que es finalmente lo más importante de la tarea de tracking (pues para la precisión tenemos métricas específicas de segmentación). Ve si es necesario ajustar la discusión de resultados a estas consideraciones.
+7) _Estructura el Estado del Arte como capítulo de la memoria de la siguiente forma:_
 
-12) Correcciones ortográficas y de estilo
-- identico → idéntico
-- en como está definida → en cómo está definida
-- imagenes → imágenes
-- “o tomado con pinzas” : busca una manera más formal de decirlo
-- porciento → %
+    _2.1 Soluciones existentes (Competidores): describe las soluciones existentes al problema o aquellas que más se acercan a resolver el problema. Se deben citar in situ y referenciar al final._
 
-13) Me interesa en particular que agregues los resultados de la métrica MOTA.
-Agrega en la sección segmentación un recordatorio de qué métrica es mejor o peor, poniendo con negrita en cada columna el mejor valor para las tablas 11.20 en adelante. (tab:tracking_promedio_model)
+    _2.2 Herramientas y Métodos (Marco Teórico): explica las técnicas y componentes de interés para resolver el problema, pudiendo ser tanto del estado del arte como del estado de la técnica. Se deben citar in situ y referenciar al final._
 
-14) Reestructura la memoria considerando un Capítulo de Validación:
+    _2.3 Discusión: Un par de párrafos indicando desde las soluciones existentes en qué se diferencia la solución propuesta en la memoria (contribuciones), describiendo en detalle utilizando los elementos del marco teórico cómo se estructura la solución, enfatizando las diferencias con lo existente._
 
-- 4. Validación: Se definen las pruebas y métricas asociadas para validar la hipótesis, las preguntas de trabajo y el logro de los objetivos. Se definen también los datasets de prueba si corresponde, o herramientas de evaluación para poder realizar la validación. Luego, se presentan los resultados obtenidos. Finalmente, se agrega una sección Discusión que explica si se logró o no, y en qué grado, validar la hipótesis, las preguntas de trabajo y el logro de los objetivos. En el contexto de lo desarrollado, dado que parte de tus objetivos de desarrollo es la depuración de la base de datos, desde el capítulo 7 de Métricas debisesen ser secciones del capítulo de Validación. El capítulo 12 que hiciste llámalo como sección “Discusión” donde, como hiciste, discutas los resultados más relevantes previos a la Conclusión de la memoria.
+    _La sección 2.1 que escribiste (Visión por computadora y su uso en la acuicultura) es 2.1 Soluciones existentes. El capítulo 3 de Estado del Arte que escribiste debiese ser 2.2 Herramientas y Métodos (ó Marco Teórico)._
+
+
+8) _En el marco teórico que desarrollaste (que en realidad es “Soluciones Existentes”):_
+
+- _En el segundo párrafo destaca también la relevancia de la estimación de biomasa._
+- _“modelos tridimensionales generados en Blender, para la estimación de volumen y masa en peces”: ya no utilizamos Blender por lento, así que basta que digas: “modelos tridimensionales para la estimación de volumen y masa en peces”._
+- _Si encuentras más técnicas que resuelven los problemas de la acuicultura incluso de forma parcial, debieses agregarlos en esta sección._
+
+_En el estado del arte que desarrollaste (que en realidad es “Marco Teórico”):_
+
+- _reducción en consumo energéticos. → reducción en consumo energético._
+- _en la 3.5.1 creo relevante hacer el punto con lo previamente mencionado, que en el marco de esta memoria, dada la utilización de modelos de detección y segmentación de instancia, resulta adecuada la consideración de técnicas de tracking-by-detection, que es lo que finalmente presentas en esta sección._
+
+9) _El título “Trabajo a realizar” desbiese ser el Capítulo 3 – Desarrollo de la Solución._
+
+10) _En 6.3 (base de datos):_
+
+    _“El primero de carácter público y con la finalidad de replicación de resultados. El segundo de carácter privado, que además es depurado en una versión más refinada para lograr mejores modelos.” → debieses hablar de dataset dado el caracter de información anotada para entrenamiento y validación. Así esta frase puede ser en “masculino”, pues hablas del “dataset” y no de la base de datos._
+
+11) _Cuidado con lo que dices en la sección 7, pues MOTA es de las mejoras métricas en representar directamente la calidad de las asociaciones al tener un énfasis en métricas de coincidencia de tamaño y número de tracks, que es finalmente lo más importante de la tarea de tracking (pues para la precisión tenemos métricas específicas de segmentación). Ve si es necesario ajustar la discusión de resultados a estas consideraciones._
+
+12) _Correcciones ortográficas y de estilo_
+- _identico → idéntico_
+- _en como está definida → en cómo está definida_
+- _imagenes → imágenes_
+- _“o tomado con pinzas” : busca una manera más formal de decirlo_
+- _porciento → %_
+
+13) _Me interesa en particular que agregues los resultados de la métrica MOTA.
+Agrega en la sección segmentación un recordatorio de qué métrica es mejor o peor, poniendo con negrita en cada columna el mejor valor para las tablas 11.20 en adelante. (tab:tracking\_promedio\_model)_
+
+14) _Reestructura la memoria considerando un Capítulo de Validación:_
+
+- _4. Validación: Se definen las pruebas y métricas asociadas para validar la hipótesis, las preguntas de trabajo y el logro de los objetivos. Se definen también los datasets de prueba si corresponde, o herramientas de evaluación para poder realizar la validación. Luego, se presentan los resultados obtenidos. Finalmente, se agrega una sección Discusión que explica si se logró o no, y en qué grado, validar la hipótesis, las preguntas de trabajo y el logro de los objetivos. En el contexto de lo desarrollado, dado que parte de tus objetivos de desarrollo es la depuración de la base de datos, desde el capítulo 7 de Métricas debisesen ser secciones del capítulo de Validación. El capítulo 12 que hiciste llámalo como sección “Discusión” donde, como hiciste, discutas los resultados más relevantes previos a la Conclusión de la memoria._
