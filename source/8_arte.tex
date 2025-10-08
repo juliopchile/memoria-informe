@@ -1,6 +1,27 @@
-% Introducción
-\section{Estado del arte}
-% TODO Corrección [7]: Este archivo debe integrarse como sección 2.2 Herramientas y Métodos (actual "Estado del arte" pasará a ser parte del Capítulo 2 reestructurado). Incluir encabezado adecuado y ajustar numeración tras mover 7_MarcoTeorico a 2.1.
+\part*{Estado del Arte}\addcontentsline{toc}{part}{Estado del Arte}
+% TODO Corrección [7] [DONE 1/2]: Reestructurar: Este archivo pasará a ser Capítulo 2 Estado del Arte con secciones 2.1 Soluciones existentes (contenido actual de esta subsección) y 2.2 Herramientas y Métodos (mover parte técnica al archivo 8_arte.tex). Añadir 2.3 Discusión (comparar solución propuesta versus existentes; destacar contribuciones: dataset depurado, marco conjunto segmentación+tracking, integración optimización TensorRT).
+\section{Soluciones Existentes}
+% TODO Corrección [8]: En este segundo párrafo añadir explícitamente relevancia de estimación de biomasa (ligada a precisión volumétrica y salud) y mención de reducción de remuestreo gracias a mejor tracking.
+La visión por computadora, también llamada visión artificial, es una disciplina dentro del aprendizaje de máquina y la informática que se centra en desarrollar algoritmos y sistemas capaces de interpretar y analizar imágenes y videos. Esto se logra mediante técnicas de procesamiento digital, modelado matemático, análisis de patrones y métodos estadísticos que permiten identificar objetos, segmentar escenas y comprender el contenido visual. Tiene aplicaciones prácticas en áreas como la robótica, la seguridad o la conducción autónoma.
+
+La acuicultura constituye cerca de la mitad de la producción de productos marinos en el mundo \cite{FAO2024} donde la piscicultura forma parte importante de la actividad de acuicultura del país \cite{chile2017levantamiento}. Es entonces de vital importancia monitorear la integridad y salud de los peces por medio de revisiones regulares para asegurar una alimentación adecuada y la detección temprana de enfermedades. Lamentablemente, las mediciones manuales dependen de las condiciones meteorológicas, exigen mucho tiempo y trabajo y, sobre todo, son invasivas y estresantes para los peces \cite{Tonachella2022}.
+
+Como solución alternativa se han propuesto métodos de estimación estadística para la talla de peces mediante sensores, radares y cámaras \cite{Tonachella2022} (Fig. \ref{fig:workflow_tonachella}), y el uso de modelos de aprendizaje automático en detección de enfermedades \cite{Ahmed2022}. Estas soluciones prometen ser más escalables, menos costosas y ser menos intrusivas en el ciclo de vida de los animales.
+
+\begin{figure}[htbp]
+\begin{center}
+    \includegraphics[width=0.9\textwidth]{figures/workflow_tonachella.png}
+    \caption[Flujo de trabajo propuesto por Tonachella para estimación de la talla en peces]{Proceso general del método propuesto por Tonachella \cite{Tonachella2022}: reconocimiento automático por visión artificial y estimación de la talla en peces.}
+    \label{fig:workflow_tonachella}
+\end{center}
+\end{figure}
+
+WildSense por su parte implementa una novedosa técnica basada en el emparejamiento de mapas de profundidad obtenidos con cámaras estéreo y modelos tridimensionales generados en Blender, para la estimación de volumen y masa en peces.
+% TODO Corrección [8]: Reemplazar “modelos tridimensionales generados en Blender, para la estimación de volumen y masa en peces” por “modelos tridimensionales para la estimación de volumen y masa en peces” (ya no se usa Blender por desempeño). No modificado automáticamente.
+% TODO Corrección [8]: Evaluar inclusión de técnicas adicionales usadas en acuicultura: monitoreo de lesiones con redes de clasificación, estimación automática de comportamiento (schooling patterns), análisis de alimentación mediante detección de pellets, sensores multiespectrales para salud, integración sonar + visión.
+
+\section{Herramientas y Métodos}
+% TODO Corrección [7] [DONE]: Este archivo debe integrarse como sección 2.2 Herramientas y Métodos (actual "Estado del arte" pasará a ser parte del Capítulo 2 reestructurado). Incluir encabezado adecuado y ajustar numeración tras mover 7_MarcoTeorico a 2.1.
 % TODO Corrección [7]: Al final de este capítulo agregar subsección 2.3 Discusión (contrastar solución propuesta vs. soluciones existentes; justificar elección de tracking-by-detection con métricas HOTA, AssA, IDF1, MOTA; destacar contribución de depuración de dataset y exportación eficiente).
 En la presente sección se exponen los avances recientes y las técnicas predominantes en tareas de visión por computadora, enfocándose en la segmentación de instancias, el seguimiento de objetos y la optimización del entrenamiento de modelos. Se abordan además las técnicas actuales de optimización y las consideraciones en validación y despliegue.
 

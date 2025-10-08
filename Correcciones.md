@@ -69,6 +69,11 @@ Además modifiqué los "Objetivos específicos" para que sean más coherentes co
 
     _La sección 2.1 que escribiste (Visión por computadora y su uso en la acuicultura) es 2.1 Soluciones existentes. El capítulo 3 de Estado del Arte que escribiste debiese ser 2.2 Herramientas y Métodos (ó Marco Teórico)._
 
+Se cambió la sección de "Marco Teórico" por la parte de "Estado del Arte".
+
+Se cambió la subsección de "Visión por computadora y su uso en la acuicultura" por la sección "Herramientas y Métodos".
+
+Se creó la sección de "Discusión" al final de la parte de "Estado del Arte
 
 ---
 8) _En el marco teórico que desarrollaste (que en realidad es “Soluciones Existentes”):_
