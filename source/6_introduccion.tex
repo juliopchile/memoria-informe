@@ -1,15 +1,60 @@
 \part*{Introducción}\addcontentsline{toc}{part}{Introducción}
 \section{Contexto general}
 % TODO Corrección [2]: Destacar explícitamente el framework de validación (segmentación + tracking-by-detection) aquí o al final del contexto general. Añadir 1–2 frases resaltando que la contribución incluye un marco de validación conjunto de métricas de precisión (F1, mAP@50-95) y métricas de asociación (HOTA, AssA, IDF1, MOTA) integradas para evaluar mejoras.
-% TODO Corrección [3]: Ahondar en la relevancia de mejorar precisión para estimación de biomasa y detección de lesiones; explicar cómo mejor tracking reduce remuestreo y aumenta muestras por pez mejorando estimaciones individuales.
+% TODO Corrección [3] [DONE]: Ahondar en la relevancia de mejorar precisión para estimación de biomasa y detección de lesiones; explicar cómo mejor tracking reduce remuestreo y aumenta muestras por pez mejorando estimaciones individuales.
 % TODO Corrección [4]: Insertar subsecciones antes de Objetivos: 1.2 Problema a Resolver (detallar ineficiencias actuales: descarte masivo, parpadeo, costos cómputo); 1.3 Acercamiento a la Solución (resumen: depuración dataset, entrenamiento YOLO multi-versión, búsqueda hiperparámetros, optimización TensorRT, validación tracking-by-detection); 1.4 Hipótesis (p.ej.: “La depuración especializada del dataset + optimización de hiperparámetros y exportación eficiente mejora simultáneamente la precisión de segmentación y la estabilidad de seguimiento reduciendo parpadeo y costo computacional”).
 % TODO Corrección [6]: Después de la Hipótesis agregar sección "Estructura de la Memoria" explicando brevemente cada capítulo (Introducción, Soluciones existentes, Herramientas y Métodos, Validación, Desarrollo de la Solución, Resultados, Discusión, Conclusiones, Referencias, Anexos) tras la reestructuración solicitada.
-WildSense, empresa spin-off de la UTFSM, entre sus muchas actividades provee servicios de estimación de biomasa con análisis de profundidad estéreo \cite{wildsense-1}. Es en este ámbito que la visión por computadora juega un rol fundamental, donde la segmentación de instancias y el seguimiento funcionan como etapas iniciales en la caracterización biométrica de salmones \cite{wildsense-2} (Fig. \ref{fig:workflow_wildsense}).
+WildSense, empresa spin-off de la UTFSM, entre sus muchas actividades provee servicios de estimación de biomasa en peces con análisis de profundidad estéreo \cite{wildsense-1}. Es en este ámbito que la visión por computadora juega un rol fundamental, donde la segmentación de instancias y el seguimiento funcionan como etapas iniciales en la caracterización biométrica de salmones \cite{wildsense-2}. Es muy importante que estas etapas sean robustas y precisas, ya que cualquier error puede propagarse a las etapas posteriores, afectando la calidad de las estimaciones finales.
 
-Previo a la estimación de masa se descartan las muestras que presentan deficiencias, las cuales constituyen una mayoría de los casos. Esta situación es una clara ineficiencia en el flujo de procesamiento. En consecuencia, se plantea el desarrollo de una base de datos especializada que permita entrenar modelos de segmentación orientados únicamente a identificar los peces de interés, reduciendo así los tiempos de procesamiento en las etapas de seguimiento y posteriores. Además, se busca ampliar y explorar aspectos poco abordados en trabajos previos. Se llevarán a cabo entrenamientos con búsqueda exhaustiva de hiperparámetros en modelos tales como YOLOv8, YOLOv9 y YOLOv11, además de experimentar con el despliegue en Tensor-RT.
+Para entender la motivación detrás de este proyecto es importante conocer el flujo de trabajo implementado por WildSense, para así identificar debilidades y proponer posibles soluciones. A continuación se explica el proceso, el cual además es ilustrado en la figura \ref{fig:workflow_wildsense}.
+
+\begin{enumerate}
+    \item \textbf{Captura en video}: se registran videos de salmones mediante cámaras estéreo, obteniendo información visual, mapas de profundidad y nubes de puntos para la escena.
+    \item \textbf{Detección y segmentación}: las imágenes se someten a un procesamiento mediante modelos de segmentación de instancias, que generan predicciones referentes a la posición (detección) y al contorno (segmentación) de los peces presentes en la escena. Este procedimiento posibilita el aislamiento de información visual y espacial correspondiente a los objetos de interés ---salmones en este caso--- del fondo.
+    \item \textbf{Tracking}: con el fin de mitigar errores derivados de mediciones únicas, se implementa una estimación estadística basada en múltiples muestras, lo que requiere agrupar las detecciones correspondientes a cada pez. La agrupación se logra mediante algoritmos de seguimiento o \textit{tracking}. Cabe mencionar que si bien en ocasiones la tarea de seguimiento se integra al proceso de detección en videos, en el caso de WildSense, se utilizan modelos YOLO que procesan imágenes de forma independiente sin incluir seguimiento. Por el elevado costo computacional que implicaría incorporar un modelo adicional específico solo para el seguimiento, se opta por utilizar la técnica de seguimiento basado en detección, aprovechando las detecciones ya obtenidas.
+    \item \textbf{Post-procesado}: se realiza filtrado de muestras deficientes. Estas constituyen casos donde el pez está incompleto, cubierto, muy alejado para realizar una estimación apropiada o el número de muestras rastreadas son muy pocas como para realizar una estimación confiable.
+    \item \textbf{Estimación de volumen}: finalmente se usan los datos de profundidad tomados con las cámaras estéreo y se emparejan a modelos tridimensionales creados en Blender, con los cuales es posible realizar estimaciones de volumen y masa.
+\end{enumerate}
+
+\begin{figure}[htbp]
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{figures/workflow_wildsense.png}
+    \caption[Flujo de trabajo implementado por WildSense para estimación de masa y volumen en peces]{Diagrama de flujo con el proceso estimación de volumen y biomasa de salmones implementada por WildSense \cite{wildsense-2}.}
+    \label{fig:workflow_wildsense}
+\end{center}
+\end{figure}
+
+Cabe mencionar que, si bien en el presente WildSense no ofrece servicios de detección de enfermedades o lesiones en peces, el monitoreo sanitario constituye una línea estratégica en desarrollo y proyección. En consecuencia, se vuelve prioritario que el material capturado para la estimación de biomasa y volumen sea reutilizable para futuros análisis de salud. Esto exige capturas con buena visibilidad en peces correctamente segmentados (Fig. \ref{fig:detect_lesions}).
+
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tabular}{ccc}
+    % Pez 1
+    %\includegraphics[width=0.26\linewidth]{figures/anomaly_detection/fish1.jpeg} &
+    %\includegraphics[width=0.26\linewidth]{figures/anomaly_detection/mask1.png} &
+    %\includegraphics[width=0.26\linewidth]{figures/anomaly_detection/detect1.jpeg} \\[6pt]
+
+    % Pez 2
+    %\includegraphics[width=0.26\linewidth]{figures/anomaly_detection/fish2.jpeg} &
+    %\includegraphics[width=0.26\linewidth]{figures/anomaly_detection/mask2.png} &
+    %\includegraphics[width=0.26\linewidth]{figures/anomaly_detection/detect2.jpeg} \\[6pt]
+
+    % Pez 3
+    \includegraphics[width=0.26\linewidth]{figures/anomaly_detection/fish3.jpeg} &
+    \includegraphics[width=0.26\linewidth]{figures/anomaly_detection/mask3.png} &
+    \includegraphics[width=0.26\linewidth]{figures/anomaly_detection/detect3.jpeg} \\[6pt]
+  \end{tabular}
+\caption[Detección de enfermedades en peces implementada por WildSense]{Detección de enfermedades en peces implementada por WildSense \cite{wildsense-2}. Izquierda: imagen original. Centro: máscara del pez. Derecha: detección de anomalías (lesiones).}
+\label{fig:detect_lesions}
+\end{figure}
+
+% TODO Corrección [3]: Ampliar motivación incorporando impacto en estimación de biomasa y detección de lesiones; explicar cómo reducir remuestreo incrementa muestras por pez y precisión de estimaciones individuales.
+
 
 \subsection{Objetivo general}
-Entrenar modelos de segmentación de instancias YOLO para una base de datos de salmones mejorada y validar los modelos resultantes en las tareas de segmentación y seguimiento.
+Desarrollar y validar un sistema integrado de visión que permita segmentar y seguir peces de forma robusta para respaldar estimaciones confiables de biomasa y habilitar análisis posteriores de salud.
+% (Versión original) Entrenar modelos de segmentación de instancias YOLO para una base de datos de salmones mejorada y validar los modelos resultantes en las tareas de segmentación y seguimiento.
 % TODO Corrección [5]: Reformular objetivo general al contexto de jaulas de cultivo en salmonicultura. Ejemplo sugerido (no reemplazado automáticamente):
 % "Mejorar la calidad de la segmentación y el seguimiento de instancias de salmones en jaulas de cultivo acuícola mediante la depuración especializada del dataset, optimización de hiperparámetros y validación integrada de métricas de segmentación y tracking." Sustituir el texto actual por formulación equivalente.
 
