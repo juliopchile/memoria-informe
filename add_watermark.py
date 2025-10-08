@@ -221,14 +221,14 @@ if __name__ == "__main__":
     config = cast(Config, {
         "logo1_path": "logos/logo-wildsense.png",
         "logo2_path": "logos/logo-aquarov.png",
-        "scale1": 0.17,
-        "scale2": 0.17,
+        "scale1": 0.1, # 0.17,
+        "scale2": 0.1, # 0.17,
         "padding": 20,
         "alpha1": 0.5,
         "alpha2": 0.65,
         "pattern_mode": "grid",
         "pattern_logo": "both",
-        "pattern_gap": 85,
+        "pattern_gap": 70, # 80,
         "pattern_place_corners": False,
         "pattern_random_start": True,
         "pattern_extend_outwards": True,
@@ -236,9 +236,10 @@ if __name__ == "__main__":
     })
 
     input_dirs = [
-        "figures_without_watermark/results",
-        "figures_without_watermark/filter_examples",
-        "figures_without_watermark/frames_guardados"
+        #"figures_without_watermark/filter_examples",
+        #"figures_without_watermark/frames_guardados",
+        "figures_without_watermark/muestras",
+        #"figures_without_watermark/results"
     ]
     out_root = "figures"
     total = 0
