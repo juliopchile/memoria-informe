@@ -96,6 +96,8 @@ Video\_2 & 220 & 37 & 1855 & Aguas azules con baja visibilidad. \\ \hline
 \end{tabular}
 \end{table}
 
+
+
 \begin{figure}[htbp]
     \centerline{
     \includegraphics[width=.9\linewidth]{figures/muestras/deepfish_muestra.jpg}}
@@ -110,12 +112,22 @@ Video\_2 & 220 & 37 & 1855 & Aguas azules con baja visibilidad. \\ \hline
     \label{salmon_muestra}
 \end{figure}
 
+\begin{comment}
 \begin{figure}[htbp]
     \centerline{
     \includegraphics[width=.9\linewidth]{figures/muestras/Muestras_video.png}}
     \caption[Muestra de la base de datos de seguimiento]{Muestra de imágenes de la base de datos de seguimiento.}
     \label{tracking_muestra}
 \end{figure}
+\end{comment}
+
+\TwoImgs[0.9\textwidth][0.8em]
+{figures/muestras/Muestra_video_1.png}% Image_1
+{Muestra de la secuencia Video\_1}% Caption_1 & Label_1 (optional)
+{figures/muestras/Muestra_video_2.png}% Image_2
+{Muestra de la secuencia Video\_2}% Caption_2 & Label_2 (optional)
+[Muestra de la base de datos de seguimiento]{Muestra de imágenes de la base de datos de seguimiento.}% Global caption
+{tracking_muestra}% Global label
 
 \subsubsection{Deepfish}
 Esta base de datos de dominio público fue desarrollada como un \textit{benchmark} para tareas de clasificación con peces, etiquetando en variados contextos y habitats \cite{Deepfish}. Para este trabajo solo se utilizaron las etiquetas e imágenes en la tarea de segmentación de instancias, pero el \textit{dataset} completo también contempla otras tareas de clasificación. Para el despliegue del mismo se utilizó una versión trabajada con anterioridad disponible desde Roboflow \cite{DeepfishRoboflow}.

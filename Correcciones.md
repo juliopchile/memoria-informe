@@ -12,7 +12,7 @@ Cambié el abstract para reflejar que las mejoras buscadas y obtenidas son en ca
 ---
 3) _Ahonda en el contexto acerca de la relevancia en la mejora en precisión para tareas específicas como la estimación de biomasa y detección de lesiones, junto con la relevancia del seguimiento de instancias para reducir el remuestreo y aumentar la cantidad de muestras por pez, lo cual permite mejorar la estimación de cada instancia en particular._
 
-Moví la sección de "Trabajo realizado por WildSense y motivación de mejoras" que se encontraba en la parte de "Trabajo a realizar" a la sección de “Contexto general” en la parte de “Introducción”. De esa manera explico en la introducción cómo funciona el proceso de estimación de biomasa de WildSense para luego indicar bien cuál es el problema (en la subsección siguiente) y como esto es relevante para la calidad de las estimaciones y el uso de muestras en detección de lesiones.
+Moví el contenido de la sección **4. Trabajo realizado por WildSense y motivación de mejoras** que se encontraba en la parte de **Trabajo a realizar** a la ahora nueva subsección **1.1 Motivación de mejora** en la parte de **Introducción**. De esa manera explico en la introducción cómo funciona el proceso de estimación de biomasa de WildSense para luego indicar bien cuál es el problema (en la subsección siguiente) y como esto es relevante para la calidad de las estimaciones y el uso de muestras en detección de lesiones.
 
 Además, incluí una figura que muestra un ejemplo de detección de enfermedades implementada por WildSense.
 
@@ -25,31 +25,29 @@ Además, incluí una figura que muestra un ejemplo de detección de enfermedades
 
     _1.4 Hipótesis: describe la hipótesis a validar en la memoria (se valida en el capítulo de Validación); también se describen preguntas de trabajo, que son aspectos de interés más específicos a validar (también en Validación)._
 
-Creadas las subsecciones indicadas (“Problema a resolver”, “Acercamiento a la solución” e “Hipótesis”).
+Creadas las subsecciones indicadas:
 
-**1.2 Problema a resolver**: conecto la explicación previa en “Contexto general” indicando de forma general y también puntual cuales son los problemas principales con el flujo de trabajo actual. También indico por qué estos problemas nacen de la base de datos usada.
+**1.2. Problema a resolver**: conecto la explicación previa en **1. Contexto general** y **1.1. Motivación de mejora**  indicando de forma general y también puntual cuales son los problemas principales con el flujo de trabajo actual. También indico por qué estos problemas nacen de la base de datos usada.
 
-**1.3 Acercamiento a la solución**: explico la solución implementada en la memoria, resumiendo a grandes rasgos lo que se hizo en la misma: depurar el dataset de salmones; crear el dataset de seguimiento para salmones; hacer pruebas con diferentes modelos YOLO, optimización de hiperparámetros y exportación TensoRT; y las pruebas hechas con Deepfish con fines de replicación, al menos para la parte de segmentación de instancias.
+**1.3. Acercamiento a la solución**: explico la solución implementada en la memoria, resumiendo a grandes rasgos lo que se hizo en la misma: depurar el dataset de salmones; crear el dataset de seguimiento para salmones; hacer pruebas con diferentes modelos YOLO, optimización de hiperparámetros y exportación TensoRT; y las pruebas hechas con Deepfish con fines de replicación, al menos para la parte de segmentación de instancias.
 
 ```
-[DUDA] debería de poner un resumen de lo que voy a hacer? o solo un resumen de la solución implementada? siento que es casi lo mismo, pero no exactamente igual ya que al poner que haré también incluyo las cosas que se crearon para este proyecto. Digame que es lo que considera mejor.
+[DUDA] ¿Debería de poner un resumen de lo que hice o solo un resumen de la solución implementada? siento que es casi lo mismo, pero no exactamente igual ya que al poner que hice queda algo más largo, pero igual me calzó bien. Digame que es lo que considera más apropiado.
 ```
 
-**1.4 Hipótesis**: describo los resultados que espero obtener y con qué métricas voy a corroborar esto.
+**1.4. Hipótesis**: describo los resultados que espero obtener y con qué métricas voy a corroborar esto.
 
 ```
 [COMENTARIO]
 Debo de admitir que la inclusión de estas 3 subsecciones no es la más "elegante", incurro bastante en repetición de ideas y palabras. Quizá soy demasiado verboso en ellas. También tengo miedo de que la introducción quede demasiado larga.
 
-Es más, la parte de "Trabajo realizado por WildSense y motivación de mejoras" que moví a la sección de "Contexto general" en la introducción, originalmente iba a ser parte de la introducción misma, pero leí por ahí un documento que explica el formato de las memorias para ELO y decía que la introducción + Marco Teórico y SOTA no pueden sobrepasar cierto largo, yo no respeté mucho eso, ya que igual me exedí, pero a fin de no exederme taaanto moví la sección de motivación a la parte de "Trabajo a realizar". Además me parecía que era mejor ponerla luego del SOTA, ya que en esta sección se explican terminologías y nombres utilizados en la otra sección, por ende ponerlas en la introducción podría ser muy intrusiva para el lector, al exponerlo a tantos conceptos que no han sido explicados aún. Pero finalmente la tuve que poner igualmente en la introducción, así que xD.
+Además, la sección de "Trabajo realizado por WildSense y motivación de mejoras" que moví a la sección de "Contexto General" en la introducción, originalmente iba a estar allí, pero leí por ahí un documento que explica el formato de las memorias para ELO y decía que la introducción + Marco Teórico y SOTA no pueden sobrepasar cierto largo, yo no respeté mucho eso, ya que igual me exedí, pero a fin de no exederme taaanto moví esa sección a la parte "Trabajo a realizar" (ahora llamada "Desarrollo de la Solución"). Además me parecía que era mejor poner la motivación luego del SOTA, ya que en el SOTA se explican terminologías y nombres utilizados en la otra sección, por ende ponerlas en la introducción podría ser muy intrusiva para el lector, al exponerlo a tantos conceptos que no han sido explicados aún. Pero finalmente la tuve que poner igualmente en la introducción, así que xD.
 ```
 
 ---
 5) _En el objetivo general debes poner que es en el contexto de jaulas de cultivo de la salmonicultura (o acuicultura). El objetivo no es entrenar modelos, sino que mejorar la calidad de la segmentación y el seguimiento de instancias de peces (o de salmones siendo especifico), a través de lo que hiciste._
 
-Mejoré la subsección de "Objetivo general" para especificar el contexto de jaulas de cultivo en acuicultura y que sea más coherente con los puntos especificados en las subsecciones anteriores ("Problema a resolver", "Acercamiento a la solución" e "Hipótesis").
-
-Además modifiqué los "Objetivos específicos" para que sean más coherentes con los cambios realizados.
+Mejoré la ahora subsección **1.5. Objetivo general** para especificar el contexto de jaulas de cultivo en acuicultura y que sea más coherente con los puntos especificados en las subsecciones anteriores. Además modifiqué los **1.6. Objetivo específicos** para que sean más coherentes con los cambios realizados.
 
 ---
 6) _Luego de la Hipótesis, agrega una sección “Estructura de la Memoria” que explique brevemente el contenido de cada capítulo posterior._
@@ -69,11 +67,13 @@ Además modifiqué los "Objetivos específicos" para que sean más coherentes co
 
     _La sección 2.1 que escribiste (Visión por computadora y su uso en la acuicultura) es 2.1 Soluciones existentes. El capítulo 3 de Estado del Arte que escribiste debiese ser 2.2 Herramientas y Métodos (ó Marco Teórico)._
 
-Se cambió la sección de "Marco Teórico" por la parte de "Estado del Arte".
+Se cambió la sección **2. Marco Teórico** por la parte **Estado del Arte**.
 
-Se cambió la subsección de "Visión por computadora y su uso en la acuicultura" por la sección "Herramientas y Métodos".
+Se cambió la subsección **2.1. Visión por computadora y su uso en la acuicultura** por la sección **2. Soluciones Existentes**.  Incluí unas imagenes de ejemplo donde se ve como miden peces de forma tradicional (a mano o con máquinas), para ilustrar mejor la idea de que estas técnicas son invasivas y estresantes para el animal. Además añadí un pequeño parrafo hablando de las proyecciones de WildSense en detección de enfermedades, inspección de mallas y monitoreo subacuático.
 
-Se creó la sección de "Discusión" al final de la parte de "Estado del Arte
+Se cambió la sección **3. Estado del arte** por **3. Herramientas y Métodos**, ya que "Estado del Arte" es ahora el nombre de la parte entera. El contenido no se cambió.
+
+Se creó la sección de **4. Discusión** al final de la parte de **Estado del Arte**. Aquí menciono cual es la diferencia entre mi "solución" y otras soluciones existentes (WildSense) y por qué tiene valor mi propuesta. También justifico el uso de YOLO por sobre otras arquitecturas, eso se relaciona con las técnicas de entrenamiento y exportación.
 
 ---
 8) _En el marco teórico que desarrollaste (que en realidad es “Soluciones Existentes”):_
