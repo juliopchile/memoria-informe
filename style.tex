@@ -28,8 +28,6 @@
 \usepackage{svg}
 %\usepackage{subfig}
 \usepackage{subcaption}
-
-\usepackage{amssymb}
 \usepackage{pifont}
 \newcommand{\cmark}{\ding{51}}%
 \newcommand{\xmark}{\ding{55}}%
@@ -710,3 +708,209 @@
 
 
 \renewcommand{\glstextformat}[1]{\textit{#1}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FIGURAS DE DISPOSICIÓN Y TAMAÑO AJUSTABLE %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{xfp}      % cálculos en punto flotante
+\usepackage{calc}
+\usepackage{xparse}
+\usepackage{etoolbox} % utilidades CSV (opcional)
+\makeatletter
+
+% ---------------- \TwoImgs (simple, para 2 imágenes con misma altura calculada) ----------------
+\newsavebox{\TwoImgs@BoxA}
+\newsavebox{\TwoImgs@BoxB}
+\newlength{\TwoImgs@maxwidth}
+\newlength{\TwoImgs@sep}
+\newlength{\TwoImgs@Awd}
+\newlength{\TwoImgs@Aht}
+\newlength{\TwoImgs@Bwd}
+\newlength{\TwoImgs@Bht}
+\newlength{\TwoImgs@computedheight}
+\setlength{\TwoImgs@maxwidth}{0.9\textwidth}
+\setlength{\TwoImgs@sep}{1em}
+\newcommand{\TwoImgsSetDefaults}[2]{%
+  \setlength{\TwoImgs@maxwidth}{#1}%
+  \setlength{\TwoImgs@sep}{#2}%
+}
+\NewDocumentCommand{\TwoImgs}{ O{\TwoImgs@maxwidth} O{\TwoImgs@sep} m m m m O{} m m }{%
+  \setlength{\TwoImgs@maxwidth}{#1}%
+  \setlength{\TwoImgs@sep}{#2}%
+  % medir imágenes
+  \sbox{\TwoImgs@BoxA}{\includegraphics{#3}}%
+  \sbox{\TwoImgs@BoxB}{\includegraphics{#5}}%
+  \setlength{\TwoImgs@Awd}{\wd\TwoImgs@BoxA}%
+  \setlength{\TwoImgs@Aht}{\ht\TwoImgs@BoxA}%
+  \setlength{\TwoImgs@Bwd}{\wd\TwoImgs@BoxB}%
+  \setlength{\TwoImgs@Bht}{\ht\TwoImgs@BoxB}%
+  % altura común (fórmula estable)
+  \setlength{\TwoImgs@computedheight}{%
+    \fpeval{%
+      (\strip@pt\TwoImgs@maxwidth - \strip@pt\TwoImgs@sep) /
+      ( (\strip@pt\TwoImgs@Awd)/(\strip@pt\TwoImgs@Aht) + (\strip@pt\TwoImgs@Bwd)/(\strip@pt\TwoImgs@Bht) )
+    }pt%
+  }%
+  % salida
+  \begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{\dimexpr 0.5\TwoImgs@maxwidth\relax}
+      \centering
+      \includegraphics[height=\TwoImgs@computedheight,keepaspectratio]{#3}%
+      \caption{#4}%
+    \end{subfigure}%
+    \hspace{\TwoImgs@sep}%
+    \begin{subfigure}[b]{\dimexpr 0.5\TwoImgs@maxwidth\relax}
+      \centering
+      \includegraphics[height=\TwoImgs@computedheight,keepaspectratio]{#5}%
+      \caption{#6}%
+    \end{subfigure}
+    % aquí elegimos entre \caption{long} o \caption[short]{long}
+    \ifstrempty{#7}{%
+      \caption{#8}%
+    }{%
+      \caption[#7]{#8}%
+    }%
+    \label{#9}
+  \end{figure}
+}
+
+% ---------------- \EqualColGrid (divide el ancho en columnas iguales) ----------------
+\newlength{\EqualColGrid@cellwidth}
+\NewDocumentCommand{\EqualColGrid}{ O{0.9\textwidth} O{1em} m m m m m }{%
+  % #1 maxwidth, #2 sep, #3 cols, #4 files CSV, #5 captions CSV, #6 caption general, #7 label
+  \begingroup
+  \setlength{\@tempdima}{#1}%
+  \setlength{\@tempdimb}{#2}%
+  \edef\ECG@cols{#3}%
+  \setlength{\EqualColGrid@cellwidth}{\dimexpr (\@tempdima - (\ECG@cols-1)\@tempdimb) / \ECG@cols\relax}%
+  \begin{figure}[htbp]\centering
+    \newcounter{ECG@i}\setcounter{ECG@i}{0}%
+    % helper to fetch nth caption
+    \newcommand\EqualColGrid@getcap[1]{%
+      \edef\EqualColGrid@ans{}%
+      \newcounter{ECG@tmp}\setcounter{ECG@tmp}{0}%
+      \renewcommand{\do##1}{\stepcounter{ECG@tmp}\ifnum\value{ECG@tmp}=#1 \edef\EqualColGrid@ans{##1}\fi}%
+      \docsvlist{#5}%
+      \EqualColGrid@ans
+    }%
+    \renewcommand{\do}[1]{%
+      \stepcounter{ECG@i}%
+      \edef\ECG@file{##1}%
+      \edef\ECG@cap{\EqualColGrid@getcap{\theECG@i}}%
+      \begin{subfigure}[b]{\EqualColGrid@cellwidth}\centering
+        \includegraphics[width=\linewidth,keepaspectratio]{\ECG@file}%
+        \caption{\ECG@cap}%
+      \end{subfigure}%
+      % separación y salto de línea al final de cada fila
+      \ifnum\value{ECG@i}<\numexpr\docsvlistlen{#4}\relax
+        \ifnum\value{ECG@i}<\ECG@cols
+          \hspace{#2}%
+        \fi
+        \ifnum\value{ECG@i}=\numexpr\ECG@cols * (\numexpr(\value{ECG@i}-1)/\ECG@cols\relax)\relax
+          \\[0.5em]%
+        \fi
+      \fi
+    }%
+    \docsvlist{#4}%
+    \caption{#6}\label{#7}%
+  \end{figure}
+  \endgroup
+}
+
+% ---------------- \UniformGrid (misma altura para todas las imágenes; filas no exceden maxwidth) ----------------
+\newcounter{UG@count}
+\newcounter{UG@cols}
+\newcounter{UG@rows}
+\newlength{\UG@maxwidth}
+\newlength{\UG@seph}
+\newlength{\UG@cellwidth}
+\newlength{\UG@H}
+\NewDocumentCommand{\UniformGrid}{ O{0.9\textwidth} O{1em} m m m m m }{%
+  % #1 = maxwidth, #2 = sep, #3 = cols, #4 = files CSV, #5 = captions CSV, #6 caption, #7 label
+  \begingroup
+  \setlength{\UG@maxwidth}{#1}%
+  \setlength{\UG@seph}{#2}%
+  \setcounter{UG@cols}{#3}%
+  \setcounter{UG@count}{0}%
+  % 1) medir y almacenar coef = w/h para cada imagen
+  \@for\UG@file:=#4\do{%
+    \stepcounter{UG@count}%
+    % medir
+    \sbox0{\includegraphics{\UG@file}}%
+    \setlength{\@tempdima}{\wd0}%
+    \setlength{\@tempdimb}{\ht0}%
+    \expandafter\xdef\csname UG@file@\theUG@count\endcsname{\UG@file}%
+    \expandafter\xdef\csname UG@w@\theUG@count\endcsname{\strip@pt\@tempdima}%
+    \expandafter\xdef\csname UG@h@\theUG@count\endcsname{\strip@pt\@tempdimb}%
+    \expandafter\xdef\csname UG@coef@\theUG@count\endcsname{\fpeval{(\strip@pt\@tempdima)/(\strip@pt\@tempdimb)}}%
+  }%
+  \edef\UG@N{\theUG@count}%
+  \setcounter{UG@rows}{\numexpr (\UG@N + \value{UG@cols} -1) / \value{UG@cols} \relax}%
+  % 2) para cada fila computar sumcoef y H_row, quedarnos con min(H_row)
+  \edef\UG@minH{1000000}%
+  \count@=1
+  \loop
+    \ifnum\count@>\value{UG@rows}\relax
+      \breakloop
+    \fi
+    \edef\UG@start{\the\numexpr (\count@-1)*\value{UG@cols} + 1\relax}%
+    \edef\UG@end{\the\numexpr \count@*\value{UG@cols}\relax}%
+    % corregir si pasa de N
+    \ifnum\UG@end>\UG@N \edef\UG@end{\UG@N}\fi
+    % sumar coeficientes en la fila
+    \edef\UG@sumcoeff{0}%
+    \count@i=\UG@start
+    \loop
+      \ifnum\count@i>\UG@end \breakloop \fi
+      \edef\UG@coefval{\csname UG@coef@\the\count@i\endcsname}%
+      \edef\UG@sumcoeff{\fpeval{\UG@sumcoeff + \UG@coefval}}%
+      \advance\count@i by 1
+    \repeat
+    \edef\UG@seppt{\strip@pt\UG@seph}%
+    \edef\UG@maxwpt{\strip@pt\UG@maxwidth}%
+    \edef\UG@Hrow{\fpeval{(\UG@maxwpt - (\UG@cols-1)*\UG@seppt) / \UG@sumcoeff}}%
+    \edef\UG@minH{\fpeval{min(\UG@minH,\UG@Hrow)}}%
+    \advance\count@ by 1
+  \repeat
+  % set length for height
+  \setlength{\UG@H}{\UG@minH pt}%
+  % cell width for layout (equal columns)
+  \setlength{\UG@cellwidth}{\dimexpr (\UG@maxwidth - (\value{UG@cols}-1)\UG@seph) / \value{UG@cols}\relax}%
+  % 3) render
+  \begin{figure}[htbp]\centering
+    \newcounter{UG@renderi}\setcounter{UG@renderi}{0}%
+    \newcounter{UG@rendercol}\setcounter{UG@rendercol}{0}%
+    % helper para nth caption
+    \newcommand\UG@getcap[1]{%
+      \edef\UG@ans{}%
+      \newcounter{UG@tmp}\setcounter{UG@tmp}{0}%
+      \renewcommand{\do##1}{\stepcounter{UG@tmp}\ifnum\value{UG@tmp}=#1 \edef\UG@ans{##1}\fi}%
+      \docsvlist{#5}%
+      \UG@ans
+    }%
+    \@for\UG@file:=#4\do{%
+      \stepcounter{UG@renderi}\stepcounter{UG@rendercol}%
+      \edef\UG@thisfile{\UG@file}%
+      \edef\UG@thiscap{\UG@getcap{\theUG@renderi}}%
+      \begin{subfigure}[b]{\UG@cellwidth}\centering
+        \includegraphics[height=\UG@H,keepaspectratio]{\UG@thisfile}%
+        \caption{\UG@thiscap}%
+      \end{subfigure}%
+      \ifnum\value{UG@renderi}<\UG@N
+        \ifnum\value{UG@rendercol}<\value{UG@cols}
+          \hspace{\UG@seph}%
+        \else
+          \\[0.6em]\setcounter{UG@rendercol}{0}%
+        \fi
+      \fi
+    }%
+    \caption{#6}\label{#7}%
+  \end{figure}
+  \endgroup
+}
+\makeatother
+
+%% TODO ? Los métodos \EqualColGrid y \UniformGrid no funcan. No se porqué. Arreglar si quieres, no se xdddd.
