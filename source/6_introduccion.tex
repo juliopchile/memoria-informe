@@ -70,21 +70,21 @@ Por otro lado el ``parpadeo'' se da por la dificultad de modelos YOLO de detecta
 
 % Resume para el lector la solución implementada.
 \subsection{Acercamiento a la solución}
-Los problemas mencionados justifican el desarrollo de una base de datos especializada que permita entrenar modelos de segmentación orientados únicamente a identificar instancias de interés. En este trabajo se depura un \textit{dataset} de salmones en uso, eliminando instancias irrelevantes mediante técnicas de filtrado con criterio de tamaño y nitidez.
+Los problemas mencionados justifican el desarrollo de una base de datos especializada que permita entrenar modelos de segmentación orientados únicamente a identificar instancias de interés. En este trabajo se depura entonces un \textit{dataset} de salmones, eliminando instancias irrelevantes mediante técnicas de filtrado con criterio de tamaño y nitidez. Para esto se desarrolla un código capaz de analizar cada instancia en el conjunto de datos y decidir si es relevante o no según los criterios mencionados.
 
 Se etiqueta también una base de datos de seguimiento desde cero, con anotaciones manuales, para evaluar los modelos entrenados y compararlos contra la versión actualmente desplegada.
 
-El proyecto amplía aspectos poco abordados en trabajos previos: se realiza una búsqueda exhaustiva de hiperparámetros, se experimenta con múltiples variantes YOLO (YOLOv8, YOLOv9 y YOLO11) y se prueba la exportación a TensorRT para acelerar la inferencia en tiempo real.
+El proyecto además amplía aspectos poco abordados en trabajos previos: se realiza una búsqueda exhaustiva de hiperparámetros para ver su impacto en el entrenamiento; se experimenta con múltiples variantes YOLO (YOLOv8, YOLOv9 y YOLO11) así como diferentes configuraciones de entrenamiento (optimizador, uso de imágenes de fondo y Transfer Learning); y se prueba la exportación con TensorRT para acelerar la inferencia en tiempo real.
 
-Finalmente y por motivos de replicación y contraste, se entrenan modelos adicionales con la base pública Deepfish; aunque no es ideal para el caso de uso de WildSense, permite comparar con trabajos previos y evaluar la efectividad de algunas técnicas propuestas en un contexto diferente. Los modelos entrenados en Deepfish no se evalúan en seguimiento pero si en segmentación de instancias.
+Finalmente y por motivos de replicación, se entrenan modelos adicionales con la base pública Deepfish; aunque no ideal para el caso de uso de WildSense, permite comparar con trabajos previos y evaluar la efectividad de algunas técnicas propuestas en un contexto diferente. Los modelos entrenados en Deepfish no se evalúan en seguimiento pero si en segmentación de instancias.
 
 \subsection{Hipótesis}
 % Versión corta
-Se desea que los nuevos modelos entrenados sobre la base de datos depurada presenten mejores métricas de asociación y estabilidad temporal (mayor IDF1, AssA, HOTA, MOTA, MT\%, y menores IDSW y Frag) respecto a la versión actualmente desplegada por WildSense. Esto al evaluarse en el \textit{dataset} de \textit{tracking} elaborado en esta memoria.
+Se espera que los nuevos modelos entrenados sobre la base de datos depurada presenten mejores métricas de asociación y estabilidad temporal (mayor IDF1, AssA, HOTA, MOTA, MT\%, y menores IDSW y Frag) respecto a la versión desplegada por WildSense. Esto al evaluarse en el \textit{dataset} de \textit{tracking} elaborado para esta memoria. Se espera también que la calidad de las máscaras mejore cualitativamente (bordes, continuidad, ausencia de cortes).% aun cuando no sea posible una comparación cuantitativa directa en segmentación debido a conjuntos de validación distintos; esta mejora se verificará mediante inspección visual contrastiva.
 
-Se espera también que la calidad de las máscaras mejore cualitativamente (bordes, continuidad, ausencia de cortes) aun cuando no sea posible una comparación cuantitativa directa en segmentación debido a conjuntos de validación distintos; esta mejora se verificará mediante inspección visual contrastiva.
+Luego, basado en trabajos previos, se espera que modelos entrenados con SGD, uso de imagenes de fondo y sin Transfer Learning, presenten mejores resultados respecto a otras configuraciones.
 
-Finalmente, la optimización de hiperparámetros en Deepfish debiese aumentar las métricas de segmentación (precisión, exhaustividad, F1, mAP@50 y mAP@50-95) respecto a resultados anteriores, acercándose o estableciendo un nuevo estado del arte para ese conjunto. %Mientras que con Salmons, al ser nuevo, no se tiene una expectativa clara, pero se espera que la búsqueda de hiperparámetros también mejore las métricas de segmentación.
+Finalmente, la optimización de hiperparámetros en Deepfish debiese aumentar las métricas de segmentación (precisión, exhaustividad, F1, mAP@50 y mAP@50-95) respecto a resultados anteriores, acercándose o estableciendo un nuevo estado del arte para ese conjunto.
 
 % Versión más larga 
 %Se espera que la depuración de la base de datos de salmones mejore simultáneamente: la estabilidad del seguimiento reduciendo el parpadeo; la precisión de segmentación mejorando bordes y contornos; y reducir el número de instancias detectadas y seguidas.
@@ -99,21 +99,21 @@ Finalmente, la optimización de hiperparámetros en Deepfish debiese aumentar la
 
 
 \subsection{Objetivo general}
+% TODO Corrección [5] [DONE]: Reformular objetivo general al contexto de jaulas de cultivo en salmonicultura.
 % (Versión original)
-Entrenar modelos de segmentación de instancias YOLO para una base de datos de salmones mejorada y validar los modelos resultantes en las tareas de segmentación y seguimiento.
+% Entrenar modelos de segmentación de instancias YOLO para una base de datos de salmones mejorada y validar los modelos resultantes en las tareas de segmentación y seguimiento.
 
-% TODO Corrección [5]: Reformular objetivo general al contexto de jaulas de cultivo en salmonicultura. Ejemplo sugerido (no reemplazado automáticamente):
-% "Mejorar la calidad de la segmentación y el seguimiento de instancias de salmones en jaulas de cultivo acuícola mediante la depuración especializada del dataset, optimización de hiperparámetros y validación integrada de métricas de segmentación y tracking." Sustituir el texto actual por formulación equivalente.
-
-% Mejorar la calidad de la segmentación y el seguimiento de instancias de salmones en el contexto de jaulas de cultivo en salmonicultura mediante la depuración especializada de un \textit{dataset}, optimización de hiperparámetros y validación integrada de métricas de segmentación y \textit{tracking}.
-
+Mejorar la calidad de la segmentación y seguimiento basado en detección de modelos YOLO entrenados en una base de datos de salmones en el contexto de jaulas de cultivo en acuicultura, mediante la depuración especializada de dicha base de datos. También corroborar la efectividad de la búsqueda de hiperparámetros, configuraciones de entrenamiento, la experimentación con múltiples versiones de YOLO y la optimización mediante TensorRT.
 
 \subsection{Objetivos específicos}
-% TODO Corrección [5]: Revisar que objetivos específicos reflejen mejora de calidad (precisión + estabilidad de seguimiento) y no solo entrenamiento. Ajustar redacción: incluir reducción de parpadeo, eficiencia cómputo, validación con marco integral.
+% TODO Corrección [5] [DONE?]: Revisar que objetivos específicos reflejen mejora de calidad (precisión + estabilidad de seguimiento) y no solo entrenamiento. Ajustar redacción: incluir reducción de parpadeo, eficiencia cómputo, validación con marco integral.
 \begin{itemize}
+    \setlength{\itemsep}{0pt}%
+    %\setlength{\parskip}{0pt}%
+    %\setlength{\parsep}{0pt}%
     \item Optimizar una base de datos de salmones para adecuarla al caso de uso de WildSense.
-    \item Evaluar y buscar hiperparámetros que potencien el rendimiento de modelos entrenados.
-    \item Llevar a cabo entrenamientos con una base de datos pública para fines de replicación.
+    \item Diseñar una base de datos de seguimiento para evaluar \textit{tracking} en salmones.
+    \item Evaluar y buscar hiperparámetros que potencien el entrenamiento en modelos YOLO, para diferentes configuraciones, bases de datos y versiones de modelo.
     \item Validar los modelos en segmentación de instancia y seguimiento basado en detección.
-    \item Concluir sobre los efectos de optimizar la base de datos, la búsqueda de hiperparámetros y la exportación con cuantización numérica.
+    \item Concluir sobre los efectos de optimizar la base de datos, realizar entrenamiento con búsqueda de hiperparámetros y la exportación de modelos con cuantización numérica.
 \end{itemize}

@@ -32,16 +32,31 @@ Creadas las subsecciones indicadas (“Problema a resolver”, “Acercamiento a
 **1.3 Acercamiento a la solución**: explico la solución implementada en la memoria, resumiendo a grandes rasgos lo que se hizo en la misma: depurar el dataset de salmones; crear el dataset de seguimiento para salmones; hacer pruebas con diferentes modelos YOLO, optimización de hiperparámetros y exportación TensoRT; y las pruebas hechas con Deepfish con fines de replicación, al menos para la parte de segmentación de instancias.
 
 ```
-[DUDA] debería de poner un resumen de lo que voy a hacer? o solo un resumen de la solución? siento que es casi lo mismo, pero no exactamente igual ya que al poner que haré también incluyo las cosas que se crearon para este proyecto. Digame que es lo que considera mejor.
+[DUDA] debería de poner un resumen de lo que voy a hacer? o solo un resumen de la solución implementada? siento que es casi lo mismo, pero no exactamente igual ya que al poner que haré también incluyo las cosas que se crearon para este proyecto. Digame que es lo que considera mejor.
 ```
 
 **1.4 Hipótesis**: describo los resultados que espero obtener y con qué métricas voy a corroborar esto.
 
+```
+[COMENTARIO]
+Debo de admitir que la inclusión de estas 3 subsecciones no es la más "elegante", incurro bastante en repetición de ideas y palabras. Quizá soy demasiado verboso en ellas. También tengo miedo de que la introducción quede demasiado larga.
+
+Es más, la parte de "Trabajo realizado por WildSense y motivación de mejoras" que moví a la sección de "Contexto general" en la introducción, originalmente iba a ser parte de la introducción misma, pero leí por ahí un documento que explica el formato de las memorias para ELO y decía que la introducción + Marco Teórico y SOTA no pueden sobrepasar cierto largo, yo no respeté mucho eso, ya que igual me exedí, pero a fin de no exederme taaanto moví la sección de motivación a la parte de "Trabajo a realizar". Además me parecía que era mejor ponerla luego del SOTA, ya que en esta sección se explican terminologías y nombres utilizados en la otra sección, por ende ponerlas en la introducción podría ser muy intrusiva para el lector, al exponerlo a tantos conceptos que no han sido explicados aún. Pero finalmente la tuve que poner igualmente en la introducción, así que xD.
+```
+
 ---
 5) _En el objetivo general debes poner que es en el contexto de jaulas de cultivo de la salmonicultura (o acuicultura). El objetivo no es entrenar modelos, sino que mejorar la calidad de la segmentación y el seguimiento de instancias de peces (o de salmones siendo especifico), a través de lo que hiciste._
 
+Mejoré la subsección de "Objetivo general" para especificar el contexto de jaulas de cultivo en acuicultura y que sea más coherente con los puntos especificados en las subsecciones anteriores ("Problema a resolver", "Acercamiento a la solución" e "Hipótesis").
+
+Además modifiqué los "Objetivos específicos" para que sean más coherentes con los cambios realizados.
+
 ---
 6) _Luego de la Hipótesis, agrega una sección “Estructura de la Memoria” que explique brevemente el contenido de cada capítulo posterior._
+
+```
+[DUDA] Esto va luego de las subsecciones de "Objetivo general" y "Objetivos específicos"? o inmediatamente luego de "Hípotesis" y antes de los objetivos? asumí lo primero y los pondré luego de los objetivos para mantener orden en el texto.
+```
 
 ---
 7) _Estructura el Estado del Arte como capítulo de la memoria de la siguiente forma:_
