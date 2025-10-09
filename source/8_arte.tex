@@ -1,10 +1,10 @@
 \part*{Estado del Arte}\addcontentsline{toc}{part}{Estado del Arte}
 % TODO Corrección [7] [DONE]: Reestructurar: Este archivo pasará a ser Capítulo 2 Estado del Arte con secciones 2.1 Soluciones existentes (contenido actual de esta subsección) y 2.2 Herramientas y Métodos (mover parte técnica al archivo 8_arte.tex). Añadir 2.3 Discusión (comparar solución propuesta versus existentes; destacar contribuciones: dataset depurado, marco conjunto segmentación+tracking, integración optimización TensorRT).
 \section{Soluciones Existentes}
-% TODO Corrección [8]: En este segundo párrafo añadir explícitamente relevancia de estimación de biomasa (ligada a precisión volumétrica y salud) y mención de reducción de remuestreo gracias a mejor tracking.
+% TODO Corrección [8] [DONE]: En este segundo párrafo añadir explícitamente relevancia de estimación de biomasa (ligada a precisión volumétrica y salud) y mención de reducción de remuestreo gracias a mejor tracking.
 La visión por computadora, también llamada visión artificial, es una disciplina dentro del aprendizaje de máquina y la informática que se centra en desarrollar algoritmos y sistemas capaces de interpretar y analizar imágenes y videos. Esto se logra mediante técnicas de procesamiento digital, modelado matemático, análisis de patrones y métodos estadísticos que permiten identificar objetos, segmentar escenas y comprender el contenido visual. Tiene aplicaciones prácticas en áreas como la robótica, la seguridad o la conducción autónoma.
 
-La acuicultura constituye cerca de la mitad de la producción de productos marinos en el mundo \cite{FAO2024} donde la piscicultura forma parte importante de la actividad de acuicultura del país \cite{chile2017levantamiento}. Es entonces de vital importancia monitorear la integridad y salud de los peces por medio de revisiones regulares para asegurar una alimentación adecuada y la detección temprana de enfermedades. Lamentablemente, las mediciones manuales dependen de condiciones meteorológicas, exigen mucho tiempo y trabajo y, además, son invasivas y estresantes para los peces \cite{Tonachella2022} (Fig. \ref{fig:medicion_tradicional_peces}).
+La acuicultura constituye cerca del 60\% de la producción de productos marinos en el mundo \cite{FAO2024} y la piscicultura forma parte importante de la actividad acuicola en Chile \cite{chile2017levantamiento}. Es entonces de vital importancia el monitoreo de la salud de los peces (estimación de talla, biomasa y lesiones) por medio de revisiones regulares para asegurar una alimentación adecuada y la detección temprana de enfermedades. Por desgracia, las mediciones suelen depender de las condiciones meteorológicas, exigen mucho tiempo y trabajo, además de ser invasivas y estresantes para los peces \cite{Tonachella2022} (Fig. \ref{fig:medicion_tradicional_peces}).
 
 \TwoImgs[0.9\textwidth][1em]
 {figures/midiendo_pez.jpg}% Image_1
@@ -14,9 +14,10 @@ La acuicultura constituye cerca de la mitad de la producción de productos marin
 [Técnicas tradicionales de medición de talla y peso en peces]% Global short caption
 {Técnicas tradicionales de medición de talla y peso en peces.}% Global caption
 {fig:medicion_tradicional_peces}% Global label
+    
+En este contexto, la visión por computadora resulta especialmente relevante para la estimación precisa de biomasa, talla y caracterización de salud, ya que permite calcular el volumen y peso de los peces de manera no invasiva, lo que está directamente ligado a la salud y productividad del cultivo a la vez que son más escalables y menos costosas.
 
-
-Como solución alternativa se han propuesto métodos de estimación estadística para la talla de peces mediante sensores, radares y cámaras \cite{Tonachella2022} (Fig. \ref{fig:workflow_tonachella}), y el uso de modelos de aprendizaje automático en detección de enfermedades \cite{Ahmed2022}. Estas soluciones prometen ser más escalables, menos costosas y menos intrusivas en el ciclo de vida de los animales.
+Ejemplos de solución propuestas incluyen métodos de estimación estadística para la talla de peces mediante sensores, radares y cámaras \cite{Tonachella2022} (Fig. \ref{fig:workflow_tonachella}), y el uso de modelos de aprendizaje automático en detección de enfermedades \cite{Ahmed2022}. %Estas soluciones prometen ser más escalables, menos costosas y menos intrusivas en el ciclo de vida de los animales.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -26,9 +27,11 @@ Como solución alternativa se han propuesto métodos de estimación estadística
 \end{center}
 \end{figure}
 
-WildSense por su parte implementa una novedosa técnica basada en el emparejamiento de mapas de profundidad obtenidos con cámaras estéreo y modelos tridimensionales generados en Blender, para la estimación de volumen y masa en peces. Una explicación más detallada de su flujo de trabajo se encuentra en la sección \ref{sec:workflow_wildsense}.
-% TODO Corrección [8]: Reemplazar “modelos tridimensionales generados en Blender, para la estimación de volumen y masa en peces” por “modelos tridimensionales para la estimación de volumen y masa en peces” (ya no se usa Blender por desempeño). No modificado automáticamente.
-% TODO Corrección [8]: Evaluar inclusión de técnicas adicionales usadas en acuicultura: monitoreo de lesiones con redes de clasificación, estimación automática de comportamiento (schooling patterns), análisis de alimentación mediante detección de pellets, sensores multiespectrales para salud, integración sonar + visión.
+
+% TODO Corrección [8] [DONE]: Reemplazar “modelos tridimensionales generados en Blender, para la estimación de volumen y masa en peces” por “modelos tridimensionales para la estimación de volumen y masa en peces” (ya no se usa Blender por desempeño). No modificado automáticamente.
+% TODO Corrección [8] [DONE]: Evaluar inclusión de técnicas adicionales usadas en acuicultura: monitoreo de lesiones con redes de clasificación, estimación automática de comportamiento (schooling patterns), análisis de alimentación mediante detección de pellets, sensores multiespectrales para salud, integración sonar + visión.
+
+WildSense por su parte implementa una novedosa técnica basada en el emparejamiento de mapas de profundidad obtenidos con cámaras estéreo y modelos tridimensionales para la estimación de volumen y masa en peces. Una explicación más detallada de su flujo de trabajo se encuentra en la sección \ref{sec:workflow_wildsense}.
 
 Además entre las proyecciones futuras de WildSense se encuentra la detección y caracterización de nivel de progresión de enfermedades; inspección de mallas en jaulas de cultivo; y monitoreo subacuático (temperatura, oxígeno saturado, sólidos disueltos, pH) \cite{wildsense-2}.
 
@@ -200,8 +203,8 @@ Los ajustadores de la tasa de aprendizaje ---en inglés \textit{learning rate sc
 Estudios recientes han indicado que el tamaño del lote, si bien no afecta significativamente el rendimiento final, debe ajustarse en conjunto con otros hiperparámetros (como la tasa de aprendizaje) para optimizar el entrenamiento. En la búsqueda de hiperparámetros, se ha evidenciado que lotes de tamaño intermedio facilitan un ajuste más rápido y eficiente \cite{Shallue2018, Breuel2015}.
 
 \subsection{Técnicas de optimización}
-% TODO Corrección [8]: Corregir redacción "reducción en consumo energéticos" -> "reducción en consumo energético" en el párrafo siguiente.
-Diversas técnicas se han desarrollado para optimizar modelos de aprendizaje automático, ya sea mediante la reducción del costo computacional, la disminución del tiempo de inferencia o la reducción en consumo energéticos. Entre las técnicas más populares se destacan:
+% TODO Corrección [8] [DONE]: Corregir redacción "reducción en consumo energéticos" -> "reducción en consumo energético" en el párrafo siguiente.
+Diversas técnicas se han desarrollado para optimizar modelos de aprendizaje automático, ya sea mediante la reducción del costo computacional, la disminución del tiempo de inferencia o la reducción en consumo energético. Entre las técnicas más populares se destacan:
 
 \subsubsection{Pruning (poda)}
 La poda comprende la eliminación de conexiones, pesos o neuronas redundantes en un modelo entrenado, con el fin de reducir la complejidad del modelo. Esta técnica requiere un manejo cuidadoso, ya que la eliminación indiscriminada de parámetros puede deteriorar la precisión \cite{Cheng2018}.
@@ -228,27 +231,27 @@ En grandes modelos de lenguaje se observa que el impacto negativo de la cuantiza
 Esta técnica implica entrenar un modelo más pequeño y eficiente (llamado modelo estudiante) utilizando las predicciones de un modelo más grande y preciso (modelo maestro). El estudiante aprende a imitar el comportamiento del maestro, lo que permite reducir el tamaño del modelo manteniendo un buen rendimiento \cite{Cheng2018}.
 
 \subsection{Seguimiento}
-% TODO Corrección [8]: En la subsección 3.5.1 (equivalente tras reordenar) enfatizar explícitamente que dada la utilización de modelos de detección y segmentación de instancia, tracking-by-detection es el enfoque adecuado (agregar párrafo de enlace con objetivos y validación).
+% TODO Corrección [8] [DONE]: En la subsección 3.5.1 (equivalente tras reordenar) enfatizar explícitamente que dada la utilización de modelos de detección y segmentación de instancia, tracking-by-detection es el enfoque adecuado (agregar párrafo de enlace con objetivos y validación).
 En su forma más simple, el seguimiento puede definirse como el problema de estimar la trayectoria de un objeto en el plano de la imagen a medida que se desplaza por una escena. En otras palabras, un \textit{tracker} asigna etiquetas coherentes a los objetos rastreados en diferentes fotogramas de un vídeo. Además, dependiendo del dominio de seguimiento, un \textit{tracker} también puede proporcionar información centrada en el objeto, como la orientación, el área o la forma de un objeto \cite{Yilmaz2006}.
 
 Según \cite[Yilmaz et al.]{Yilmaz2006} es posible clasificar taxonómicamente el seguimiento según el método empleado, donde distinguen basado en el modelo de representación utilizado para el objeto de interés.
-     
+
 \begin{itemize}
     \item \textbf{Seguimiento por punto}: los objetos detectados se representan mediante puntos, y la asociación de los puntos se basa en el estado anterior ---o futuro--- del objeto, que puede incluir su posición y movimiento. Este método requiere detecciones previas.
     \item \textbf{Seguimiento por plantilla (\textit{kernel})}: se rastrean objetos basándose en modelos de apariencia del objeto de interés. Estos modelos de apariencia pueden ser plantillas, estimaciones de densidad de aparición o regiones de objeto (por ejemplo cajas englobantes). Este método puede utilizar detecciones previas o ser la forma en que se realizan detecciones futuras.
     \item \textbf{Seguimiento por silueta}: aquí el modelo de apariencia corresponde a un contorno o silueta del objeto de interes. Similar al seguimiento por plantilla, es posible utilizar detecciones previas (``shape matching'') o realizar nuevas deteccioens (``contour tracking'').
 \end{itemize}
 
-Otra forma de categorizar la tarea de seguimiento es según su implementación basada o no en detecciones.
+Otra forma de categorizar la tarea de seguimiento es según su implementación basada o no en detecciones previas. En el marco de esta memoria, dada la utilización de modelos de detección y segmentación de instancia, resulta adecuada la especial consideración en técnicas de seguimiento basado en detección.
 
 \begin{itemize}
     \item \textbf{Seguimiento basado en detección}: implica detectar objetos en cada fotograma de una secuencia de video mediante un detector y luego usar algoritmos de asociación de datos (como SORT o DeepSORT), para vincular estas detecciones a través de los fotogramas. 
 
-    \item \textbf{Seguimiento basado en modelos}: utiliza un modelo predefinido del objeto, el cual puede ser predeterminado o aprendido, simple (forma, color, etc.) o complejo (representación semática o basada en contexto) y lo ajusta en cada fotograma. En resumen se realiza detección al mismo tiempo que se sigue al objeto.
+    \item \textbf{Seguimiento basado en modelos}: utiliza un modelo predefinido del objeto, el cual puede ser predeterminado o aprendido, simple (forma, color, etc.) o complejo (representación semántica o basada en contexto) y lo ajusta en cada fotograma. En resumen se realiza detección al mismo tiempo que se sigue al objeto.
 \end{itemize}
 
 \subsubsection{Algoritmos de seguimiento relevantes}
-Entre los algoritmos desarrollados para el seguimiento de objetos destacan:
+Entre los algoritmos desarrollados para el seguimiento de objetos destacan los siguientes:
 \begin{itemize}
     \item \textbf{BoT-SORT}: algoritmo de seguimiento de múltiples objetos que combina información sobre el movimiento, la apariencia y la Compensación del Movimiento de Cámara (CMC) \cite{BotSORT}.
 
@@ -262,6 +265,6 @@ Entre los algoritmos desarrollados para el seguimiento de objetos destacan:
 \end{itemize}
 
 \section{Discusión}
-La solución implementada por WildSense entrena modelos sobre bases de datos heterogéneos sin filtrar y evalúan segmentación sin seguimiento. La propuesta de este trabajo se diferencia al poner primero la depuración programática del \textit{dataset} para eliminar instancias de bajo valor y se introduce un marco integrado de validación que alinea métricas espaciales (precisión, recall, F1, mAP@50, mAP@50-95) con métricas temporales y de asociación (HOTA, AssA, IDF1, MOTA, MT\%, IDSW, Frag) para medir impacto conjunto sobre segmentación y seguimiento.
+La solución implementada por WildSense entrena modelos sobre bases de datos heterogéneos sin filtrar y evalúan segmentación sin seguimiento. La propuesta de este trabajo se diferencia al poner primero la depuración programática del \textit{dataset} para eliminar instancias de bajo valor y se introduce además un marco integrado de validación que alinea métricas espaciales (precisión, recall, F1, mAP@50, mAP@50-95) con métricas temporales y de asociación (HOTA, AssA, IDF1, MOTA, MT\%, IDSW, Frag) para medir impacto conjunto sobre segmentación y seguimiento.
 
 Por otro lado se prefiere evaluar variantes YOLO (v8, v9, 11) pues equilibran precisión y velocidad a diferencia de arquitecturas más pesadas (Mask-/MS-RCNN, SOLOv2) que superan en rendimiento pero penalizan el throughput al ser más lentas. Además YOLO permite de forma nativa (a travez de Ultralytics) exportar a TensorRT para optimizar latencia; entrenamiento con búsqueda de hiperparámetros; y seguimiento por detección (ByteTrack, BoT-SORT).

@@ -82,10 +82,21 @@ Se creó la sección de **4. Discusión** al final de la parte de **Estado del A
 - _“modelos tridimensionales generados en Blender, para la estimación de volumen y masa en peces”: ya no utilizamos Blender por lento, así que basta que digas: “modelos tridimensionales para la estimación de volumen y masa en peces”._
 - _Si encuentras más técnicas que resuelven los problemas de la acuicultura incluso de forma parcial, debieses agregarlos en esta sección._
 
+Modifiqué el segundo párrafo de la ahora sección **2. Soluciones Existentes** para destacar la relevancia de la estimación de biomasa. Puse a la estimación de biomasa como una de las formas de monitorear la salud de los peces entre parentesis. Además agregué otro parrafo entre ese y el tercero para mencionar porque es importante la visión por computadora en estas tareas.
+
+Quité la referencia a Blender.
+
+No encontré más técnicas que resuelvan problemas en acuicultura, prefiero no ahondar más en el tema por razones de tiempo. Pero como mencioné en el punto anterior, incluí un parrafo mencionando que WildSense está proyectandose para solucionar otros problemas en la acuicultura.
+
+---
 _En el estado del arte que desarrollaste (que en realidad es “Marco Teórico”):_
 
 - _reducción en consumo energéticos. → reducción en consumo energético._
 - _en la 3.5.1 creo relevante hacer el punto con lo previamente mencionado, que en el marco de esta memoria, dada la utilización de modelos de detección y segmentación de instancia, resulta adecuada la consideración de técnicas de tracking-by-detection, que es lo que finalmente presentas en esta sección._
+
+Corregí el error de ortografía en la subsección **3.4. Técnicas de optimización**
+
+En la sección **3.5 Seguimiento** Hago enfasis en como las técnicas de seguimiento basado en detección son interes particular para este proyecto.
 
 ---
 9) _El título “Trabajo a realizar” desbiese ser el Capítulo 3 – Desarrollo de la Solución._
