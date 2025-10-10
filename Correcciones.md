@@ -101,6 +101,8 @@ En la sección **3.5 Seguimiento** Hago enfasis en como las técnicas de seguimi
 ---
 9) _El título “Trabajo a realizar” desbiese ser el Capítulo 3 – Desarrollo de la Solución._
 
+La parte de **Trabajo a realizar** se cambió a **Desarrollo de la Solución**
+
 ---
 10) _En 6.3 (base de datos):_
 
