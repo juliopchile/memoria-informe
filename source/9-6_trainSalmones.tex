@@ -5,8 +5,8 @@ Esta sección detalla el proceso de entrenamiento de modelos utilizando la base 
 \subsection{Entrenamiento inicial}
 Idem al caso con Deepfish, este entrenamiento busca establecer una línea base para encaminar los entrenamientos posteriores con búsqueda de hiperparámetros y optimización. Se realizan exactamente los mismos entrenamientos que en la sección \ref{sec:entrenamientoDeepfish}, pero utilizando la base de datos Salmons y con diferentes tamaños de lote, debido a que este conjunto de datos es considerablemente más grande. Para los modelos \textit{n}, \textit{s} y \textit{m} se usó \textit{batch size} 8, para modelos \textit{l} y \textit{c} se usó 6 y para modelos \textit{x} y \textit{e} se usó 4. En total se realizaron 48 entrenamientos.
 
-El análisis es identico al de Deepfish, por lo que solo se resumen los resultados más relevantes.
-% TODO Corrección [12]: Corregir acento "idéntico".
+El análisis es idéntico al de Deepfish, por lo que solo se resumen los resultados más relevantes.
+% TODO Corrección [12] [DONE]: Corregir acento "idéntico".
 
 \subsubsection{Efecto del tamaño del modelo}
 Igual que con Deepfish, los modelos más pequeños (n, s) mostraron un rendimiento inferior comparandose con modelos más grandes. Sin embargo, esta mejora se estabiliza en modelos medianos y no hay mejoras significativas al usar otros más grandes.
@@ -65,13 +65,13 @@ Similar a como ocurre con Deepfish, SGD supera marginalmente a AdamW en la mayor
 \end{figure}
 
 \subsubsection{Efecto de las imágenes de fondo (Full vs ``LO'')}
-A diferencia de Deepfish, en Salmons no se observaron diferencias significativas promedio entre entrenar con imágenes de fondo (Full) o sin ellas (``LO'') (tabla \ref{tab:salmons_mejoraRelativa_model} y fig. \ref{fig:salmons_yolo_dataset_comparison}). En promedio incluir imagenes de fondo empeora el rendimiento en 0.12\% en mAP@50-95. Similar a Deepfish, esta diferencia aumenta al exportar a TensorRT-INT8, decayendo en hasta un 3\% su rendimiento (fig. \ref{fig:salmons_yolo_transfer_learning_factor_mejora_by_format}).
-% TODO Corrección [12]: Cambiar "imagenes" -> "imágenes" (dos veces).
+A diferencia de Deepfish, en Salmons no se observaron diferencias significativas promedio entre entrenar con imágenes de fondo (Full) o sin ellas (``LO'') (tabla \ref{tab:salmons_mejoraRelativa_model} y fig. \ref{fig:salmons_yolo_dataset_comparison}). En promedio incluir imágenes de fondo empeora el rendimiento en 0.12\% en mAP@50-95. Similar a Deepfish, esta diferencia aumenta al exportar a TensorRT-INT8, decayendo en hasta un 3\% su rendimiento (fig. \ref{fig:salmons_yolo_transfer_learning_factor_mejora_by_format}).
+% TODO Corrección [12] [DONE]: Cambiar "imagenes" -> "imágenes" (dos veces).
 
 Por paradojico que parezca, este comportamiento puede deberse a que al ser Salmons una base de datos más grande, el modelo aprende a generalizar mejor sin necesidad de imágenes de fondo e incluiras solo ``diluye'' la relevancia de cada imagen en el entrenamiento, afectando su aprendizaje. Esto empeora aún más al exportarse con TensorRT con cuantización numérica pues simplificar el modelo implica la pérdida de información en el espacio latente (pesos del modelo), y si estos ya están muy ``diluidos'' o distribuidos homogeneamente, se vuelve incluso más díficil caracterizar objetos de interes y distinguirlos del fondo.
 
-Otra alternativa se haya en como está definida la base de datos de validación. Al poseer pocas imagenes sin instancias de peces o con contextos complejos que se beneficien de distinguir salmones de no salmones, el modelo no es capaz de validar correctamente su aprendizaje y pareciera que es peor, cuando en la práctica podría no serlo.
-% TODO Corrección [12]: Cambiar "imagenes" -> "imágenes" y "en como" -> "en cómo".
+Otra alternativa se haya en cómo está definida la base de datos de validación. Al poseer pocas imágenes sin instancias de peces o con contextos complejos que se beneficien de distinguir salmones de no salmones, el modelo no es capaz de validar correctamente su aprendizaje y pareciera que es peor, cuando en la práctica podría no serlo.
+% TODO Corrección [12] [DONE]: Cambiar "imagenes" -> "imágenes" y "en como" -> "en cómo".
 
 \begin{table}[htbp]
 \centering
@@ -144,8 +144,8 @@ El incremento en velocidad de inferencia depende del formato de exportación y m
 \end{center}
 \end{figure}
 
-De manera similar, la caida en rendimiento al optimizar el modelo se incrementa con ciertas configuraciones, en este caso siendo el uso del optimizador AdamW, \textit{Transfer Learning} y la inclusión de imágenes de fondo (tabla \ref{tab:salmons_factorMejora_optimizer_by_format} y figs. \ref{fig:salmons_yolo_transfer_learning_factor_mejora_by_format} y \ref{fig:salmons_yolo_dataset_factor_mejora_by_format}). Similar a Deepfish, estos efectos sugieren que estas prácticas pueden limitar la capacidad del modelo para aprender adecuadamente a lo largo de todos sus pesos, mas hay que ser cauteloso al interpretar estos resultados especialmente en el caso de la inclusión de imágenes de fondo, ya que ocurre lo contrario a lo que se esperaría y esto debe ser estudiado más a fondo o tomado con pinzas.
-% TODO Corrección [12]: Sustituir "tomado con pinzas" por "interpretado con cautela".
+De manera similar, la caida en rendimiento al optimizar el modelo se incrementa con ciertas configuraciones, en este caso siendo el uso del optimizador AdamW, \textit{Transfer Learning} y la inclusión de imágenes de fondo (tabla \ref{tab:salmons_factorMejora_optimizer_by_format} y figs. \ref{fig:salmons_yolo_transfer_learning_factor_mejora_by_format} y \ref{fig:salmons_yolo_dataset_factor_mejora_by_format}). Similar a Deepfish, estos efectos sugieren que estas prácticas pueden limitar la capacidad del modelo para aprender adecuadamente a lo largo de todos sus pesos, mas hay que ser cauteloso al interpretar estos resultados especialmente en el caso de la inclusión de imágenes de fondo, ya que ocurre lo contrario a lo que se esperaría y esto debe ser estudiado más a fondo e interpretado con cautela.
+% TODO Corrección [12] [DONE]: Sustituir "tomado con pinzas" por "interpretado con cautela".
 
 \begin{table}[htbp]
 \centering
@@ -225,8 +225,8 @@ Al ser esta versión de Salmons una base de datos nueva y con un subconjunto de 
 A continuación se muestran ejemplos de segmentación obtenidos con los modelos entrenados en Salmons (fig. \ref{fig:salmons_segmentation_examples}). Para estos ejemplos se usó el modelo YOLOv8l-seg.
 
 \subsubsection{Consideraciones y conclusiones}
-Los resultados obtenidos con Salmons son satisfactorios al demostrar que depurar la base de datos y aumentar su tamaño permite entrenar modelos más precisos en la detección y segmentación de instancias de interes. Sin embargo, hay un aspecto que merece ser discutido y es que al ser una base de datos donde no todas las instancias de salmones están etiquetadas, el modelo puede aprender a ignorar ciertas instancias que en la práctica deberían ser detectadas y viceversa. Esto significa que el \textit{dataset} en si no está ``bien definido'' y cualquier análisis cuantitativo de sus resultados debe ser tomado con pinzas pues esto no refleja su verdadero rendimiento.
-% TODO Corrección [12]: Sustituir "tomado con pinzas" y acentuar "en sí"; revisar "interes" -> "interés".
+Los resultados obtenidos con Salmons son satisfactorios al demostrar que depurar la base de datos y aumentar su tamaño permite entrenar modelos más precisos en la detección y segmentación de instancias de interés. Sin embargo, hay un aspecto que merece ser discutido y es que al ser una base de datos donde no todas las instancias de salmones están etiquetadas, el modelo puede aprender a ignorar ciertas instancias que en la práctica deberían ser detectadas y viceversa. Esto significa que el \textit{dataset} en sí no está ``bien definido'' y cualquier análisis cuantitativo de sus resultados debe ser interpretado con cautela, pues podría no reflejar fielmente su rendimiento real.
+% TODO Corrección [12] [DONE]: Sustituir "tomado con pinzas" y acentuar "en sí"; revisar "interes" -> "interés".
 % TODO Corrección [11] [DONE]: Alinear discusión con rol de MOTA (no eliminar MOTA, complementar con HOTA/AssA/IDF1).
 
 \begin{figure}[htbp]
