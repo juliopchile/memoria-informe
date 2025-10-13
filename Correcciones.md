@@ -89,7 +89,7 @@ Quité la referencia a Blender.
 No encontré más técnicas que resuelvan problemas en acuicultura, prefiero no ahondar más en el tema por razones de tiempo. Pero como mencioné en el punto anterior, incluí un parrafo mencionando que WildSense está proyectandose para solucionar otros problemas en la acuicultura.
 
 ---
-_En el estado del arte que desarrollaste (que en realidad es “Marco Teórico”):_
+9) _En el estado del arte que desarrollaste (que en realidad es “Marco Teórico”):_
 
 - _reducción en consumo energéticos. → reducción en consumo energético._
 - _en la 3.5.1 creo relevante hacer el punto con lo previamente mencionado, que en el marco de esta memoria, dada la utilización de modelos de detección y segmentación de instancia, resulta adecuada la consideración de técnicas de tracking-by-detection, que es lo que finalmente presentas en esta sección._
@@ -99,24 +99,24 @@ Corregí el error de ortografía en la subsección **3.4. Técnicas de optimizac
 En la sección **3.5 Seguimiento** Hago enfasis en como las técnicas de seguimiento basado en detección son interes particular para este proyecto.
 
 ---
-9) _El título “Trabajo a realizar” desbiese ser el Capítulo 3 – Desarrollo de la Solución._
+10) _El título “Trabajo a realizar” desbiese ser el Capítulo 3 – Desarrollo de la Solución._
 
 La parte de **Trabajo a realizar** se cambió a **Desarrollo de la Solución**
 
 ---
-10) _En 6.3 (base de datos):_
+11) _En 6.3 (base de datos):_
 
     _“El primero de carácter público y con la finalidad de replicación de resultados. El segundo de carácter privado, que además es depurado en una versión más refinada para lograr mejores modelos.” → debieses hablar de dataset dado el caracter de información anotada para entrenamiento y validación. Así esta frase puede ser en “masculino”, pues hablas del “dataset” y no de la base de datos._
 
 Reformulé el párrafo en **6.3. Bases de datos** para que sea sintacticamente más correcta.
 
 ---
-11) _Cuidado con lo que dices en la sección 7, pues MOTA es de las mejoras métricas en representar directamente la calidad de las asociaciones al tener un énfasis en métricas de coincidencia de tamaño y número de tracks, que es finalmente lo más importante de la tarea de tracking (pues para la precisión tenemos métricas específicas de segmentación). Ve si es necesario ajustar la discusión de resultados a estas consideraciones._
+12) _Cuidado con lo que dices en la sección 7, pues MOTA es de las mejoras métricas en representar directamente la calidad de las asociaciones al tener un énfasis en métricas de coincidencia de tamaño y número de tracks, que es finalmente lo más importante de la tarea de tracking (pues para la precisión tenemos métricas específicas de segmentación). Ve si es necesario ajustar la discusión de resultados a estas consideraciones._
 
 Reformulé la sección para incluir MOTA como métrica utilizada y no excluirla.
 
 ---
-12) _Correcciones ortográficas y de estilo_
+13) _Correcciones ortográficas y de estilo_
 - _identico → idéntico_
 - _en como está definida → en cómo está definida_
 - _imagenes → imágenes_
@@ -126,12 +126,31 @@ Reformulé la sección para incluir MOTA como métrica utilizada y no excluirla.
 Realicé las correcciones ortográficas y de estilo.
 
 ---
-13) _Me interesa en particular que agregues los resultados de la métrica MOTA.
+14) _Me interesa en particular que agregues los resultados de la métrica MOTA.
 Agrega en la sección segmentación un recordatorio de qué métrica es mejor o peor, poniendo con negrita en cada columna el mejor valor para las tablas 11.20 en adelante. (tab:tracking\_promedio\_model)_
 
 Añadí la métrica MOTA en los resultados de validación (figuras y tablas). Además se destacaron en negrita los mejores resultados por columna en las tablas de validación (segmentación y seguimiento).
 
 ---
-14) _Reestructura la memoria considerando un Capítulo de Validación:_
+15) _Reestructura la memoria considerando un Capítulo de Validación:_
 
-- _4. Validación: Se definen las pruebas y métricas asociadas para validar la hipótesis, las preguntas de trabajo y el logro de los objetivos. Se definen también los datasets de prueba si corresponde, o herramientas de evaluación para poder realizar la validación. Luego, se presentan los resultados obtenidos. Finalmente, se agrega una sección Discusión que explica si se logró o no, y en qué grado, validar la hipótesis, las preguntas de trabajo y el logro de los objetivos. En el contexto de lo desarrollado, dado que parte de tus objetivos de desarrollo es la depuración de la base de datos, desde el capítulo 7 de Métricas debisesen ser secciones del capítulo de Validación. El capítulo 12 que hiciste llámalo como sección “Discusión” donde, como hiciste, discutas los resultados más relevantes previos a la Conclusión de la memoria._
+- _4. Validación: Se definen las pruebas y métricas asociadas para validar la hipótesis, las preguntas de trabajo y el logro de los objetivos. Se definen también los datasets de prueba si corresponde, o herramientas de evaluación para poder realizar la validación. Luego, se presentan los resultados obtenidos. Finalmente, se agrega una sección Discusión que explica si se logró o no, y en qué grado, validar la hipótesis, las preguntas de trabajo y el logro de los objetivos._
+- _En el contexto de lo desarrollado, dado que parte de tus objetivos de desarrollo es la depuración de la base de datos, desde la sección 7 de Métricas debiesen ser secciones del capítulo de Validación. El capítulo 12 que hiciste llámalo como sección “Discusión” donde, como hiciste, discutas los resultados más relevantes previos a la Conclusión de la memoria._
+
+Cree la parte de **Validación** donde: definí las métricas de validación; incluyo los resultados finales de validación de los modelos, tanto para segmentación de instancias como seguimiento; pero no definí ningún dataset ni como lo cree porque eso va en su propia sección.
+
+Se movió toda la sección **7. Métricas de validación** del capítulo **Trabajo a realizar** a la sección **11. Métricas de Validación** del ahora nuevo capítulo **Validación**.
+
+Se movió la subsección **12.3. Especificaciones** a la sección **12. Especificaciones del Entorno de Trabajo**, dentro del capitulo de Validación.
+
+Los resultados de validación que se encontraban al final de las secciones de entrenamiento de modelos para Deepfish y Salmons, fueron movidos a subsecciones dentro de la nueva sección **13. Segmentación de instancias**, dentro del capítulo de **Validación**. De esta forma se encuentran los resultados en un capítulo aparte.
+
+```
+[COMENTARIO] No moví los resultados de los entrenamientos iniciales en Deepfish ni Salmons al capítulo de Validación: esto porque estos resultados son utilizados para justificar las decisiones de configuración para la busqueda de hiperparámetros y entrenamiento final de los modelos, por lo tanto si bien son "validaciones" de modelos, no son los finales y ponerlos en un capitulo aparte harían difícil la lectura cohesiva y correferente del texto, ya que luego se hace referencia a dichos resultados en la subsección siguiente.
+
+Ahora si se pregunta porque dejé los entrenamientos en el capitulo de "Desarrollo de la Solución" en primer lugar y no los moví a "Validación" como usted sugirió: si bien la motivación principal de este proyecto es crear un dataset, no es como que todo lo demás sea solo validación de aquello. Parte importante del trabajo de esta memoria fue entrenar los modelos y hacer la busqueda de hiperparámetros (eso es lo que me tardo semanas solo en entrenar y meses para perfeccionar previamente), por eso lo mantuve en ese capítulo.
+```
+
+Los resultados de validación de los modelos de seguimiento se movieron en su totalidad al capitulo de **Validación** como sección **13. Seguimiento en Salmones**.
+
+Lo que antes era la sección **12. Resultados** lo puse en la ahora nueva sección **Discusión**. Solo incluí comentarios sobre si se corrobora o desmiente la hipotesis realizada en cada tema. Además se reescribió la sección de conclusión para que no repita las mismas conclusiones dadas en la sección anterior, pero si se prefiere se podría volver a la versión previa.

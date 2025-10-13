@@ -1,5 +1,5 @@
 \section{Entrenamiento con Deepfish}
-% TODO Corrección [14]: Resumir aquí solo aspectos de implementación; mover análisis comparativo de métricas y resultados finales al Capítulo 4 (Validación). Incluir referencia cruzada una vez reestructurado.
+% TODO Corrección [14] [NO]: Resumir aquí solo aspectos de implementación; mover análisis comparativo de métricas y resultados finales al Capítulo 4 (Validación). Incluir referencia cruzada una vez reestructurado.
 Esta sección detalla el proceso de entrenamiento de modelos de segmentación utilizando la base de datos Deepfish. Se emplearon modelos pre-entrenados en la base de datos COCO, disponibles en la plataforma Ultralytics, y se ajustaron mediante re-entrenamiento para adaptarlos a la tarea específica de segmentación de peces en el entorno marino. Además este entrenamiento sirve como plantilla para los entrenamientos posteriores con la base de datos de salmones.
 
 \subsection{Entrenamiento inicial}
@@ -322,39 +322,6 @@ warmup\_momentum & (0.0, 0.95) & warmup initial momentum \\ \hline
 \end{tabular}
 \end{table}
 
-El mejor F1 fue 0.987081 (YOLOv8l), encima de versiones YOLO previas pero debajo de Mask-RCNN y MS-RCNN ---la búsqueda de hiperparámetros encontró F1 superiores, pero esta no fue la métrica priorizada. El mejor mAP@50 alcanzó 0.990494 (YOLO11x), superando todos los SOTA; y el mejor mAP@50-95 fue 0.866947 (YOLOv9e), sin referencia previa para comparar. Además, la degradación al exportar a TensorRT-INT8 es consistente con los análisis previos.
-
-\begin{table}[htbp]
-\centering
-\caption[Métricas de validación finales para Deepfish]{Métricas de validación finales para los modelos entrenados con Deepfish. Los datos en gris corresponden a los mejores resultados en el SOTA encontrados en trabajos anteriores \cite{Guerrero2024}.}
-\label{tab:deepfish_resultados_finales}
-\resizebox{\textwidth}{!}{
-\begin{tabular}{|l|l|l|l|l|l|l|}
-\hline
-\multicolumn{1}{|c|}{\textbf{Model}} & \multicolumn{1}{c|}{\textbf{precision}} & \multicolumn{1}{c|}{\textbf{recall}} & \multicolumn{1}{c|}{\textbf{F1\_score}} & \multicolumn{1}{c|}{\textbf{mAP50}} & \multicolumn{1}{c|}{\textbf{mAP50-95}} & \multicolumn{1}{c|}{\textbf{Format}} \\ \hline
- & 0.999798 & \textbf{0.974684} & 0.987081 & 0.988554 & 0.854858 & Pytorch \\ \cline{2-7} 
-\multirow{-2}{*}{yolov8l-seg} & 0.997991 & 0.962025 & 0.979678 & 0.986868 & 0.828008 & TensorRT-INT8 \\ \hline
- & \textbf{1.000000} & 0.971526 & 0.985558 & 0.982418 & 0.856800 & Pytorch \\ \cline{2-7} 
-\multirow{-2}{*}{yolov8x-seg} & \textbf{1.000000} & 0.909706 & 0.952718 & 0.974205 & 0.836648 & TensorRT-INT8 \\ \hline
- & 0.998282 & 0.949367 & 0.973210 & 0.981325 & \textbf{0.866947} & Pytorch \\ \cline{2-7} 
-\multirow{-2}{*}{yolov9e-seg} & 0.986039 & 0.894078 & 0.937810 & 0.963326 & 0.818743 & TensorRT-INT8 \\ \hline
- & 0.996304 & 0.962025 & 0.978865 & 0.984134 & 0.851774 & Pytorch \\ \cline{2-7} 
-\multirow{-2}{*}{yolo11l-seg} & 0.972137 & 0.883325 & 0.925606 & 0.928226 & 0.743149 & TensorRT-INT8 \\ \hline
- & 0.999076 & \textbf{0.974684} & 0.986729 & \textbf{0.990494} & 0.858102 & Pytorch \\ \cline{2-7} 
-\multirow{-2}{*}{yolo11x-seg} & 0.997386 & \textbf{0.974684} & 0.985904 & 0.981660 & 0.815214 & TensorRT-INT8 \\ \hline
-\rowcolor[HTML]{D4D4D4} 
-Mask-RCNN & - & - & \textbf{0.989500} & 0.988000 & - & Pytorch \\ \hline
-\rowcolor[HTML]{D4D4D4} 
-MS-RCNN & - & - & 0.988500 & 0.986000 & - & Pytorch \\ \hline
-\rowcolor[HTML]{D4D4D4} 
-SOLOv2 & - & - & 0.982900 & 0.975000 & - & Pytorch \\ \hline
-\rowcolor[HTML]{D4D4D4} 
-Yolov8l-seg* & - & - & 0.944900 & 0.942000 & - & Pytorch \\ \hline
-\rowcolor[HTML]{D4D4D4} 
-Yolov8x-seg* & - & - & 0.923700 & 0.961000 & - & Pytorch \\ \hline
-\end{tabular}
-}
-\end{table}
 
 \subsubsection{Ejemplos de segmentación}
 A continuación se muestran ejemplos de segmentación obtenidos con los modelos entrenados en Deepfish (fig. \ref{fig:deepfish_segmentation_examples}). Para estos ejemplos se usó el modelo YOLOv8l-seg.
@@ -455,9 +422,3 @@ A continuación se muestran ejemplos de segmentación obtenidos con los modelos 
     \label{fig:deepfish_segmentation_examples}
 \end{center}
 \end{figure}
-
-
-\subsubsection{Consideraciones y conclusiones}
-Se logra superar el SOTA establecido en el trabajo de \cite[Alejandro Guerrero, 2024]{Guerrero2024}, y se demuestra la viabilidad del uso de exportación a TensorRT para optimizar tiempos de inferencia en aplicaciones en tiempo real, con minima perdida de desempeño.
-
-Cabe mencionar que la versión del \textit{dataset} Deepfish utilizada en este trabajo difiere ligeramente de la empleada en \cite{Guerrero2024}, ya que este último incluía instancias de peces combinados mal etiquetados (múltiples peces compartiendo una sola máscara), mientras que en este trabajo se arregló este error y se separaron en instancias individuales. Esto puede, en parte, explicar diferencias en los resultados obtenidos ya que afectaría las métricas de validación dependientes del \textit{recall}.
