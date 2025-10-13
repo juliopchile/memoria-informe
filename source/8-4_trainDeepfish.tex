@@ -1,5 +1,4 @@
 \section{Entrenamiento con Deepfish}
-% TODO Corrección [14] [NO]: Resumir aquí solo aspectos de implementación; mover análisis comparativo de métricas y resultados finales al Capítulo 4 (Validación). Incluir referencia cruzada una vez reestructurado.
 Esta sección detalla el proceso de entrenamiento de modelos de segmentación utilizando la base de datos Deepfish. Se emplearon modelos pre-entrenados en la base de datos COCO, disponibles en la plataforma Ultralytics, y se ajustaron mediante re-entrenamiento para adaptarlos a la tarea específica de segmentación de peces en el entorno marino. Además este entrenamiento sirve como plantilla para los entrenamientos posteriores con la base de datos de salmones.
 
 \subsection{Entrenamiento inicial}
@@ -29,7 +28,6 @@ yolo11x-seg & 379 & 62,051,411 & 62,051,395 & 319.7 & 11 \\ \hline
 \end{table}
 
 Se entrenaron modelos YOLO de segmentación en diferentes tamaños y versiones, los modelos entrenados son: YOLOv8n, YOLOv8s, YOLOv8m, YOLOv8l, YOLOv8x, YOLOv9c, YOLOv9e, YOLO11n, YOLO11s, YOLO11m, YOLO11l y YOLO11x. Para cada modelo se utilizaron las versiones completa y ``_LO'' de la base de datos Deepfish, con el objetivo de evaluar el impacto de las imágenes de fondo en el rendimiento del modelo. Se realizaron entrenamientos completos (sin congelar capas) y entrenamientos con TL \textit{(Transfer Learning)} (congelando capas del \textit{backbone} según se ve en la tabla \ref{tab:models_summary_freeze}). Además para cada variante de entrenamiento se realizó una versión utilizando el optimizador AdamW y otra con SGD. Cada entrenamiento fue de 80 épocas y se utilizaron hiperparámetros por defecto de Ultralytics. En total se realizaron 48 entrenamientos.
-% TODO lenguaje: “YOLO11x” (no “YOLO1x”).
 
 \subsubsection{Efecto del tamaño del modelo}
 Se observa que en métricas como F1 y mAP@50 el aumento de tamaño no garantiza mejora (fig. \ref{fig:deepfish_yolov8_metrics_stacked}): los modelos pequeños (n, s) rinden peor, la ganancia se atenúa a partir de los tamaños medianos-grandes (m, l) ---probablemente por la complejidad limitada de Deepfish y el riesgo de sobreajuste. En cambio, usando la métrica más exigente mAP@50-95 (fig. \ref{fig:deepfish_yolov8_metrics_stacked} y \ref{fig:deepfish_yolo9_yolo11_metrics_map50_95}) los modelos grandes sí muestran una mejora consistente, indicando mejor captura de detalles finos en la segmentación.
@@ -176,7 +174,6 @@ Para la base de datos Deepfish, la inclusión de imágenes de fondo suele mejora
 \end{table}
 
 Otro aspecto relevante a mencionar es que la omisión de imágenes de fondo incrementa la caída de rendimiento al utilizar modelos exportados con TensorRT y cuantización numérica INT8 (fig. \ref{fig:deepfish_yolo_dataset_factor_mejora_by_format}). Esto puede implicar que la presencia de imágenes de fondo ayuda a generalizar el aprendizaje del modelo a lo largo de todo el rango dinámico de pesos y activaciones, lo que se ve reflejado en una menor degradación al aplicar técnicas de optimización numérica agresivas.
-% TODO lenguaje: “caída” y “aprendizaje” con ortografía correcta.
 
 \begin{figure}[htbp]
   \centering

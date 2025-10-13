@@ -1,23 +1,16 @@
 \part*{Capítulo 1: Introducción}\addcontentsline{toc}{part}{Capítulo 1: Introducción}
 \section{Contexto General}
-% TODO Corrección [2] [DONE]: Destacar explícitamente el framework de validación (segmentación + tracking-by-detection) aquí o al final del contexto general. Añadir 1–2 frases resaltando que la contribución incluye un marco de validación conjunto de métricas de precisión (F1, mAP@50-95) y métricas de asociación (HOTA, AssA, IDF1, MOTA) integradas para evaluar mejoras.
-% TODO Corrección [3] [DONE]: Ahondar en la relevancia de mejorar precisión para estimación de biomasa y detección de lesiones; explicar cómo mejor tracking reduce remuestreo y aumenta muestras por pez mejorando estimaciones individuales.
-% TODO Corrección [4] [DONE]: Insertar subsecciones antes de Objetivos: 1.2 Problema a Resolver (detallar ineficiencias actuales: descarte masivo, parpadeo, costos cómputo); 1.3 Acercamiento a la Solución (resumen: depuración dataset, entrenamiento YOLO multi-versión, búsqueda hiperparámetros, optimización TensorRT, validación tracking-by-detection); 1.4 Hipótesis (p.ej.: “La depuración especializada del dataset + optimización de hiperparámetros y exportación eficiente mejora simultáneamente la precisión de segmentación y la estabilidad de seguimiento reduciendo parpadeo y costo computacional”).
-% TODO Corrección [6] [DONE]: Después de la Hipótesis agregar sección "Estructura de la Memoria" explicando brevemente cada capítulo (Introducción, Soluciones existentes, Herramientas y Métodos, Validación, Desarrollo de la Solución, Resultados, Discusión, Conclusiones, Referencias, Anexos) tras la reestructuración solicitada.
 WildSense, empresa spin-off de la UTFSM, entre sus muchas actividades provee servicios de estimación de biomasa en peces con análisis de profundidad estéreo \cite{wildsense-1}. Es en este ámbito que la visión por computadora juega un rol fundamental, donde la segmentación de instancias y el seguimiento funcionan como etapas iniciales en la caracterización biométrica de salmones \cite{wildsense-2}. %Es muy importante que estas etapas sean robustas y precisas, ya que cualquier error puede propagarse a las etapas posteriores, afectando la calidad de las estimaciones finales.
-% TODO lenguaje: Revisa si prefieres “empresa derivada” en lugar de “spin-off” por estilo consistente en español técnico.
 
 \subsection{Motivación de mejora}
 \label{sec:workflow_wildsense}
 Para entender la motivación detrás de este proyecto es importante conocer el flujo de trabajo implementado por WildSense, para así identificar debilidades y proponer posibles soluciones. A continuación se explica el proceso, el cual además es ilustrado en la figura \ref{fig:workflow_wildsense}.
-% TODO lenguaje: Evita repetición de “además”; posible: “...proceso, ilustrado en la figura...”.
 
 \begin{enumerate}
     \item \textbf{Captura en video}: se registran videos de salmones mediante cámaras estéreo, obteniendo información visual, mapas de profundidad y nubes de puntos para la escena.
     \item \textbf{Detección y segmentación}: las imágenes se someten a un procesamiento mediante modelos de segmentación de instancias, que generan predicciones referentes a la posición (detección) y al contorno (segmentación) de los peces presentes en la escena. Este procedimiento posibilita el aislamiento de información visual y espacial correspondiente a los objetos de interés ---salmones en este caso--- del fondo.
     \item \textbf{Tracking}: con el fin de mitigar errores derivados de mediciones únicas, se implementa una estimación estadística basada en múltiples muestras, lo que requiere agrupar las detecciones correspondientes a cada pez. La agrupación se logra mediante algoritmos de seguimiento o \textit{tracking}. Cabe mencionar que si bien en ocasiones la tarea de seguimiento se integra al proceso de detección en videos, en el caso de WildSense, se utilizan modelos YOLO que procesan imágenes de forma independiente sin incluir seguimiento. Por el elevado costo computacional que implicaría incorporar un modelo adicional específico solo para el seguimiento, se opta por utilizar la técnica de seguimiento basado en detección, aprovechando las detecciones ya obtenidas.
     \item \textbf{Post-procesado}: se realiza filtrado de muestras deficientes. Estas constituyen casos donde el pez está incompleto, cubierto, muy alejado para realizar una estimación apropiada o el número de muestras rastreadas son muy pocas como para realizar una estimación confiable.
-    % TODO lenguaje: Concordancia: “el número de muestras rastreadas es muy bajo/poco como para realizar...”.
     \item \textbf{Estimación de volumen}: finalmente se usan los datos de profundidad tomados con las cámaras estéreo y se emparejan a modelos tridimensionales creados en Blender, con los cuales es posible realizar estimaciones de volumen y masa.
 \end{enumerate}
 
@@ -51,11 +44,8 @@ Cabe mencionar que, si bien en el presente WildSense no ofrece servicios de dete
     \includegraphics[width=0.26\linewidth]{figures/anomaly_detection/detect3.jpeg}
   \end{tabular}
 \caption[Detección de enfermedades en peces implementada por WildSense]{Detección de enfermedades en peces implementada por WildSense \cite{wildsense-2}. Izquierda: imagen original. Centro: máscara del pez. Derecha: detección de anomalías (lesiones).}
-% TODO lenguaje: Asegura consistencia entre “Fig.” y “Figura” en todo el documento.
 \label{fig:detect_lesions}
 \end{figure}
-
-% TODO Corrección [3] [DONE]: Ampliar motivación incorporando impacto en estimación de biomasa y detección de lesiones; explicar cómo reducir remuestreo incrementa muestras por pez y precisión de estimaciones individuales.
 
 % Explica el problema a resolver con el mayor detalle posible.
 \subsection{Problema a resolver}
@@ -70,31 +60,25 @@ Como se explica más arriba, previo a la estimación de biomasa se descartan num
     \item \textbf{Parpadeo}: los modelos de segmentación usados presentan inconsistencias temporales en sus detecciones, donde un pez es segmentado en algunos cuadros y en otros no. Este fenómeno, aquí apodado "parpadeo", dificulta el seguimiento continuo de objetos y puede conllevar a errores en la asociación de identidades. Esto genera tres efectos: (1) trayectorias más cortas, reduciendo la cantidad de muestras por pez; (2) remuestreo de una misma entidad como múltiples peces, afectando la estimación global de biomasa; y (3) mayor número de trayectorias totales, lo que incrementa el costo computacional en etapas posteriores.
 \end{itemize}
 
-Los primeros dos problemas nacen de la naturaleza heterogénea de la base de datos usada para entrenar los modelos de segmentación, el cual contiene numerosas instancias de bajo interés, como lo son: peces muy alejados (sin datos de profundidad asociable), parcialmente ocluidos (segmentaciones incompletas), con mala visibilidad (no pueden usarse en análisis de salud) y en poses contorsionadas (difíciles de emparejar con modelos 3D).
-% TODO lenguaje: “contorsionadas” en lugar de “contorcionadas”. También ajustar concordancia: “la cual contiene”.
+Los primeros dos problemas nacen de la naturaleza heterogénea de la base de datos usada para entrenar los modelos de segmentación, la cual contiene numerosas instancias de bajo interés, como lo son: peces muy alejados (sin datos de profundidad asociable), parcialmente ocluidos (segmentaciones incompletas), con mala visibilidad (no pueden usarse en análisis de salud) y en poses contorsionadas (difíciles de emparejar con modelos 3D).
 
-Por otro lado el ``parpadeo'' se da por la dificultad de modelos YOLO de detectar un gran número de instancias por imagen al darle similar prioridad a todos los objetos en escena, provocando inconsistencias en su detección para cuadros diferentes. Esto puede atenuarse si el modelo se especializa en detectar solo los peces de interés, reduciendo la cantidad total de instancias a detectar y facilitando la tarea del modelo.
-% TODO lenguaje: Coma después de “Por otro lado,”. “darles una prioridad similar” suena más natural.
+Por otro lado, el ``parpadeo'' se da por la dificultad de modelos YOLO de detectar un gran número de instancias por imagen al darles una prioridad similar a todos los objetos en escena, provocando inconsistencias en su detección para cuadros diferentes. Esto puede atenuarse si el modelo se especializa en detectar solo los peces de interés, reduciendo la cantidad total de instancias a detectar y facilitando la tarea del modelo.
 
 % Resume para el lector la solución implementada.
 \subsection{Acercamiento a la solución}
 Los problemas mencionados justifican el desarrollo de una base de datos especializada que permita entrenar modelos de segmentación orientados únicamente a identificar instancias de interés. En este trabajo se depura entonces un \textit{dataset} de salmones, eliminando instancias irrelevantes mediante técnicas de filtrado con criterio de tamaño y nitidez. Para esto se desarrolla un código capaz de analizar cada instancia en el conjunto de datos y decidir si es relevante o no según los criterios mencionados.
 
-Se etiqueta también una base de datos de seguimiento desde cero, con anotaciones manuales, para evaluar los modelos entrenados y compararlos contra la versión actualmente desplegada.
-% TODO lenguaje: Evita “también” repetido en párrafos consecutivos; posibles conectores: “Asimismo/Además”.
+Se etiqueta asimismo una base de datos de seguimiento desde cero, con anotaciones manuales, para evaluar los modelos entrenados y compararlos contra la versión actualmente desplegada.
 
 Por otra parte, el proyecto amplía aspectos poco abordados en trabajos previos: se realiza una búsqueda exhaustiva de hiperparámetros para ver su impacto en el entrenamiento; se experimenta con múltiples variantes YOLO (YOLOv8, YOLOv9 y YOLO11) así como diferentes configuraciones de entrenamiento (optimizador, uso de imágenes de fondo y Transfer Learning); y se prueba la exportación con TensorRT para acelerar la inferencia en tiempo real.
-% TODO lenguaje: Repetición de “además” a lo largo del capítulo; reemplazar por “Asimismo/Por otra parte/En paralelo”.
 
 Finalmente y por motivos de replicación, se entrenan modelos adicionales con la base pública Deepfish; aunque no ideal para el caso de uso de WildSense, permite comparar con trabajos previos y evaluar la efectividad de algunas técnicas propuestas en un contexto diferente. Los modelos entrenados en Deepfish no se evalúan en seguimiento pero sí en segmentación de instancias.
-% TODO lenguaje: Acento en “sí” afirmativo.
 
 \subsection{Hipótesis}
 % Versión corta
 Se espera que los nuevos modelos entrenados sobre la base de datos depurada presenten mejores métricas de asociación y estabilidad temporal (mayor IDF1, AssA, HOTA, MOTA, MT\%, y menores IDSW y Frag) respecto a la versión desplegada por WildSense. Esto al evaluarse en el \textit{dataset} de \textit{tracking} elaborado para esta memoria. Se espera también que la calidad de las máscaras mejore cualitativamente (bordes, continuidad, ausencia de cortes).% aun cuando no sea posible una comparación cuantitativa directa en segmentación debido a conjuntos de validación distintos; esta mejora se verificará mediante inspección visual contrastiva.
 
 Luego, basado en trabajos previos, se espera que modelos entrenados con SGD, uso de imágenes de fondo y sin Transfer Learning, presenten mejores resultados respecto a otras configuraciones.
-% TODO lenguaje: “imágenes” lleva tilde.
 
 Finalmente, la optimización de hiperparámetros en Deepfish debiese aumentar las métricas de segmentación (precisión, exhaustividad, F1, mAP@50 y mAP@50-95) respecto a resultados anteriores, acercándose o estableciendo un nuevo estado del arte para ese conjunto.
 
@@ -111,14 +95,12 @@ Finalmente, la optimización de hiperparámetros en Deepfish debiese aumentar la
 
 
 \subsection{Objetivo general}
-% TODO Corrección [5] [DONE]: Reformular objetivo general al contexto de jaulas de cultivo en salmonicultura.
 % (Versión original)
 % Entrenar modelos de segmentación de instancias YOLO para una base de datos de salmones mejorada y validar los modelos resultantes en las tareas de segmentación y seguimiento.
 
 Mejorar la calidad de la segmentación y seguimiento basado en detección de modelos YOLO entrenados en una base de datos de salmones en el contexto de jaulas de cultivo en acuicultura, mediante la depuración especializada de dicha base de datos. También corroborar la efectividad de la búsqueda de hiperparámetros, configuraciones de entrenamiento, la experimentación con múltiples versiones de YOLO y la optimización mediante TensorRT.
 
 \subsection{Objetivos específicos}
-% TODO Corrección [5] [DONE?]: Revisar que objetivos específicos reflejen mejora de calidad (precisión + estabilidad de seguimiento) y no solo entrenamiento. Ajustar redacción: incluir reducción de parpadeo, eficiencia cómputo, validación con marco integral.
 \begin{itemize}
     \setlength{\itemsep}{0pt}%
     %\setlength{\parskip}{0pt}%

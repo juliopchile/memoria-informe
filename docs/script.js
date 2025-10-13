@@ -33,9 +33,9 @@ const translations = {
     abstract1:
       "In the aquaculture industry, the constant monitoring of fish health is crucial. Advances in computer vision now allow this task to be performed in a scalable and less invasive manner. WildSense, a spin-off company of the UTFSM, provides services for weight estimation in salmon, for which instance segmentation and detection-based tracking are integral components of its pipeline, although there remains room for optimization.",
     abstract2:
-      "This project refines an instance segmentation database for salmon by filtering it to include only relevant cases, with the aim of training YOLO models with performance superior to previous works. In addition, hyperparameters are optimized for training, and the models are exported to TensorRT in order to reduce their inference times.",
+      "This project refines an instance segmentation dataset for salmon by filtering it to include only relevant cases, with the aim of training YOLO models with performance superior to previous works. In addition, hyperparameters are optimized for training, and the models are exported to TensorRT in order to reduce their inference times.",
     abstract3:
-      "The results demonstrate that a more precise database can enhance performance in tracking tasks and improve the quality of segmentations; hyperparameter optimization yields better outcomes; and the conversion to TensorRT significantly reduces inference times with minimal performance loss.",
+      "The results demonstrate that a more precise dataset can enhance performance in tracking tasks and improve the quality of segmentations; hyperparameter optimization yields better outcomes; and the conversion to TensorRT significantly reduces inference times with minimal performance loss.",
     linksTitle: "Links",
     pdf: "Read PDF (spanish only)",
     code: "Project code",

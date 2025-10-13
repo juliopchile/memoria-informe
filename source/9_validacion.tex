@@ -1,20 +1,12 @@
-% TODO Corrección [14]: Al crear Capítulo 4 (Validación) mover parte de estas subsecciones (segmentación, seguimiento) allí; aquí dejar síntesis consolidada.
-% TODO Corrección [13] [DONE]: Añadir resultados MOTA (y MOTP si disponible) y resaltar mejores valores en negrita en tablas desde tab:tracking_promedio_model en adelante.
-% TODO Corrección [2]: Reforzar referencia al marco conjunto de validación (segmentación + tracking-by-detection) en apertura.
-
 \part*{Capítulo 4: Validación}\addcontentsline{toc}{part}{Capítulo 4: Validación}
 En este capítulo se definen las métricas de validación utilizadas para evaluar el desempeño de los modelos entrenados en las tareas de segmentación de instancias y seguimiento de salmones. Se presentan los resultados obtenidos en dichas tareas, comparando el rendimiento de los modelos desarrollados con versiones previas y destacando las mejoras alcanzadas.
-% TODO lenguaje: Introducir explícitamente el marco integrado segmentación + tracking-by-detection en el párrafo de apertura.
 
 \section{Métricas de Validación}
-% TODO Corrección [2]: Añadir párrafo introductorio resaltando el marco integrado: segmentación (F1, mAP@50, mAP@50-95) + tracking (HOTA, AssA, IDF1, MOTA, MT%, IDSW, Frag) como contribución metodológica.
-% TODO Corrección [14]: Esta sección se moverá / referenciará dentro del nuevo Capítulo 4 (Validación) tras reestructuración.
 Para determinar el rendimiento de un modelo es necesario obtener métricas de validación específicas para cada tarea. En el caso de la segmentación de instancias, las métricas más utilizadas son el \textit{mean average precision} (mAP) y el \textit{F1 score}. En este trabajo se priorizó la optimización de la métrica mAP@50-95, que corresponde al promedio de la precisión media calculada en umbrales de IoU desde 0.50 hasta 0.95, en pasos de 0.05.
 
  En la tarea de seguimiento existen varias métricas bien establecidas en la literatura. Las más tradicionales son MOTA y MOTP, pero en los últimos años han surgido métricas (p. ej. HOTA, AssA, IDF1) que descomponen el rendimiento en detección y asociación, por lo que también resultan informativas para problemas donde la conservación de identidad y la continuidad del seguimiento son prioritarias ---como en este trabajo.
 
  En consecuencia, se priorizan métricas que directamente miden la calidad de la asociación (AssA / IDF1) y la continuidad de tracks (MT / MT\%), y se utiliza HOTA (y sus subcomponentes) en conjunto con MOTA para obtener una visión balanceada entre detección y asociación.
-% TODO Corrección [11] [DONE]: Matizar este párrafo: reconocer valor de MOTA para medir calidad global de asociaciones y justificar uso complementario en lugar de restarle importancia.
 
 \subsection{Matriz de confusión}
 La matriz de confusión ---también conocida como matriz de errores o matriz de coincidencias--- es una representación tabular que muestra, de forma simultánea, los aciertos y errores de un clasificador. Cada fila corresponde a la clase real de los ejemplos y cada columna a la clase predicha, lo que permite evaluar de un vistazo la capacidad del modelo para distinguir entre \textbf{verdaderos positivos}, \textbf{falsos positivos}, \textbf{falsos negativos} y \textbf{verdaderos negativos}.
@@ -40,7 +32,6 @@ La matriz de confusión ---también conocida como matriz de errores o matriz de 
 
 \subsection{Intersección sobre unión (IoU)}
 Se define como el área de intersección, dividida por el área de la unión entre la segmentación predicha por el modelo ($S_p$) y la segmentación real o \textit{ground-truth} ($S_{gt}$) (Ec. \ref{eq:intersection_over_union}).
-% TODO lenguaje: “área” con tilde; evitar macro \acute si no es necesario.
 
 \begin{equation}
   \label{eq:intersection_over_union}
@@ -99,9 +90,7 @@ Se calcula mediante la siguiente ecuación (Ec. \ref{eq:map}):
 
 donde $N$ es el número de clases y $\text{AP}_i$ es la precisión media de la clase $i$. La precisión media se calcula como el área bajo la curva de precisión-exhaustividad (PR) para cada clase, y se define como el promedio de la precisión en diferentes puntos de \textit{recall}. 
 
-% TODO lenguaje: Falta agregar fuentes y citas para métricas de tracking. [CALLAO GIL!!!]
-% TODO Corrección [13]: Completar referencias formales para IDF1, MOTA/MOTP, MT/PT/ML, IDSW, Frag y AssA (además de HOTA ya citada). Incluir resultados de MOTA en tablas de resultados.
-
+% TODO lenguaje: Falta agregar fuentes y citas para métricas de tracking.
 \subsection{HOTA, DetA, AssA y LocA}
 HOTA \cite{HOTA} (\textit{Higher Order Tracking Accuracy}) es una métrica de seguimiento que busca equilibrar detección y asociación. HOTA y sus subcomponentes se obtienen emparejando detecciones y \textit{ground-truths} por cuadro (usualmente por IoU) y calculando las razones TP/FP/FN y medidas de asociación por umbral. Es habitual reportar HOTA como AUC (\textit{Area Under the Curve}) sobre distintos umbrales IoU. En la práctica se reporta:
 \begin{itemize}
@@ -259,14 +248,10 @@ El mejor F1 fue 0.920745, el mejor mAP@50 alcanzó 0.964219 (YOLOv8l) y el mejor
 Los resultados obtenidos con Salmons son satisfactorios al demostrar que depurar la base de datos y aumentar su tamaño permite entrenar modelos más precisos en la detección y segmentación de instancias de interés. Sin embargo, hay un aspecto que merece ser discutido y es que al ser una base de datos donde no todas las instancias de salmones están etiquetadas, el modelo puede aprender a ignorar ciertas instancias que en la práctica deberían ser detectadas y viceversa. Esto significa que el \textit{dataset} en sí no está ``bien definido'' y cualquier análisis cuantitativo de sus resultados debe ser interpretado con cautela, pues podría no reflejar fielmente su rendimiento real.
 
 %Al ser esta versión de Salmons una base de datos nueva y con un subconjunto de validación diferente, no es posible comparar directamente estos modelos con los obtenidos en trabajos previos \cite{Guerrero2024}. Una comparación se realiza más adelante con la tarea de seguimiento.
-% TODO Corrección [12] [DONE]: Sustituir "tomado con pinzas" y acentuar "en sí"; revisar "interes" -> "interés".
-% TODO Corrección [11] [DONE]: Alinear discusión con rol de MOTA (no eliminar MOTA, complementar con HOTA/AssA/IDF1).
 
 %%%%%%%%%
 
 \section{Seguimiento de Salmones}
-% TODO Corrección [14]: Parte analítica (tablas y comparación métricas) mover al Capítulo 4 Validación (sección Resultados de tracking) y agregar subsección Discusión final allí.
-% TODO Corrección [2]: Referenciar explícitamente el marco conjunto de validación (segmentación + tracking-by-detection) al inicio.
 Para validar la capacidad de los modelos obtenidos y comprobar la hipótesis planteada, se realizaron tareas de segmentación y seguimiento en videos de salmones utilizando las bases de datos Tracking Salmones (ver sección \ref{sec:datasets}).
 
 Se evaluaron los cinco mejores modelos entrenados con la base de datos Salmons, junto con sus exportaciones en TensorRT-FP16 y TensorRT-INT8. Además, se incluyó un modelo YOLOv8l-seg ---aquí llamado Salmones2024--- entrenado sobre la versión original del \textit{dataset}, también con sus exportaciones a TensorRT. Este es el modelo utilizado actualmente por WildSense.
@@ -279,10 +264,8 @@ Se desarrolló además un código en Python que convierte predicciones de segmen
 
 \subsection{Comparación por modelo}
 En el promedio de las ambas secuencias (tabla \ref{tab:tracking_promedio_model} y figs. \ref{fig:tracking_metricas_clave_modelo_promedio} y \ref{fig:tracking_metricas_consistencia_modelo_promedio}), el modelo Salmones2024 obtiene los mejores valores de recuperación con las métricas IDF1, AssA, HOTA, MOTA y MT\%. Sin embargo registra el mayor número de cambios de identidad y fragmentación (IDSW y Frag).
-% TODO Corrección [13] [DONE]: Incluir columna MOTA en tablas y marcar mejores valores en negrita. Añadir frase comparativa sobre MOTA.
 
 El dominio de Salmones2024 se explica casi por completo por su rendimiento en la secuencia ``Video\_2'' (tabla \ref{tab:tracking_tracking2_model} y figs. \ref{fig:tracking_metricas_clave_modelo_tracking2} y \ref{fig:tracking_metricas_consistencia_modelo_tracking2}). Aquí supera con amplio margen a todos los demás (56, 22, 43, 67 y 280 \% superior a los segundos lugares en IDF1, AssA, HOTA, MOTA y MT\% respectivamente). Aun así, Salmones2024 incurre en más IDSW y mantiene una fragmentación relativamente alta, evidenciando inestabilidad temporal y ``parpadeo'' pese a su mayor cobertura de detecciones. Este comportamiento se da pues los nuevos modelos no consideran a los peces con baja visibilidad como ``instancias de interés'', resultando en un número muy bajo de detecciones, afectando al seguimiento. Pero esto es un comportamiento esperado, ya que los nuevos modelos fueron entrenados para detectar solo peces en buenas condiciones de visibilidad.
-% TODO Corrección [12] [DONE]: Cambiar "porciento" -> "%".
 
 En la secuencia ``Video\_1'' (tabla \ref{tab:tracking_tracking1_model} y figs. \ref{fig:tracking_metricas_clave_modelo_tracking1} y \ref{fig:tracking_metricas_consistencia_modelo_tracking1}) las diferencias se estrechan: YOLO11m logra el mayor IDF1, superando ligeramente a Salmones2024. No obstante, Salmones2024 conserva el mejor AssA, HOTA, MOTA y MT\%. En esta secuencia se observa además que los modelos nuevos (especialmente YOLO11l) reducen de forma marcada IDSW y Frag, mostrando trayectorias más estables cuando las condiciones son favorables.
 
@@ -398,10 +381,8 @@ yolo11l & 0.37311 & 0.39729 & 0.29915 & 0.25517 & 0.07207 & 6.66667 & 20.00000 \
 El efecto de la exportación es el esperado: TensorRT-FP16 reproduce casi en su totalidad el rendimiento del modelo en PyTorch (o incluso puede mejorar como con Video\_1), mientras que TensorRT-INT8 introduce una degradación sistemática en las métricas de seguimiento y \textit{recall} (IDF1, AssA, HOTA, MOTA y MT\%).
 
 Las métricas donde valores menores son mejores (IDSW y Frag) disminuyen tanto para FP16 (ligeramente) como para INT8 (de forma marcada). Sin embargo, esta reducción no debe interpretarse automáticamente como mejora: la cuantización INT8 provoca pérdida de detecciones (menor \textit{recall} efectivo), reduciendo el número de trayectorias activas y, con ello, las oportunidades de incurrir en cambios de identidad o fragmentaciones.
-% TODO Corrección [11] [DONE]: Evaluar si debe mencionarse que MOTA también captura parte de esta degradación y ajustar discusión.
 
 En general este patrón se repite para ambas secuencias, cabe mencionar que la degradación esperada bajo INT8 es más severa para la secuencia Video\_2 (tabla \ref{tab:tracking_tracking2_format} y figs. \ref{fig:tracking_metricas_clave_formato_tracking2}).
-% TODO lenguaje: “solo mencionar” → “cabe mencionar”/“destaca que”.
 
 \begin{table}[htbp]
 \centering
