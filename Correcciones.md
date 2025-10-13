@@ -12,7 +12,7 @@ Cambié el abstract para reflejar que las mejoras buscadas y obtenidas son en ca
 ---
 3) _Ahonda en el contexto acerca de la relevancia en la mejora en precisión para tareas específicas como la estimación de biomasa y detección de lesiones, junto con la relevancia del seguimiento de instancias para reducir el remuestreo y aumentar la cantidad de muestras por pez, lo cual permite mejorar la estimación de cada instancia en particular._
 
-Moví el contenido de la sección **4. Trabajo realizado por WildSense y motivación de mejoras** que se encontraba en la parte de **Trabajo a realizar** a la ahora nueva subsección **1.1 Motivación de mejora** en la parte de **Introducción**. De esa manera explico en la introducción cómo funciona el proceso de estimación de biomasa de WildSense para luego indicar bien cuál es el problema (en la subsección siguiente) y como esto es relevante para la calidad de las estimaciones y el uso de muestras en detección de lesiones.
+Moví el contenido de la sección **4. Trabajo realizado por WildSense y motivación de mejoras** que se encontraba en el capítulo **Trabajo a realizar** a la ahora nueva subsección **1.1 Motivación de mejora** en el capítulo de **Introducción**. De esa manera explico en la introducción cómo funciona el proceso de estimación de biomasa de WildSense para luego indicar bien cuál es el problema (en la subsección siguiente) y como esto es relevante para la calidad de las estimaciones y el uso de muestras en detección de lesiones.
 
 Además, incluí una figura que muestra un ejemplo de detección de enfermedades implementada por WildSense.
 
@@ -27,7 +27,7 @@ Además, incluí una figura que muestra un ejemplo de detección de enfermedades
 
 Creadas las subsecciones indicadas:
 
-**1.2. Problema a resolver**: conecto la explicación previa en **1. Contexto general** y **1.1. Motivación de mejora**  indicando de forma general y también puntual cuales son los problemas principales con el flujo de trabajo actual. También indico por qué estos problemas nacen de la base de datos usada.
+**1.2. Problema a resolver**: conecto la explicación previa en **1. Contexto general** y **1.1. Motivación de mejora**  indicando de forma general y también puntual cuales son los problemas principales con el flujo de trabajo actual de WildSense. También indico por qué estos problemas nacen de la base de datos usada.
 
 **1.3. Acercamiento a la solución**: explico la solución implementada en la memoria, resumiendo a grandes rasgos lo que se hizo en la misma: depurar el dataset de salmones; crear el dataset de seguimiento para salmones; hacer pruebas con diferentes modelos YOLO, optimización de hiperparámetros y exportación TensoRT; y las pruebas hechas con Deepfish con fines de replicación, al menos para la parte de segmentación de instancias.
 
@@ -67,13 +67,13 @@ Mejoré la ahora subsección **1.5. Objetivo general** para especificar el conte
 
     _La sección 2.1 que escribiste (Visión por computadora y su uso en la acuicultura) es 2.1 Soluciones existentes. El capítulo 3 de Estado del Arte que escribiste debiese ser 2.2 Herramientas y Métodos (ó Marco Teórico)._
 
-Se cambió la sección **2. Marco Teórico** por la parte **Estado del Arte**.
+Se cambió la sección **2. Marco Teórico** por el capítulo **Estado del Arte**.
 
-Se cambió la subsección **2.1. Visión por computadora y su uso en la acuicultura** por la sección **2. Soluciones Existentes**.  Incluí unas imagenes de ejemplo donde se ve como miden peces de forma tradicional (a mano o con máquinas), para ilustrar mejor la idea de que estas técnicas son invasivas y estresantes para el animal. Además añadí un pequeño parrafo hablando de las proyecciones de WildSense en detección de enfermedades, inspección de mallas y monitoreo subacuático.
+Se cambió la subsección **2.1. Visión por computadora y su uso en la acuicultura** por la sección **3. Soluciones Existentes**.  Incluí unas imagenes de ejemplo donde se ve como miden peces de forma tradicional (a mano o con máquinas), para ilustrar mejor la idea de que estas técnicas son invasivas y estresantes para el animal. Además añadí un pequeño parrafo hablando de las proyecciones de WildSense en detección de enfermedades, inspección de mallas y monitoreo subacuático.
 
-Se cambió la sección **3. Estado del arte** por **3. Herramientas y Métodos**, ya que "Estado del Arte" es ahora el nombre de la parte entera. El contenido no se cambió.
+Se cambió la sección **3. Estado del arte** por **4. Herramientas y Métodos**, ya que "Estado del Arte" es ahora el nombre de la parte entera. El contenido no se cambió.
 
-Se creó la sección de **4. Discusión** al final de la parte de **Estado del Arte**. Aquí menciono cual es la diferencia entre mi "solución" y otras soluciones existentes (WildSense) y por qué tiene valor mi propuesta. También justifico el uso de YOLO por sobre otras arquitecturas, eso se relaciona con las técnicas de entrenamiento y exportación.
+Se creó la sección de **5. Discusión sobre el Estado del Arte** al final de la parte de **Estado del Arte**. Aquí menciono cual es la diferencia entre mi "solución" y otras soluciones existentes (WildSense) y por qué tiene valor mi propuesta. También justifico el uso de YOLO por sobre otras arquitecturas, eso se relaciona con las técnicas de entrenamiento y exportación.
 
 ---
 8) _En el marco teórico que desarrollaste (que en realidad es “Soluciones Existentes”):_
@@ -82,7 +82,7 @@ Se creó la sección de **4. Discusión** al final de la parte de **Estado del A
 - _“modelos tridimensionales generados en Blender, para la estimación de volumen y masa en peces”: ya no utilizamos Blender por lento, así que basta que digas: “modelos tridimensionales para la estimación de volumen y masa en peces”._
 - _Si encuentras más técnicas que resuelven los problemas de la acuicultura incluso de forma parcial, debieses agregarlos en esta sección._
 
-Modifiqué el segundo párrafo de la ahora sección **2. Soluciones Existentes** para destacar la relevancia de la estimación de biomasa. Puse a la estimación de biomasa como una de las formas de monitorear la salud de los peces entre parentesis. Además agregué otro parrafo entre ese y el tercero para mencionar porque es importante la visión por computadora en estas tareas.
+Modifiqué el segundo párrafo de la ahora sección **3. Soluciones Existentes** para destacar la relevancia de la estimación de biomasa. Puse a la estimación de biomasa como una de las formas de monitorear la salud de los peces entre parentesis. Además agregué otro parrafo entre ese y el tercero para mencionar porque es importante la visión por computadora en estas tareas.
 
 Quité la referencia a Blender.
 
@@ -94,21 +94,21 @@ No encontré más técnicas que resuelvan problemas en acuicultura, prefiero no 
 - _reducción en consumo energéticos. → reducción en consumo energético._
 - _en la 3.5.1 creo relevante hacer el punto con lo previamente mencionado, que en el marco de esta memoria, dada la utilización de modelos de detección y segmentación de instancia, resulta adecuada la consideración de técnicas de tracking-by-detection, que es lo que finalmente presentas en esta sección._
 
-Corregí el error de ortografía en la subsección **3.4. Técnicas de optimización**
+Corregí el error de ortografía en la subsección **4.4. Técnicas de optimización**
 
-En la sección **3.5 Seguimiento** Hago enfasis en como las técnicas de seguimiento basado en detección son interes particular para este proyecto.
+En la sección **4.5 Seguimiento** Hago enfasis en como las técnicas de seguimiento basado en detección son interes particular para este proyecto.
 
 ---
 10) _El título “Trabajo a realizar” desbiese ser el Capítulo 3 – Desarrollo de la Solución._
 
-La parte de **Trabajo a realizar** se cambió a **Desarrollo de la Solución**
+El capítulo de **Trabajo a realizar** se cambió a **Desarrollo de la Solución**
 
 ---
 11) _En 6.3 (base de datos):_
 
     _“El primero de carácter público y con la finalidad de replicación de resultados. El segundo de carácter privado, que además es depurado en una versión más refinada para lograr mejores modelos.” → debieses hablar de dataset dado el caracter de información anotada para entrenamiento y validación. Así esta frase puede ser en “masculino”, pues hablas del “dataset” y no de la base de datos._
 
-Reformulé el párrafo en **6.3. Bases de datos** para que sea sintacticamente más correcta.
+Reformulé el párrafo en **7.3. Bases de datos** para que sea sintacticamente más correcta.
 
 ---
 12) _Cuidado con lo que dices en la sección 7, pues MOTA es de las mejoras métricas en representar directamente la calidad de las asociaciones al tener un énfasis en métricas de coincidencia de tamaño y número de tracks, que es finalmente lo más importante de la tarea de tracking (pues para la precisión tenemos métricas específicas de segmentación). Ve si es necesario ajustar la discusión de resultados a estas consideraciones._
@@ -139,9 +139,9 @@ Añadí la métrica MOTA en los resultados de validación (figuras y tablas). Ad
 
 Cree la parte de **Validación** donde: definí las métricas de validación; incluyo los resultados finales de validación de los modelos, tanto para segmentación de instancias como seguimiento; pero no definí ningún dataset ni como lo cree porque eso va en su propia sección.
 
-Se movió toda la sección **7. Métricas de validación** del capítulo **Trabajo a realizar** a la sección **11. Métricas de Validación** del ahora nuevo capítulo **Validación**.
+Se movió toda de la antigua sección **7. Métricas de validación** del capítulo **Trabajo a realizar** a la sección **11. Métricas de Validación** del ahora nuevo capítulo **Validación**.
 
-Se movió la subsección **12.3. Especificaciones** a la sección **12. Especificaciones del Entorno de Trabajo**, dentro del capitulo de Validación.
+Se movió la subsección **12.3. Especificaciones** a la ahora sección **12. Especificaciones del Entorno de Trabajo**, dentro del capitulo de Validación.
 
 Los resultados de validación que se encontraban al final de las secciones de entrenamiento de modelos para Deepfish y Salmons, fueron movidos a subsecciones dentro de la nueva sección **13. Segmentación de instancias**, dentro del capítulo de **Validación**. De esta forma se encuentran los resultados en un capítulo aparte.
 
@@ -153,11 +153,13 @@ Ahora si se pregunta porque dejé los entrenamientos en el capitulo de "Desarrol
 
 Los resultados de validación de los modelos de seguimiento se movieron en su totalidad al capitulo de **Validación** como sección **13. Seguimiento en Salmones**.
 
-Lo que antes era la sección **12. Resultados** lo puse en la ahora nueva sección **Discusión**. Solo incluí comentarios sobre si se corrobora o desmiente la hipotesis realizada en cada tema. Además se reescribió la sección de conclusión para que no repita las mismas conclusiones dadas en la sección anterior, pero si se prefiere se podría volver a la versión previa.
+Lo que antes era la sección **12. Resultados** lo puse en la ahora nueva sección **15. Discusión sobre Resultados de Validación**. Solo incluí comentarios sobre si se corrobora o desmiente la hipotesis realizada en cada tema. Además se reescribió la sección de conclusión para que no repita las mismas conclusiones dadas en la sección anterior, pero si se prefiere se podría volver a la versión previa.
 
 ---
 
 ```
 [COMENTARIOS FINALES]
-Para que no se desarmara tanto el orden de la memoria (figuras que a veces se ponen en lugares donde no debería) cambia el tamaño de algunos párrafos y tablas, añadiendo o quitando información. Estos cambios no los explico en los changelogs pero están presente a lo largo de la memoria.
+Siento que la creación de las nuevas secciones hacen que la memoria quede muy larga y con muchas partes donde explico los mismos temas varias veces, entonces creo que esta versión es más verbosa y "repetitiva", no quiero volver a revisarla para "optimizarla" y hacerla más corta, creo que está bien así.
+
+Además que no se desarmara tanto el orden de la memoria (figuras que a veces se ponen en lugares donde no debería) cambia el tamaño de algunos párrafos y tablas, añadiendo o quitando información. Estos cambios no los explico en los changelogs pero están presente a lo largo de la memoria.
 ```
