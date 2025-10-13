@@ -129,6 +129,8 @@ Realicé las correcciones ortográficas y de estilo.
 13) _Me interesa en particular que agregues los resultados de la métrica MOTA.
 Agrega en la sección segmentación un recordatorio de qué métrica es mejor o peor, poniendo con negrita en cada columna el mejor valor para las tablas 11.20 en adelante. (tab:tracking\_promedio\_model)_
 
+Añadí la métrica MOTA en los resultados de validación (figuras y tablas). Además se destacaron en negrita los mejores resultados por columna en las tablas de validación (segmentación y seguimiento).
+
 ---
 14) _Reestructura la memoria considerando un Capítulo de Validación:_
 

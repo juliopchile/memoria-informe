@@ -199,20 +199,20 @@ El mejor F1 fue 0.920745, el mejor mAP@50 alcanzó 0.964219 (YOLOv8l) y el mejor
 \resizebox{\textwidth}{!}{
 \begin{tabular}{|r|r|r|r|r|r|r|}
 \hline
-\multicolumn{1}{|c|}{\textbf{Model}} & \multicolumn{1}{c|}{\textbf{precision(M)}} & \multicolumn{1}{c|}{\textbf{recall(M)}} & \multicolumn{1}{c|}{\textbf{F1\_score(M)}} & \multicolumn{1}{c|}{\textbf{mAP50(M)}} & \multicolumn{1}{c|}{\textbf{mAP50-95(M)}} & \multicolumn{1}{c|}{\textbf{Format}} \\ \hline
+\multicolumn{1}{|c|}{\textbf{Model}} & \multicolumn{1}{c|}{\textbf{precision}} & \multicolumn{1}{c|}{\textbf{recall}} & \multicolumn{1}{c|}{\textbf{F1\_score}} & \multicolumn{1}{c|}{\textbf{mAP50}} & \multicolumn{1}{c|}{\textbf{mAP50-95}} & \multicolumn{1}{c|}{\textbf{Format}} \\ \hline
 \multirow{3}{*}{yolov8m-seg} & 0.918982 & 0.901081 & 0.909943 & 0.956664 & 0.841938 & Pytorch \\ \cline{2-7} 
  & 0.901204 & 0.895137 & 0.898160 & 0.942524 & 0.825067 & TensorRT-F16 \\ \cline{2-7} 
  & 0.898992 & 0.866822 & 0.882614 & 0.923051 & 0.808302 & TensorRT-INT8 \\ \hline
-\multirow{3}{*}{yolov8l-seg} & 0.934967 & 0.906950 & 0.920745 & 0.964219 & 0.855048 & Pytorch \\ \cline{2-7} 
+\multirow{3}{*}{yolov8l-seg} & 0.934967 & 0.906950 & \textbf{0.920745} & \textbf{0.964219} & \textbf{0.855048} & Pytorch \\ \cline{2-7} 
  & 0.900628 & 0.889379 & 0.894968 & 0.942430 & 0.821504 & TensorRT-F16 \\ \cline{2-7} 
  & 0.911594 & 0.843225 & 0.876077 & 0.925137 & 0.802004 & TensorRT-INT8 \\ \hline
 \multirow{3}{*}{yolov9c-seg} & 0.905389 & 0.916710 & 0.911014 & 0.955673 & 0.843308 & Pytorch \\ \cline{2-7} 
  & 0.885074 & 0.881683 & 0.883375 & 0.944443 & 0.825897 & TensorRT-F16 \\ \cline{2-7} 
  & 0.915060 & 0.830632 & 0.870804 & 0.935842 & 0.805967 & TensorRT-INT8 \\ \hline
-\multirow{3}{*}{yolo11m-seg} & 0.948910 & 0.878505 & 0.912351 & 0.958191 & 0.836368 & Pytorch \\ \cline{2-7} 
+\multirow{3}{*}{yolo11m-seg} & \textbf{0.948910} & 0.878505 & 0.912351 & 0.958191 & 0.836368 & Pytorch \\ \cline{2-7} 
  & 0.931674 & 0.859813 & 0.894302 & 0.941678 & 0.815239 & TensorRT-F16 \\ \cline{2-7} 
  & 0.921174 & 0.819123 & 0.867156 & 0.925916 & 0.791362 & TensorRT-INT8 \\ \hline
-\multirow{3}{*}{yolo11l-seg} & 0.907006 & 0.918224 & 0.912581 & 0.960751 & 0.854808 & Pytorch \\ \cline{2-7} 
+\multirow{3}{*}{yolo11l-seg} & 0.907006 & \textbf{0.918224} & 0.912581 & 0.960751 & 0.854808 & Pytorch \\ \cline{2-7} 
  & 0.951026 & 0.862061 & 0.904361 & 0.948310 & 0.833763 & TensorRT-F16 \\ \cline{2-7} 
  & 0.942736 & 0.850467 & 0.894228 & 0.941315 & 0.819330 & TensorRT-INT8 \\ \hline
 \end{tabular}
