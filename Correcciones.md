@@ -113,6 +113,8 @@ Reformulé el párrafo en **6.3. Bases de datos** para que sea sintacticamente m
 ---
 11) _Cuidado con lo que dices en la sección 7, pues MOTA es de las mejoras métricas en representar directamente la calidad de las asociaciones al tener un énfasis en métricas de coincidencia de tamaño y número de tracks, que es finalmente lo más importante de la tarea de tracking (pues para la precisión tenemos métricas específicas de segmentación). Ve si es necesario ajustar la discusión de resultados a estas consideraciones._
 
+Reformulé la sección para incluir MOTA como métrica utilizada y no excluirla.
+
 ---
 12) _Correcciones ortográficas y de estilo_
 - _identico → idéntico_

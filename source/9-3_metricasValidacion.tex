@@ -3,10 +3,10 @@
 % TODO Corrección [14]: Esta sección se moverá / referenciará dentro del nuevo Capítulo 4 (Validación) tras reestructuración.
 Para determinar el rendimiento de un modelo es necesario obtener métricas de validación específicas para cada tarea. En el caso de la segmentación de instancias, las métricas más utilizadas son el \textit{mean average precision} (mAP) y el \textit{F1 score}. En este trabajo se priorizó la optimización de la métrica mAP@50-95, que corresponde al promedio de la precisión media calculada en umbrales de IoU desde 0.50 hasta 0.95, en pasos de 0.05.
 
- En la tarea de seguimiento existen varias métricas bien establecidas en la literatura. Las más tradicionales son MOTA y MOTP, pero en los últimos años han surgido métricas (p. ej. HOTA, AssA, IDF1) que descomponen el rendimiento en detección y asociación, por lo que resultan más informativas para problemas donde la conservación de identidad y la continuidad del seguimiento son prioritarias ---como en este trabajo.
+ En la tarea de seguimiento existen varias métricas bien establecidas en la literatura. Las más tradicionales son MOTA y MOTP, pero en los últimos años han surgido métricas (p. ej. HOTA, AssA, IDF1) que descomponen el rendimiento en detección y asociación, por lo que también resultan informativas para problemas donde la conservación de identidad y la continuidad del seguimiento son prioritarias ---como en este trabajo.
 
- En consecuencia, aunque en la literatura se reporta con frecuencia MOTA, en este trabajo se priorizan métricas que directamente miden la calidad de la asociación (AssA / IDF1) y la continuidad de tracks (MT / MT\%), y se utiliza HOTA (y sus subcomponentes) para obtener una visión balanceada entre detección y asociación. MOTA se calcula y se muestra por completitud pero no es la métrica de decisión principal, porque puede enmascarar mejoras en la asociación cuando el detector cambia el balance FP/FN.
-% TODO Corrección [11]: Matizar este párrafo: reconocer valor de MOTA para medir calidad global de asociaciones y justificar uso complementario en lugar de restarle importancia.
+ En consecuencia, se priorizan métricas que directamente miden la calidad de la asociación (AssA / IDF1) y la continuidad de tracks (MT / MT\%), y se utiliza HOTA (y sus subcomponentes) en conjunto con MOTA para obtener una visión balanceada entre detección y asociación.
+% TODO Corrección [11] [DONE]: Matizar este párrafo: reconocer valor de MOTA para medir calidad global de asociaciones y justificar uso complementario en lugar de restarle importancia.
 
 \subsection{Matriz de confusión}
 La matriz de confusión ---también conocida como matriz de errores o matriz de coincidencias--- es una representación tabular que muestra, de forma simultánea, los aciertos y errores de un clasificador. Cada fila corresponde a la clase real de los ejemplos y cada columna a la clase predicha, lo que permite evaluar de un vistazo la capacidad del modelo para distinguir entre \textbf{verdaderos positivos}, \textbf{falsos positivos}, \textbf{falsos negativos} y \textbf{verdaderos negativos}.
@@ -135,16 +135,6 @@ MOTA y MOTP son métricas clásicas en seguimiento. MOTA combina errores de fals
 \label{eq:mota}
 \end{equation}
 
-%\textbf{Limitación:} MOTA agrega errores distintos en un solo número; un detector muy conservador (baja FP) puede mejorar MOTA aunque empeore la asociación. Por ello MOTA es útil como resumen pero \emph{no} suficientemente diagnóstica para decidir en problemas donde la continuidad e identidad son críticas.  
-%Se reporta MOTA/MOTP por completitud, pero la selección de modelo se basa principalmente en AssA/IDF1/MT\% y HOTA (y en el análisis por componente de HOTA).
-
-%\subsection{Detección: Precisión, Recall y curvas AUC}
-%Las métricas clásicas de detección (Precision, Recall, AP/mAP) siguen siendo %relevantes para verificar que no se sacrifica demasiado recall al mejorar %asociación.  
-%\begin{itemize}
-%  \item \textbf{Precision / Recall:} fórmulas estándar (Ec. \ref{eq:precision}, %\ref{eq:recall} en este documento).
-%  \item \textbf{AP / mAP:} área bajo la curva precision–recall; se usa para %comprobar la capacidad detectora en distintos umbrales.
-%\end{itemize}
-%\textbf{Por qué se mantienen:} si la asociación mejora pero el detector deja de %encontrar consistentemente los peces de interés, el pipeline de masa/volumen se %vería afectado; por eso se usan conjuntamente con las métricas de tracking.
 
 \subsection{Métricas de comparación}
 Estas métricas se utilizan para comparar el rendimiento entre diferentes configuraciones de entrenamiento, modelos o bases de datos.
