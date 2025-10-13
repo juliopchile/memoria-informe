@@ -2,3 +2,5 @@
 out/*
 # Ignorar imágenes sin marca de agua
 figures_without_watermark/
+# Ignorar otras cosas
+Correccinoes.md

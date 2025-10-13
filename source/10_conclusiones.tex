@@ -26,6 +26,7 @@ Queda por explorar si realmente los nuevos modelos son más eficientes en produc
     \item Se depuró programáticamente la base de datos Salmons, mejorando el seguimiento de salmones de interés en el contexto de jaulas de cultivo y la calidad de las segmentaciones en modelos entrenados. Incluso cuando no se igualó a la versión anterior, se alcanzaron métricas competitivas con un menor número de instancias seguidas, lo que indica mayor selectividad del modelo y potencial reducción de la carga computacional en uso real.
     \item La búsqueda de hiperparámetros permitió que modelos entrenados con Deepfish alcanzaran o incluso superaran el SOTA previo, lo que resalta la efectividad de este enfoque.
     \item Incluir imágenes de fondo puede aportar información, pero también degradar el rendimiento y aumentar el coste; su utilidad depende de un conjunto de validación bien definido.
+  % TODO lenguaje: “costo” o “coste” unificar; preferir uno en toda la memoria.
     \item Para esta tarea SGD mostró mayor estabilidad y robustez que AdamW.
     \item El uso de \textit{Transfer Learning} incurre solo en una ligera pérdida de rendimiento, pero puede suponer una alternativa útil bajo restricciones de hardware o tiempo.
     \item Para despliegue, TensorRT-FP16 ofrece buen equilibrio precisión--latencia; INT8 solo cuando priman la velocidad o las restricciones computacionales.
@@ -38,6 +39,7 @@ Como áreas de interés para trabajo futuro, se sugieren las siguientes líneas 
   \setlength{\parskip}{0pt}%
   \setlength{\parsep}{0pt}%
     \item Validar en producción, midiendo impacto en \textit{throughput} y contrastar calidad de estimación de biomasa/volumen con modelos empleados actualmente.
+  % TODO lenguaje: Traducir “throughput” por “tasa de procesamiento” o “rendimiento”.
     \item Evaluar \textit{trackers} adicionales más allá de DeepSORT y ByteTrack.
     \item Definir con rigor qué se considera una "instancia de interés" para salmones y documentar un protocolo de etiquetado que minimice ambigüedades y facilite la reproducibilidad al momento de entrenar y evaluar los modelos.
     \item Explorar la técnica de optimización \textit{knowledge distillation} para mejorar el rendimiento de modelos YOLO usando arquitecturas más precisas como base.

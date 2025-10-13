@@ -4,6 +4,7 @@
 
 \part*{Capítulo 4: Validación}\addcontentsline{toc}{part}{Capítulo 4: Validación}
 En este capítulo se definen las métricas de validación utilizadas para evaluar el desempeño de los modelos entrenados en las tareas de segmentación de instancias y seguimiento de salmones. Se presentan los resultados obtenidos en dichas tareas, comparando el rendimiento de los modelos desarrollados con versiones previas y destacando las mejoras alcanzadas.
+% TODO lenguaje: Introducir explícitamente el marco integrado segmentación + tracking-by-detection en el párrafo de apertura.
 
 \section{Métricas de Validación}
 % TODO Corrección [2]: Añadir párrafo introductorio resaltando el marco integrado: segmentación (F1, mAP@50, mAP@50-95) + tracking (HOTA, AssA, IDF1, MOTA, MT%, IDSW, Frag) como contribución metodológica.
@@ -38,7 +39,8 @@ La matriz de confusión ---también conocida como matriz de errores o matriz de 
 \end{table}
 
 \subsection{Intersección sobre unión (IoU)}
-Se define como el area de intersección, dividida por el área de la unión entre la segmentación predicha por el modelo ($S_p$) y la segmentación real o \textit{ground-truth} ($S_{gt}$) (Ec. \ref{eq:intersection_over_union}).
+Se define como el área de intersección, dividida por el área de la unión entre la segmentación predicha por el modelo ($S_p$) y la segmentación real o \textit{ground-truth} ($S_{gt}$) (Ec. \ref{eq:intersection_over_union}).
+% TODO lenguaje: “área” con tilde; evitar macro \acute si no es necesario.
 
 \begin{equation}
   \label{eq:intersection_over_union}
@@ -97,7 +99,7 @@ Se calcula mediante la siguiente ecuación (Ec. \ref{eq:map}):
 
 donde $N$ es el número de clases y $\text{AP}_i$ es la precisión media de la clase $i$. La precisión media se calcula como el área bajo la curva de precisión-exhaustividad (PR) para cada clase, y se define como el promedio de la precisión en diferentes puntos de \textit{recall}. 
 
-% TODO: Falta agregar fuentes y citas para las métricas de tracking.
+% TODO lenguaje: Falta agregar fuentes y citas para métricas de tracking. [CALLAO GIL!!!]
 % TODO Corrección [13]: Completar referencias formales para IDF1, MOTA/MOTP, MT/PT/ML, IDSW, Frag y AssA (además de HOTA ya citada). Incluir resultados de MOTA en tablas de resultados.
 
 \subsection{HOTA, DetA, AssA y LocA}
@@ -142,6 +144,7 @@ IDSW cuenta cuántas veces un mismo GT cambia de ID asignada por el \textit{trac
 
 \subsection{MOTA y MOTP}
 MOTA y MOTP son métricas clásicas en seguimiento. MOTA combina errores de falsos negativos, falsos positivos y cambios de identidad (IDSW) en un solo puntaje, reflejando la precisión global del seguimiento (Ec. \ref{eq:mota}). MOTP mide la precisión espacial de las detecciones emparejadas, reflejando qué tan cerca están las predicciones de las posiciones reales. En esencia, MOTA resume la capacidad del sistema para detectar y seguir objetos correctamente, mientras que MOTP evalúa la exactitud de las posiciones predichas.
+% TODO lenguaje: Añadir cita a CLEAR MOT (Bernardin & Stiefelhagen, 2008) para MOTA/MOTP; cita para IDF1 (Ristani et al., 2016).
 
 \begin{equation}
 \text{MOTA} = 1 - \dfrac{\text{FN} + \text{FP} + \text{IDSW}}{\text{Total GT detections}}
@@ -397,7 +400,8 @@ El efecto de la exportación es el esperado: TensorRT-FP16 reproduce casi en su 
 Las métricas donde valores menores son mejores (IDSW y Frag) disminuyen tanto para FP16 (ligeramente) como para INT8 (de forma marcada). Sin embargo, esta reducción no debe interpretarse automáticamente como mejora: la cuantización INT8 provoca pérdida de detecciones (menor \textit{recall} efectivo), reduciendo el número de trayectorias activas y, con ello, las oportunidades de incurrir en cambios de identidad o fragmentaciones.
 % TODO Corrección [11] [DONE]: Evaluar si debe mencionarse que MOTA también captura parte de esta degradación y ajustar discusión.
 
-En general este patrón se repite para ambas secuencias, solo mencionar que la degradación esperada bajo INT8 es más severa para la secuencia Video\_2 (tabla \ref{tab:tracking_tracking2_format} y figs. \ref{fig:tracking_metricas_clave_formato_tracking2}).
+En general este patrón se repite para ambas secuencias, cabe mencionar que la degradación esperada bajo INT8 es más severa para la secuencia Video\_2 (tabla \ref{tab:tracking_tracking2_format} y figs. \ref{fig:tracking_metricas_clave_formato_tracking2}).
+% TODO lenguaje: “solo mencionar” → “cabe mencionar”/“destaca que”.
 
 \begin{table}[htbp]
 \centering

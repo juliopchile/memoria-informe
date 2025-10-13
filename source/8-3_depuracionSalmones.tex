@@ -5,9 +5,11 @@ En la presente memoria se expone una base de datos de salmones, la cual se origi
 \subsection{Código de filtrado}
 El código de filtrado se encarga principalmente de procesar las etiquetas de la base de datos, calculando atributos de segmentación como área, forma y nitidez. En función de estos atributos se determina si una instancia ha de ser filtrada o reasignada a otra clase. El proceso comprende tres pasos principales: la lectura de las segmentaciones, el cálculo de las métricas necesarias y, finalmente, el almacenamiento de las etiquetas depuradas en un directorio específico. Un pseudocódigo del procedimiento implementado se describe en el algoritmo~\ref{alg:filter_dataset}.
 
-La lista completa de métricas soportadas son: \textbf{área}, \textbf{perímetro}, \textbf{relación de aspecto}, \textbf{circularidad}, \textbf{compactación}, \textbf{eccentricidad}, \textbf{elongación}, \textbf{rectangularidad} y \textbf{nitidez}. Se normalizan las métricas asumiendo una imagen de 640x640 pixeles. El código también permite filtrar las etiquetas por clase, lo que resulta útil para depurar bases de datos con múltiples clases.
+La lista completa de métricas soportadas son: \textbf{área}, \textbf{perímetro}, \textbf{relación de aspecto}, \textbf{circularidad}, \textbf{compactación}, \textbf{excentricidad}, \textbf{elongación}, \textbf{rectangularidad} y \textbf{nitidez}. Se normalizan las métricas asumiendo una imagen de 640x640 píxeles. El código también permite filtrar las etiquetas por clase, lo que resulta útil para depurar bases de datos con múltiples clases.
+% TODO lenguaje: “píxeles” con tilde; “excentricidad” en español usual, revisar “eccentricidad”.
 
-Para la nitidez se utiliza una media logarítmica ponderada entre la nitidez de borde y nitidez interna. La nitidez de borde se obtiene con el promedio de la magnitud del gradiente de Sobel dentro de una banda que rodea el borde la segmentación, mientras que la nitidez interna se calcula con la varianza del filtro Laplaciano aplicado a los pixeles dentro de la segmentación.
+Para la nitidez se utiliza una media logarítmica ponderada entre la nitidez de borde y nitidez interna. La nitidez de borde se obtiene con el promedio de la magnitud del gradiente de Sobel dentro de una banda que rodea el borde de la segmentación, mientras que la nitidez interna se calcula con la varianza del filtro Laplaciano aplicado a los píxeles dentro de la segmentación.
+% TODO lenguaje: “del borde de la segmentación”; “píxeles” con tilde.
 
 Además, el código incluye funcionalidades para convertir bases de datos en formato CVAT (XML) a formato YOLO y, de forma inversa, exportar bases de datos YOLO en archivos ZIP aptos para su importación a CVAT. El código de filtrado se encuentra disponible de forma pública en un repositorio GitHub bajo el nombre \enquote{filter\_dataset} \cite{Lopez2025-Filter}.
 
@@ -37,7 +39,8 @@ Además, el código incluye funcionalidades para convertir bases de datos en for
 \end{algorithm}
 
 \subsection{Filtrado}
-En primera instancia se mejoran a mano las etiquetas dentro de la base de datos de Salmons_2024base, mejorando los contornos, combinando segmentaciones divididas en múltiples instancias o extendiendo poligonos incompletos. Luego se crea una copia local con la cual se crean las distinitas variaciones.
+En primera instancia se mejoran a mano las etiquetas dentro de la base de datos de Salmons_2024base, mejorando los contornos, combinando segmentaciones divididas en múltiples instancias o extendiendo polígonos incompletos. Luego se crea una copia local con la cual se crean las distintas variaciones.
+% TODO lenguaje: “polígonos”, “distintas” con tilde/corrección.
 \begin{enumerate}% Reducir el spacing de los items
   \setlength{\itemsep}{0pt}%
   \setlength{\parskip}{0pt}%
@@ -95,7 +98,8 @@ else:
 \end{listing}
 
 \subsubsection{Ejemplo de segmentaciones filtradas}
-A continuación se muestran algunas imagenes de la base de datos Salmons_2024base y sus etiquetadas, clasificadas por área de segmentación.
+A continuación se muestran algunas imágenes de la base de datos Salmons_2024base y sus etiquetadas, clasificadas por área de segmentación.
+% TODO lenguaje: “imágenes” con tilde.
 
 \begin{figure}[h!]
 \begin{center}
@@ -144,7 +148,8 @@ A continuación se muestran algunas imagenes de la base de datos Salmons_2024bas
         \centering
         \includegraphics[width=\linewidth]{figures/filter_examples/filter9.jpg}
     \end{subfigure}
-    \caption[Ejemplo de uso del código de filtrado de base de datos]{Ejemplo de uso del código de filtrado de base de datos. En rojo se muestran las segmentaciones consideradas ``pequeñas'', en amarillo las ``medianas'' y en verde las ``grandes''. El texto blanco corresponde a el área en pixeles de cada segmentación, normalizada a una imagen de 640x640 pixeles. Dependiendo del criterio de filtrado, las segmentaciones pequeñas y medianas pueden ser eliminadas o reasignadas a otra clase, igualmente se podría aplicar algún criterio de nitidez o forma.}
+  \caption[Ejemplo de uso del código de filtrado de base de datos]{Ejemplo de uso del código de filtrado de base de datos. En rojo se muestran las segmentaciones consideradas ``pequeñas'', en amarillo las ``medianas'' y en verde las ``grandes''. El texto blanco corresponde al área en píxeles de cada segmentación, normalizada a una imagen de 640x640 píxeles. Dependiendo del criterio de filtrado, las segmentaciones pequeñas y medianas pueden ser eliminadas o reasignadas a otra clase; igualmente se podría aplicar algún criterio de nitidez o forma.}
+  % TODO lenguaje: “al área”, “píxeles” con tilde; mejorar puntuación.
     \label{fig:filtered_examples}
 \end{center}
 \end{figure}

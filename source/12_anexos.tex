@@ -16,6 +16,7 @@ Previo a la adopción de las redes neuronales, las técnicas de segmentación se
 \end{itemize}
 
 Estas técnicas, aunque útiles en casos sencillos, eran limitadas en situaciones complejas, especialmente ante escenas con variaciones de iluminación o formas de objetos poco definidas.
+% TODO lenguaje: “variaciones de iluminación” correcto; revisar consistencia terminológica con el cuerpo principal.
 
 \subsection{Técnicas con redes neuronales}
 Con la llegada del aprendizaje profundo, especialmente las Redes Neuronales Convolucionales (CNNs), se han propuesto varios marcos para la tarea de segmentación de instancias.
@@ -59,27 +60,31 @@ Una alternativa de clasificación para modelos de segmentación es la categoriza
 \setlength\itemsep{-0.3em}
     \item \textbf{Clasificación de máscara propuesta:} Esta técnica implica la generación de propuestas de máscaras, seguida de la clasificación de las propuestas generadas.
     \item \textbf{Detección seguida por segmentación:} Este popular enfoque implica la detección de objetos mediante una caja seguida de la segmentación objeto-caja.
-    \item \textbf{Etiquetado de pixeles seguido por agrupamiento:} Este enfoque implica el etiquetado categórico de cada píxel de la imagen, luego los píxeles se agrupan en instancias de objetos mediante un algoritmo de agrupación.
+    \item \textbf{Etiquetado de pixéles seguido por agrupamiento:} Este enfoque implica el etiquetado categórico de cada píxel de la imagen, luego los píxeles se agrupan en instancias de objetos mediante un algoritmo de agrupación.
+    % TODO lenguaje: “píxeles” con tilde.
     \item \textbf{Métodos de deslizamiento denso de ventana:} Se pasa una ventana de tamaño fijo a lo largo de toda la imagen para examinar cada región en detalle. En cada posición de la ventana, el modelo realiza una predicción para determinar qué clase de objeto o región pertenece a esa área.
 \end{itemize}
 
-\subsection{Segmentación de instancias en vídeo}
+\subsection{Segmentación de instancias en video}
 En 2019 \cite[Yang et al]{Yang2019} introducen la tarea de segmentación de instancias en video, \textit{Video Instance Segmentation} (VIS), que consiste en detectar, segmentar y seguir instancias individuales de objetos en videos. Ese mismo año, \cite[Voigtlaender et al.]{Voigtlaender2019} amplian la tarea de seguimiento en múltiples objetos, \textit{Multi-Object Tracking} (MOT), para incluir el seguimiento de segmentación de instancias, denominándolo \textit{Multi-Object Tracking and Segmentation} (MOTS). En la literatura científica y a efectos prácticos VIS y MOTS corresponden a la misma tarea y pueden ser usados indistintamente.
 
-A diferencia de la segmentación en imágenes, todas las técnicas conocidas de VIS implementan Redes Neuronales, siendo las más comunes CNNs. En un inicio se recurrió a modelos de segmentación, como Mask R-CNN, con la incorporación de capas extras, las cuales almacenaban información de cuadros anteriores, pero en la actualidad métodos más complejos existen. Las mayores innovaciones se dan en el uso Redes Convolucionales Recurrentes (RCNNs) para el manejo de datos secuenciales y captura de características temporales, Graph Neural Networks (GNNs) para modelar las relaciones entre distintas instancias para un mejor seguimiento y segmentación, y el uso de transformadores que permiten la tokenización de parches de vídeo con mecanismos de atención capaces de detección y segmentación en imágenes \cite{Zhou2023}.
+A diferencia de la segmentación en imágenes, todas las técnicas conocidas de VIS implementan Redes Neuronales, siendo las más comunes CNNs. En un inicio se recurrió a modelos de segmentación, como Mask R-CNN, con la incorporación de capas extras, las cuales almacenaban información de cuadros anteriores, pero en la actualidad métodos más complejos existen. Las mayores innovaciones se dan en el uso Redes Convolucionales Recurrentes (RCNNs) para el manejo de datos secuenciales y captura de características temporales, Graph Neural Networks (GNNs) para modelar las relaciones entre distintas instancias para un mejor seguimiento y segmentación, y el uso de transformadores que permiten la tokenización de parches de video con mecanismos de atención capaces de detección y segmentación en imágenes \cite{Zhou2023}.
 
 Estás técnicas resuelven simultáneamente el seguimiento y segmentación de instancias. Lamentablemente el mayor problema con VIS es la dificultad del etiquetado en bases de datos para su entrenamiento. Es por este inconveniente que suele preferirse un acercamiento con modelos cuadro a cuadro.
 
 \section{Filtro de Profundidad (código original)}
 \label{sec:anexo_filtro_profundidad}
-En primera instancia se tenía la idea de crear un filtro capaz de utilizar datos de profundidad asociadas a las imágenes de la base de datos con el fin de filtrarlas, en caso de encontrarse a una distancia mayor a la de un umbral dado. Sin embargo, al no contar con datos de profundidad asociados a las imagenes del \textit{dataset}, se optó por un filtro más sencillo que es el utilizado.
+En primera instancia se tenía la idea de crear un filtro capaz de utilizar datos de profundidad asociadas a las imágenes de la base de datos con el fin de filtrarlas, en caso de encontrarse a una distancia mayor a la de un umbral dado. Sin embargo, al no contar con datos de profundidad asociados a las imágenes del \textit{dataset}, se optó por un filtro más sencillo que es el utilizado.
+% TODO lenguaje: “imágenes” con tilde.
 
-Si bien no se utilizó esta versión del filtro, si estaba planeada su inclusión como material complementario de este proyecto. Lamentablemente el código se perdió en un formateo de disco duro y no fue posible su recuperación. Sin embargo, se incluye una imagen que muestra el funcionamiento del filtro de profundidad como evidencia de su existencia (Fig. \ref{fig:filtro_profundiad}).
+Si bien no se utilizó esta versión del filtro, sí estaba planeada su inclusión como material complementario de este proyecto. Lamentablemente el código se perdió en un formateo de disco duro y no fue posible su recuperación. Sin embargo, se incluye una imagen que muestra el funcionamiento del filtro de profundidad como evidencia de su existencia (Fig. \ref{fig:filtro_profundiad}).
+% TODO lenguaje: Acento en “sí” afirmativo.
 
 \begin{figure}[htbp]
 \begin{center}
     \includegraphics[width=0.8\textwidth]{figures/filtro_de_profunidad.png}
-    \caption[Implementación del filtro de profundidad]{Implementación del filtro de profundiad. Como puede verse en la máscara binaria de la derecha, algunas instancias se encuentran fuera del umbral de distancia (en este caso 3 metros) y por ende son excluidos del \textit{dataset}.}
+    \caption[Implementación del filtro de profundidad]{Implementación del filtro de profundidad. Como puede verse en la máscara binaria de la derecha, algunas instancias se encuentran fuera del umbral de distancia (en este caso 3 metros) y por ende son excluidas del \textit{dataset}.}
+    % TODO lenguaje: “profundidad” (dos veces) y concordancia “excluidas”.
     \label{fig:filtro_profundiad}
 \end{center}
 \end{figure}

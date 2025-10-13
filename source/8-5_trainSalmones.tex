@@ -3,13 +3,15 @@
 Esta sección detalla el proceso de entrenamiento de modelos utilizando la base de datos Salmons. Similar al entrenamiento con Deepfish, se emplearon modelos pre-entrenados con COCO, disponibles en la plataforma Ultralytics, y se ajustaron mediante re-entrenamiento.
 
 \subsection{Entrenamiento inicial}
-Idem al caso con Deepfish, este entrenamiento busca establecer una línea base para encaminar los entrenamientos posteriores con búsqueda de hiperparámetros y optimización. Se realizan exactamente los mismos entrenamientos que en la sección \ref{sec:entrenamientoDeepfish}, pero utilizando la base de datos Salmons y con diferentes tamaños de lote, debido a que este conjunto de datos es considerablemente más grande. Para los modelos \textit{n}, \textit{s} y \textit{m} se usó \textit{batch size} 8, para modelos \textit{l} y \textit{c} se usó 6 y para modelos \textit{x} y \textit{e} se usó 4. En total se realizaron 48 entrenamientos.
+Ídem al caso con Deepfish, este entrenamiento busca establecer una línea base para encaminar los entrenamientos posteriores con búsqueda de hiperparámetros y optimización. Se realizan exactamente los mismos entrenamientos que en la sección \ref{sec:entrenamientoDeepfish}, pero utilizando la base de datos Salmons y con diferentes tamaños de lote, debido a que este conjunto de datos es considerablemente más grande. Para los modelos \textit{n}, \textit{s} y \textit{m} se usó \textit{batch size} 8, para modelos \textit{l} y \textit{c} se usó 6 y para modelos \textit{x} y \textit{e} se usó 4. En total se realizaron 48 entrenamientos.
+% TODO lenguaje: “Ídem” con tilde opcional; evitar anglicismo “batch size” o dejarlo en cursiva y definir la primera vez.
 
 El análisis es idéntico al de Deepfish, por lo que solo se resumen los resultados más relevantes.
 % TODO Corrección [12] [DONE]: Corregir acento "idéntico".
 
 \subsubsection{Efecto del tamaño del modelo}
-Igual que con Deepfish, los modelos más pequeños (n, s) mostraron un rendimiento inferior comparandose con modelos más grandes. Sin embargo, esta mejora se estabiliza en modelos medianos y no hay mejoras significativas al usar otros más grandes.
+Igual que con Deepfish, los modelos más pequeños (n, s) mostraron un rendimiento inferior comparándose con modelos más grandes. Sin embargo, esta mejora se estabiliza en modelos medianos y no hay mejoras significativas al usar otros más grandes.
+% TODO lenguaje: “comparándose” con tilde.
 
 \begin{figure}[htbp]
   \centering
@@ -22,7 +24,8 @@ Esto sugiere que para Salmons no hay ventaja considerable en utilizar los modelo
 
 \subsubsection{Efecto del Transfer Learning}
 
-Similar a los entrenamientos con Deepfish, el uso de TL mostró un peor rendimiento para la métrica mAP@50-95 en la mayoría de los casos (fig. \ref{fig:salmons_yolo_transfer_Learning_comparison}). Sin embargo, en este caso la caída en rendimiento es más pronunciada y ocurre también en F1 y mAP@50 (aunque no se muestren en la figura). Similarmente, la caida en rendimiento se acrecenta al exportar a TensorRT-INT8 (fig. \ref{fig:salmons_yolo_dataset_factor_mejora_by_format}).
+Similar a los entrenamientos con Deepfish, el uso de TL mostró un peor rendimiento para la métrica mAP@50-95 en la mayoría de los casos (fig. \ref{fig:salmons_yolo_transfer_Learning_comparison}). Sin embargo, en este caso la caída en rendimiento es más pronunciada y ocurre también en F1 y mAP@50 (aunque no se muestren en la figura). Similarmente, la caída en rendimiento se acrecenta al exportar a TensorRT-INT8 (fig. \ref{fig:salmons_yolo_dataset_factor_mejora_by_format}).
+% TODO lenguaje: “caída” con tilde (dos veces).
 
 \begin{figure}[htbp]
   \centering
@@ -71,8 +74,10 @@ A diferencia de Deepfish, en Salmons no se observaron diferencias significativas
 % TODO Corrección [12] [DONE]: Cambiar "imagenes" -> "imágenes" (dos veces).
 
 Por paradojico que parezca, este comportamiento puede deberse a que al ser Salmons una base de datos más grande, el modelo aprende a generalizar mejor sin necesidad de imágenes de fondo e incluiras solo ``diluye'' la relevancia de cada imagen en el entrenamiento, afectando su aprendizaje. Esto empeora aún más al exportarse con TensorRT con cuantización numérica pues simplificar el modelo implica la pérdida de información en el espacio latente (pesos del modelo), y si estos ya están muy ``diluidos'' o distribuidos homogeneamente, se vuelve incluso más díficil caracterizar objetos de interes y distinguirlos del fondo.
+% TODO lenguaje: “Paradójico”, “incluirlas”, “homogéneamente”, “difícil”, “interés”.
 
 Otra alternativa se haya en cómo está definida la base de datos de validación. Al poseer pocas imágenes sin instancias de peces o con contextos complejos que se beneficien de distinguir salmones de no salmones, el modelo no es capaz de validar correctamente su aprendizaje y pareciera que es peor, cuando en la práctica podría no serlo.
+% TODO lenguaje: “se halla”, no “se haya”.
 % TODO Corrección [12] [DONE]: Cambiar "imagenes" -> "imágenes" y "en como" -> "en cómo".
 
 \begin{table}[htbp]
@@ -121,7 +126,8 @@ Otra alternativa se haya en cómo está definida la base de datos de validación
 \subsubsection{Efecto del formato de exportación}
 Igual que con Deepfish se observa que la exportación a TensorRT en precisión FP32 y FP16 tiene un impacto mínimo en el rendimiento del modelo ($\sim$1.41\% en mAP50 y $\sim$1.57\% en mAP50-95), y la cuantización a INT8 resulta en una degradación más significativa ($\sim$3\% en mAP50 y $\sim$3.6\% en mAP50-95) (tabla \ref{tab:salmons_mejoraRelativaPromedio_format} y fig. \ref{fig:salmons_yolo_format_comparison}).
 
-A diferencia de Deepfish, la degradación en rendimiento al exportar a TensorRT-INT8 es menor, pero esto ocurre porque los modelos más pequeños (n, s) no sufren una caída tan pronunciada en rendimiento al exportar a INT8, a diferencia de Deepfish donde estos modelos sufrieron caídas de hasta un 50\% en mAP@50-95 (fig. \ref{fig:deepfish_yolo_format_comparison}). Puede que al ser Salmons más grande los modelos pequeños si alcanzan a aprender correctamente la caracterización de sus clases.
+A diferencia de Deepfish, la degradación en rendimiento al exportar a TensorRT-INT8 es menor, pero esto ocurre porque los modelos más pequeños (n, s) no sufren una caída tan pronunciada en rendimiento al exportar a INT8, a diferencia de Deepfish donde estos modelos sufrieron caídas de hasta un 50\% en mAP@50-95 (fig. \ref{fig:deepfish_yolo_format_comparison}). Puede que al ser Salmons más grande los modelos pequeños sí alcancen a aprender correctamente la caracterización de sus clases.
+% TODO lenguaje: Acento en “sí” afirmativo.
 
 El incremento en velocidad de inferencia depende del formato de exportación y modelo, no tanto del \textit{dataset}, por ende los resultados son equivalentes a los obtenidos con Deepfish.
 
@@ -147,6 +153,7 @@ El incremento en velocidad de inferencia depende del formato de exportación y m
 \end{figure}
 
 De manera similar, la caida en rendimiento al optimizar el modelo se incrementa con ciertas configuraciones, en este caso siendo el uso del optimizador AdamW, \textit{Transfer Learning} y la inclusión de imágenes de fondo (tabla \ref{tab:salmons_factorMejora_optimizer_by_format} y figs. \ref{fig:salmons_yolo_transfer_learning_factor_mejora_by_format} y \ref{fig:salmons_yolo_dataset_factor_mejora_by_format}). Similar a Deepfish, estos efectos sugieren que estas prácticas pueden limitar la capacidad del modelo para aprender adecuadamente a lo largo de todos sus pesos, mas hay que ser cauteloso al interpretar estos resultados especialmente en el caso de la inclusión de imágenes de fondo, ya que ocurre lo contrario a lo que se esperaría y esto debe ser estudiado más a fondo e interpretado con cautela.
+% TODO lenguaje: “caída”; coma tras “mas,” si se usa adversativo o reemplazar por “pero”.
 % TODO Corrección [12] [DONE]: Sustituir "tomado con pinzas" por "interpretado con cautela".
 
 \begin{table}[htbp]
