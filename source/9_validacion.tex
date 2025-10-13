@@ -3,7 +3,7 @@
 % TODO Corrección [2]: Reforzar referencia al marco conjunto de validación (segmentación + tracking-by-detection) en apertura.
 
 \part*{Validación}\addcontentsline{toc}{part}{Validación}
-En este capítulo se definen las métricas de validación utilizadas para evaluar el desempeño de los modelos entrenados en las tareas de segmentación de instancias y seguimiento de salmones. Se presentan los resultados obtenidos en dichas tareas, comparando el rendimiento de los modelos desarrollados con versiones previas y destacando las mejoras alcanzadas. Finalmente, se discuten los resultados en función de los objetivos planteados al inicio del proyecto.
+En este capítulo se definen las métricas de validación utilizadas para evaluar el desempeño de los modelos entrenados en las tareas de segmentación de instancias y seguimiento de salmones. Se presentan los resultados obtenidos en dichas tareas, comparando el rendimiento de los modelos desarrollados con versiones previas y destacando las mejoras alcanzadas.
 
 \section{Métricas de Validación}
 % TODO Corrección [2]: Añadir párrafo introductorio resaltando el marco integrado: segmentación (F1, mAP@50, mAP@50-95) + tracking (HOTA, AssA, IDF1, MOTA, MT%, IDSW, Frag) como contribución metodológica.
@@ -103,6 +103,9 @@ donde $N$ es el número de clases y $\text{AP}_i$ es la precisión media de la c
 \subsection{HOTA, DetA, AssA y LocA}
 HOTA \cite{HOTA} (\textit{Higher Order Tracking Accuracy}) es una métrica de seguimiento que busca equilibrar detección y asociación. HOTA y sus subcomponentes se obtienen emparejando detecciones y \textit{ground-truths} por cuadro (usualmente por IoU) y calculando las razones TP/FP/FN y medidas de asociación por umbral. Es habitual reportar HOTA como AUC (\textit{Area Under the Curve}) sobre distintos umbrales IoU. En la práctica se reporta:
 \begin{itemize}
+  \setlength{\itemsep}{0pt}%
+  \setlength{\parskip}{0pt}%
+  \setlength{\parsep}{0pt}%
   \item \textbf{DetA (Detection Accuracy)}: métrica de detección (combina TP/FP/FN) en un punto de coincidencia dado.
   \item \textbf{AssA (Association Accuracy)}: mide la calidad con la que el \textit{tracker} conserva identidades a lo largo de los cuadros.
   \item \textbf{LocA (Localization Accuracy)}: refleja la precisión espacial (IoU / distancia) de las correspondencias verdaderas positivas.
@@ -124,6 +127,9 @@ Se utiliza por ser un indicador directo de la calidad global de las IDs, complem
 \subsection{MT, PT, ML (Mostly/Partly/Lost tracked) y MT\%}
 Por cada GT (\textit{Ground Truth}) se clasifica su seguimiento como:
 \begin{itemize}
+  \setlength{\itemsep}{0pt}%
+  \setlength{\parskip}{0pt}%
+  \setlength{\parsep}{0pt}%
   \item \textbf{MT:} \textit{mostly tracked} ---el GT fue detectado en la mayor parte de sus \textit{frames} (p. ej. $>80\%$).
   \item \textbf{PT:} \textit{partly tracked} ---detectado en una fracción intermedia.
   \item \textbf{ML:} \textit{mostly lost} ---detectado en muy pocos \textit{frames}.
@@ -170,8 +176,9 @@ El factor de mejora se define como la relación entre el valor de una métrica o
 \end{equation}
 
 \section{Especificaciones del Entorno de Trabajo}
-Todos los experimentos de entrenamiento se realizaron de forma remota en una estación de trabajo proporcionada por el equipo de WildSense. El sistema dispone de un procesador Intel Core i9-10900 (2.80 GHz), 32 GB de RAM y una GPU NVIDIA GeForce RTX 3060 con 12 GB de memoria, ejecutando Ubuntu 20.04.6 LTS. Salvo algunas inferencias para visualizar ejemplos, todos los resultados reportados se obtuvieron bajo esta configuración.
+Todos los experimentos de entrenamiento se realizaron de forma remota en una estación de trabajo proporcionada por el equipo de WildSense. El sistema dispone de un procesador Intel Core i9-10900 (2.80 GHz), 32 GB de RAM y una GPU NVIDIA GeForce RTX 3060 con 12 GB de memoria, ejecutando Ubuntu 20.04.6 LTS. Salvo algunas inferencias realizadas para visualizar ejemplos, todos los resultados reportados se obtuvieron bajo esta configuración.
 
+\newpage
 \section{Segmentación de Instancias}
 \subsection{Deepfish}
 El mejor F1 fue 0.987081 (YOLOv8l), encima de versiones YOLO previas pero debajo de Mask-RCNN y MS-RCNN ---la búsqueda de hiperparámetros encontró F1 superiores, pero esta no fue la métrica priorizada. El mejor mAP@50 alcanzó 0.990494 (YOLO11x), superando todos los SOTA; y el mejor mAP@50-95 fue 0.866947 (YOLOv9e), sin referencia previa para comparar. Además, la degradación al exportar a TensorRT-INT8 es consistente con los análisis previos.
@@ -209,9 +216,9 @@ Yolov8x-seg* & - & - & 0.923700 & 0.961000 & - & Pytorch \\ \hline
 \end{table}
 
 \subsubsection{Consideraciones y conclusiones}
-Se logra superar el SOTA establecido en el trabajo de \cite[Alejandro Guerrero, 2024]{Guerrero2024}, y se demuestra la viabilidad del uso de exportación a TensorRT para optimizar tiempos de inferencia en aplicaciones en tiempo real, con minima perdida de desempeño.
+Se logra superar el SOTA establecido en el trabajo de \cite[Alejandro Guerrero, 2024]{Guerrero2024}, y se demuestra la viabilidad del uso de exportación a TensorRT para optimizar tiempos de inferencia en aplicaciones en tiempo real, con mínima pérdida de desempeño.
 
-Cabe mencionar que la versión del \textit{dataset} Deepfish utilizada en este trabajo difiere ligeramente de la empleada en \cite{Guerrero2024}, ya que este último incluía instancias de peces combinados mal etiquetados (múltiples peces compartiendo una sola máscara), mientras que en este trabajo se arregló este error y se separaron en instancias individuales. Esto puede, en parte, explicar diferencias en los resultados obtenidos ya que afectaría las métricas de validación dependientes del \textit{recall}.
+Cabe mencionar que la versión del \textit{dataset} Deepfish utilizada en este trabajo difiere ligeramente del empleado en el trabajo de Guerrero, ya que este último incluía instancias de peces combinados mal etiquetados (múltiples peces compartiendo una sola máscara), mientras que en este trabajo se arregló este error y se separaron en instancias individuales. Esto puede, en parte, explicar diferencias en los resultados obtenidos ya que afectaría las métricas de validación dependientes del \textit{recall}.
 
 %%%%%%%%%
 
@@ -247,6 +254,8 @@ El mejor F1 fue 0.920745, el mejor mAP@50 alcanzó 0.964219 (YOLOv8l) y el mejor
 
 \subsubsection{Consideraciones y conclusiones}
 Los resultados obtenidos con Salmons son satisfactorios al demostrar que depurar la base de datos y aumentar su tamaño permite entrenar modelos más precisos en la detección y segmentación de instancias de interés. Sin embargo, hay un aspecto que merece ser discutido y es que al ser una base de datos donde no todas las instancias de salmones están etiquetadas, el modelo puede aprender a ignorar ciertas instancias que en la práctica deberían ser detectadas y viceversa. Esto significa que el \textit{dataset} en sí no está ``bien definido'' y cualquier análisis cuantitativo de sus resultados debe ser interpretado con cautela, pues podría no reflejar fielmente su rendimiento real.
+
+%Al ser esta versión de Salmons una base de datos nueva y con un subconjunto de validación diferente, no es posible comparar directamente estos modelos con los obtenidos en trabajos previos \cite{Guerrero2024}. Una comparación se realiza más adelante con la tarea de seguimiento.
 % TODO Corrección [12] [DONE]: Sustituir "tomado con pinzas" y acentuar "en sí"; revisar "interes" -> "interés".
 % TODO Corrección [11] [DONE]: Alinear discusión con rol de MOTA (no eliminar MOTA, complementar con HOTA/AssA/IDF1).
 

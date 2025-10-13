@@ -64,6 +64,8 @@ Similar a como ocurre con Deepfish, SGD supera marginalmente a AdamW en la mayor
   \label{fig:salmons_yolo_optimizer_map50_95}
 \end{figure}
 
+
+\newpage
 \subsubsection{Efecto de las imágenes de fondo (Full vs ``LO'')}
 A diferencia de Deepfish, en Salmons no se observaron diferencias significativas promedio entre entrenar con imágenes de fondo (Full) o sin ellas (``LO'') (tabla \ref{tab:salmons_mejoraRelativa_model} y fig. \ref{fig:salmons_yolo_dataset_comparison}). En promedio incluir imágenes de fondo empeora el rendimiento en 0.12\% en mAP@50-95. Similar a Deepfish, esta diferencia aumenta al exportar a TensorRT-INT8, decayendo en hasta un 3\% su rendimiento (fig. \ref{fig:salmons_yolo_transfer_learning_factor_mejora_by_format}).
 % TODO Corrección [12] [DONE]: Cambiar "imagenes" -> "imágenes" (dos veces).
@@ -180,6 +182,9 @@ De manera similar, la caida en rendimiento al optimizar el modelo se incrementa 
 Idem al caso con Deepfish, se realizó una búsqueda de hiperparámetros utilizando la herramienta Raytune en Ultralytics con el mismo espacio de búsqueda (tabla \ref{tab:search_space}), para finalmente re-entrenar los modelos con los mejores hiperparámetros encontrados.
 
 \begin{itemize}
+    \setlength{\itemsep}{0pt}%
+    %\setlength{\parskip}{0pt}%
+    %\setlength{\parsep}{0pt}%
     \item \textbf{Transfer Learning}: dado a ser inferior en todas las métricas, se omite el uso de \textit{Transfer Learning} y se opta por entrenar el modelo completo.
     \item \textbf{Optimizador}: igual que con Deepfish, se opta por usar SGD.
     \item \textbf{Versión del dataset}: si bien los resultados parecen indicar que la incorporación de imágenes de fondo afecta negativamente el rendimiento del modelo, este efecto no es concluyente y puede deberse a otros factores como la calidad de la base de datos de validación o una carencia intrinseca de definir bien instancias ``correctas'' de salmones en el \textit{dataset} ---esto se discute más adelante. Por ende, se opta por entrenar con la versión completa por un tema de buena práctica.
@@ -190,90 +195,39 @@ Debido a que Salmons es una base de datos más grande, se decide que es mejor re
 
 Esta vez se incluyen los resultados de exportar a TensorRT-F16 además de TensorRT-INT8, esto porque es capaz de reducir el tiempo de inferencia a la mitad sin comprometer tanto el rendimiento del modelo, lo que lo hace atractivo para este caso de uso.
 
-
-Al ser esta versión de Salmons una base de datos nueva y con un subconjunto de validación diferente, no es posible comparar directamente estos modelos con los obtenidos en trabajos previos \cite{Guerrero2024}. Una comparación se realiza más adelante con la tarea de seguimiento.
-
 \subsubsection{Ejemplos de segmentación}
 A continuación se muestran ejemplos de segmentación obtenidos con los modelos entrenados en Salmons (fig. \ref{fig:salmons_segmentation_examples}). Para estos ejemplos se usó el modelo YOLOv8l-seg.
 
 \begin{figure}[htbp]
-\begin{center}
+\centering
+%\setlength{\tabcolsep}{4pt} % Espaciado horizontal entre columnas
+%\renewcommand{\arraystretch}{1.0} % Espaciado vertical entre filas
+\begin{tabular}{ccc}
     % ====== Ejemplo 1 ======
-    \begin{subfigure}{0.27\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{figures/results/salmones/original/Seguimiento_1_000219.png}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.27\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{figures/results/salmones/painted/Seguimiento_1_000219.png}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.27\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{figures/results/salmones/predict/Seguimiento_1_000219.jpg}
-    \end{subfigure}
+    \includegraphics[width=0.25\textwidth]{figures/results/salmones/original/Seguimiento_1_000219.png} &
+    \includegraphics[width=0.25\textwidth]{figures/results/salmones/painted/Seguimiento_1_000219.png} &
+    \includegraphics[width=0.25\textwidth]{figures/results/salmones/predict/Seguimiento_1_000219.jpg} \\
+
     % ====== Ejemplo 2 ======
-    \begin{subfigure}{0.27\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{figures/results/salmones/original/Seguimiento_2_000033.png}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.27\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{figures/results/salmones/painted/Seguimiento_2_000033.png}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.27\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{figures/results/salmones/predict/Seguimiento_2_000033.jpg}
-    \end{subfigure}
+    \includegraphics[width=0.25\textwidth]{figures/results/salmones/original/Seguimiento_2_000033.png} &
+    \includegraphics[width=0.25\textwidth]{figures/results/salmones/painted/Seguimiento_2_000033.png} &
+    \includegraphics[width=0.25\textwidth]{figures/results/salmones/predict/Seguimiento_2_000033.jpg} \\
+
     % ====== Ejemplo 3 ======
-    \begin{subfigure}{0.25\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{figures/results/salmones/original/741_png_jpg.rf.836cc3dba57ee593e9b4b5a1a61f099d.jpg}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.25\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{figures/results/salmones/painted/741_png_jpg.rf.836cc3dba57ee593e9b4b5a1a61f099d.jpg}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.25\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{figures/results/salmones/predict/741_png_jpg.rf.836cc3dba57ee593e9b4b5a1a61f099d.jpg}
-    \end{subfigure}
+    \includegraphics[width=0.25\textwidth]{figures/results/salmones/original/741_png_jpg.rf.836cc3dba57ee593e9b4b5a1a61f099d.jpg} &
+    \includegraphics[width=0.25\textwidth]{figures/results/salmones/painted/741_png_jpg.rf.836cc3dba57ee593e9b4b5a1a61f099d.jpg} &
+    \includegraphics[width=0.25\textwidth]{figures/results/salmones/predict/741_png_jpg.rf.836cc3dba57ee593e9b4b5a1a61f099d.jpg} \\
+
     % ====== Ejemplo 4 ======
-    \begin{subfigure}{0.25\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{figures/results/salmones/original/Img3_jpeg.rf.3a846528a9da542cae08a04d32cb2468.jpg}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.25\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{figures/results/salmones/painted/Img3_jpeg.rf.3a846528a9da542cae08a04d32cb2468.jpg}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.25\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{figures/results/salmones/predict/Img3_jpeg.rf.3a846528a9da542cae08a04d32cb2468.jpg}
-    \end{subfigure}
+    \includegraphics[width=0.25\textwidth]{figures/results/salmones/original/Img3_jpeg.rf.3a846528a9da542cae08a04d32cb2468.jpg} &
+    \includegraphics[width=0.25\textwidth]{figures/results/salmones/painted/Img3_jpeg.rf.3a846528a9da542cae08a04d32cb2468.jpg} &
+    \includegraphics[width=0.25\textwidth]{figures/results/salmones/predict/Img3_jpeg.rf.3a846528a9da542cae08a04d32cb2468.jpg} \\
+
     % ====== Ejemplo 5 ======
-    \begin{subfigure}{0.25\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{figures/results/salmones/original/Sep25_270_png.rf.afa3b720cb52b7b4e34639773be3a4b7.jpg}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.25\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{figures/results/salmones/painted/Sep25_270_png.rf.afa3b720cb52b7b4e34639773be3a4b7.jpg}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.25\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{figures/results/salmones/predict/Sep25_270_png.rf.afa3b720cb52b7b4e34639773be3a4b7.jpg}
-    \end{subfigure}
-    \caption[Ejemplos de segmentación obtenidos en Salmons]{Ejemplos de segmentación obtenidos con el modelo YOLOv8l-seg entrenado en Salmons. De izquierda a derecha: imagen original; máscaras etiquetadas (\textit{Ground Truth}) en rojo; predicción del modelo en azul.}
-    \label{fig:salmons_segmentation_examples}
-\end{center}
+    %\includegraphics[width=0.2\textwidth]{figures/results/salmones/original/Sep25_270_png.rf.afa3b720cb52b7b4e34639773be3a4b7.jpg} &
+    %\includegraphics[width=0.2\textwidth]{figures/results/salmones/painted/Sep25_270_png.rf.afa3b720cb52b7b4e34639773be3a4b7.jpg} &
+    %\includegraphics[width=0.2\textwidth]{figures/results/salmones/predict/Sep25_270_png.rf.afa3b720cb52b7b4e34639773be3a4b7.jpg} \\
+\end{tabular}
+\caption[Ejemplos de segmentación obtenidos en Salmons]{Ejemplos de segmentación obtenidos con el modelo YOLOv8l-seg entrenado en \textit{Salmons}. De izquierda a derecha: imagen original; máscaras etiquetadas (\textit{Ground Truth}) en rojo; predicción del modelo en azul.}
+\label{fig:salmons_segmentation_examples}
 \end{figure}

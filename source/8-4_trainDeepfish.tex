@@ -6,8 +6,6 @@ Esta sección detalla el proceso de entrenamiento de modelos de segmentación ut
 \label{sec:entrenamientoDeepfish}
 El objetivo de este entrenamiento es evaluar el rendimiento de los modelos al aplicarlos directamente a la base de datos Deepfish, sin realizar ajustes adicionales. Esto permite establecer una línea base para encaminar los entrenamientos posteriores con búsqueda de hiperparámetros y optimización.
 
-Se entrenaron modelos YOLO de segmentación en diferentes tamaños y versiones, los modelos entrenados son: YOLOv8n, YOLOv8s, YOLOv8m, YOLOv8l, YOLOv8x, YOLOv9c, YOLOv9e, YOLO11n, YOLO11s, YOLO11m, YOLO11l y YOLO1x. Para cada modelo se utilizaron las versiones completa y ``_LO'' de la base de datos Deepfish, con el objetivo de evaluar el impacto de las imágenes de fondo en el rendimiento del modelo. Se realizaron entrenamientos completos (sin congelar capas) y entrenamientos con TL \textit{(Transfer Learning)} (congelando capas del \textit{backbone} según se ve en la tabla \ref{tab:models_summary_freeze}). Además para cada variante de entrenamiento se realizó una versión utilizando el optimizador AdamW y otra con SGD. Cada entrenamiento fue de 80 épocas y se utilizaron hiperparámetros por defecto de Ultralytics. En total se realizaron 48 entrenamientos.
-
 \begin{table}[htbp]
 \centering
 \caption[Sumario de modelos YOLO a entrenar]{Resumen de cada modelo: capas totales, parámetros, gradients, GFLOPs y número de capas del \textit{backbone} congeladas al realizar TL.}
@@ -29,6 +27,8 @@ yolo11l-seg & 379 & 27,617,459 & 27,617,443 & 142.7 & 11 \\ \hline
 yolo11x-seg & 379 & 62,051,411 & 62,051,395 & 319.7 & 11 \\ \hline
 \end{tabular}
 \end{table}
+
+Se entrenaron modelos YOLO de segmentación en diferentes tamaños y versiones, los modelos entrenados son: YOLOv8n, YOLOv8s, YOLOv8m, YOLOv8l, YOLOv8x, YOLOv9c, YOLOv9e, YOLO11n, YOLO11s, YOLO11m, YOLO11l y YOLO1x. Para cada modelo se utilizaron las versiones completa y ``_LO'' de la base de datos Deepfish, con el objetivo de evaluar el impacto de las imágenes de fondo en el rendimiento del modelo. Se realizaron entrenamientos completos (sin congelar capas) y entrenamientos con TL \textit{(Transfer Learning)} (congelando capas del \textit{backbone} según se ve en la tabla \ref{tab:models_summary_freeze}). Además para cada variante de entrenamiento se realizó una versión utilizando el optimizador AdamW y otra con SGD. Cada entrenamiento fue de 80 épocas y se utilizaron hiperparámetros por defecto de Ultralytics. En total se realizaron 48 entrenamientos.
 
 \subsubsection{Efecto del tamaño del modelo}
 Se observa que en métricas como F1 y mAP@50 el aumento de tamaño no garantiza mejora (fig. \ref{fig:deepfish_yolov8_metrics_stacked}): los modelos pequeños (n, s) rinden peor, la ganancia se atenúa a partir de los tamaños medianos-grandes (m, l) ---probablemente por la complejidad limitada de Deepfish y el riesgo de sobreajuste. En cambio, usando la métrica más exigente mAP@50-95 (fig. \ref{fig:deepfish_yolov8_metrics_stacked} y \ref{fig:deepfish_yolo9_yolo11_metrics_map50_95}) los modelos grandes sí muestran una mejora consistente, indicando mejor captura de detalles finos en la segmentación.
@@ -298,30 +298,66 @@ Otro aspecto relevante es la acentuación en la caída de rendimiento al exporta
 Con base en los resultados obtenidos en el entrenamiento inicial, se diseñó una configuración apropiada para realizar búsqueda de hiperparámetros. Como hiperparámetros de entrenamiento base se dejaron los valores por defecto de Ultralytics, cambiando solo los mencionados más adelante. Para la búsqueda se utilizó el espacio de búsqueda detallada en la tabla \ref{tab:search_space}, y se empleó la librería Raytune \cite{Raytune}.
 
 \begin{itemize}
-    \item \textbf{Transfer Learning}: aunque mejoró mAP@50 y F1, no se empleó en el entrenamiento final, pues permitir la adaptación completa del modelo (sin congelar capas) es clave para maximizar mAP@50-95 y reducir la degradación al exportar a TensorRT.
-    \item \textbf{Optimizador}: se escogió SGD, que superó a AdamW, mostró mejor convergencia y menor degradación al exportar a TensorRT.
-    \item \textbf{Versión del dataset}: se usa la versión completa de Deepfish; la inclusión de imágenes de fondo aportó una mejora marginal y ayudó a mitigar la degradación al exportar a TensorRT.
-    \item \textbf{Modelos}: se priorizan modelos grandes por su mejor comportamiento en mA@50-95: YOLOv8l, YOLOv8x, YOLOv9e, YOLO11l y YOLO11x.
+  \setlength{\itemsep}{0pt}%
+  %\setlength{\parskip}{0pt}%
+  %\setlength{\parsep}{0pt}%
+  \item \textbf{Transfer Learning}: aunque mejoró mAP@50 y F1, no se empleó en el entrenamiento final, pues permitir la adaptación completa del modelo (sin congelar capas) es clave para maximizar mAP@50-95 y reducir la degradación al exportar a TensorRT.
+  \item \textbf{Optimizador}: se escogió SGD, que superó a AdamW, mostró mejor convergencia y menor degradación al exportar a TensorRT.
+  \item \textbf{Versión del dataset}: se usa la versión completa de Deepfish; la inclusión de imágenes de fondo aportó una mejora marginal y ayudó a mitigar la degradación al exportar a TensorRT.
+  \item \textbf{Modelos}: se priorizan modelos grandes por su mejor comportamiento en mA@50-95: YOLOv8l, YOLOv8x, YOLOv9e, YOLO11l y YOLO11x.
 \end{itemize}
 
 Se realizó una busqueda de 50 entrenamientos por modelo, cada uno de 80 épocas y un tamaño de lote de 6 para YOLOv9e y 8 para los demás. Luego se seleccionaron los mejores resultados según la métrica mAP@50-95, y se procede a un entrenamiento final de 80 épocas con los mejores hiperparámetros encontrados para cada modelo. En total se realizan 250 entrenamientos. Los resultados finales de los modelos entrenados se muestran en la tabla \ref{tab:deepfish_resultados_finales}. 
 
 \begin{table}[htbp]
 \centering
-\caption[Espacio de búsqueda de hiperparámetros con Raytune]{Espacio de búsqueda de hiperparámetros con Raytune.}
+\caption[Espacio de búsqueda de hiperparámetros con Raytune]{Espacio de búsqueda de hiperparámetros con Raytune. En gris los hiperparámetros que no fueron considerados en la búsqueda.}
 \label{tab:search_space}
-\begin{tabular}{|c|c|c|}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c|l|}
 \hline
 \textbf{Hiperparámetro} & \textbf{Rango de búsqueda} & \textbf{Descripción} \\ \hline
-lr0 & (1e-4, 0.01) & initial learning rate \\ \hline
-lrf & (0.01, 0.5) & factor for final learning rate (lr0 * lrf) \\ \hline
-momentum & (0.6, 0.98) & SGD momentum/Adam beta1 \\ \hline
-weight\_decay & (0.0, 0.001) & optimizer weight decay 5e-4 \\ \hline
-warmup\_epochs & (0.0, 5.0) & warmup epochs (fractions ok) \\ \hline
-warmup\_momentum & (0.0, 0.95) & warmup initial momentum \\ \hline
+lr0 & (1e-4, 0.01) & Tasa de aprendizaje inicial. \\ \hline
+lrf & (0.01, 0.5) & \begin{tabular}[c]{@{}l@{}}Factor de tasa de aprendizaje final\\ como una fracción de lr0.\end{tabular} \\ \hline
+momentum & (0.6, 0.98) & Factor de momentum SGD. \\ \hline
+weight\_decay & (0.0, 0.001) & \begin{tabular}[c]{@{}l@{}}Factor de regularización L2 para\\ evitar sobreajuste.\end{tabular} \\ \hline
+warmup\_epochs & (0.0, 5.0) & \begin{tabular}[c]{@{}l@{}}Épocas para el calentamiento lineal\\ de la tasa de aprendizaje.\end{tabular} \\ \hline
+warmup\_momentum & (0.0, 0.95) & \begin{tabular}[c]{@{}l@{}}Momento inicial durante la fase de\\ calentamiento.\end{tabular} \\ \hline
+\rowcolor[HTML]{D4D4D4} 
+box & (0.02, 0.2) & \begin{tabular}[c]{@{}l@{}}Peso de la pérdida de bounding\\ box en la función de pérdida total.\end{tabular} \\ \hline
+\rowcolor[HTML]{D4D4D4} 
+cls & (0.2, 4.0) & \begin{tabular}[c]{@{}l@{}}Peso de la pérdida de clasificación\\ en la función de pérdida total.\end{tabular} \\ \hline
+\rowcolor[HTML]{D4D4D4} 
+hsv\_h & (0.0, 0.1) & Rango de tono en espacio HSV. \\ \hline
+\rowcolor[HTML]{D4D4D4} 
+hsv\_s & (0.0, 0.9) & Rango de saturación en espacio HSV. \\ \hline
+\rowcolor[HTML]{D4D4D4} 
+hsv\_v & (0.0, 0.9) & Rango de (brillo) aleatorio. \\ \hline
+\rowcolor[HTML]{D4D4D4} 
+degrees & (0.0, 45.0) & Aumento máximo de rotación (°). \\ \hline
+\rowcolor[HTML]{D4D4D4} 
+translate & (0.0, 0.9) & Aumento máximo de traslación. \\ \hline
+\rowcolor[HTML]{D4D4D4} 
+scale & (0.0, 0.9) & Rango de aumento de escala aleatoria. \\ \hline
+\rowcolor[HTML]{D4D4D4} 
+shear & (0.0, 10.0) & Aumento máximo de cizallamiento (°). \\ \hline
+\rowcolor[HTML]{D4D4D4} 
+perspective & (0.0, 0.001) & Aumento de perspectiva aleatoria. \\ \hline
+\rowcolor[HTML]{D4D4D4} 
+flipud & (0.0, 1.0) & Probabilidad de volteo vertical. \\ \hline
+\rowcolor[HTML]{D4D4D4} 
+fliplr & (0.0, 1.0) & Probabilidad de volteo horizontal. \\ \hline
+\rowcolor[HTML]{D4D4D4} 
+mosaic & (0.0, 1.0) & Probabilidad de utilizar mosaico. \\ \hline
+\rowcolor[HTML]{D4D4D4} 
+mixup & (0.0, 1.0) & Probabilidad de utilizar mixup. \\ \hline
+\rowcolor[HTML]{D4D4D4} 
+copy\_paste & (0.0, 1.0) & Probabilidad de utilizar copiar y pegar. \\ \hline
 \end{tabular}
+}
 \end{table}
 
+De todos los hiperparámetros a buscar se prefirieron aquellos que afectan directamente el proceso de optimización (tasa de aprendizaje, momentum, regularización, etc.) y se descartaron los relacionados con aumentos de datos y pesos en la función de pérdida, pues sería imposible optimizarlos correctamente con tan pocas iteraciones.
 
 \subsubsection{Ejemplos de segmentación}
 A continuación se muestran ejemplos de segmentación obtenidos con los modelos entrenados en Deepfish (fig. \ref{fig:deepfish_segmentation_examples}). Para estos ejemplos se usó el modelo YOLOv8l-seg.

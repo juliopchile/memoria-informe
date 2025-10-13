@@ -154,3 +154,10 @@ Ahora si se pregunta porque dejé los entrenamientos en el capitulo de "Desarrol
 Los resultados de validación de los modelos de seguimiento se movieron en su totalidad al capitulo de **Validación** como sección **13. Seguimiento en Salmones**.
 
 Lo que antes era la sección **12. Resultados** lo puse en la ahora nueva sección **Discusión**. Solo incluí comentarios sobre si se corrobora o desmiente la hipotesis realizada en cada tema. Además se reescribió la sección de conclusión para que no repita las mismas conclusiones dadas en la sección anterior, pero si se prefiere se podría volver a la versión previa.
+
+---
+
+```
+[COMENTARIOS FINALES]
+Para que no se desarmara tanto el orden de la memoria (figuras que a veces se ponen en lugares donde no debería) cambia el tamaño de algunos párrafos y tablas, añadiendo o quitando información. Estos cambios no los explico en los changelogs pero están presente a lo largo de la memoria.
+```

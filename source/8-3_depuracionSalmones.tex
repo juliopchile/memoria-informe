@@ -150,7 +150,7 @@ A continuación se muestran algunas imagenes de la base de datos Salmons_2024bas
 \end{figure}
 
 
-\subsection{Validación de base de datos}
+\subsection{Validación preliminar de bases de datos}
 Como el filtrado modifica el conjunto de validación, no es posible comparar directamente el rendimiento en segmentación entre modelos entrenados con la base original y las versiones filtradas. Por ello se evalúan los \textit{datasets} usando los videos ``Seguimiento_1'' y ``Seguimiento_2''. Dado que las bases de datos de seguimiento no estaban completas, la evaluación fue cualitativa: la métrica principal fue el número de instancias detectadas (menos es mejor al indicar menor ``parpadeo'') y se inspeccionó visualmente la calidad de las segmentaciones. Se utilizaron modelos YOLOv8l-seg para las pruebas, tanto en formato PyTorch como TensorRT.
 
 \begin{table}[htbp]
