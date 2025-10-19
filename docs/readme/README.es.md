@@ -25,6 +25,6 @@ En la industria acuícola, el monitoreo constante de la salud de los peces es cr
 
 Este proyecto perfecciona una base de datos de segmentación de instancias de salmones, con el objetivo de entrenar modelos YOLO con rendimiento superior. Además se optimizan hiperparámetros para el entrenamiento y se exportan los modelos a TensorRT para reducir sus tiempos de inferencia.
 
-Los resultados demuestran que una base de datos más precisa puede aumentar su rendimiento en tareas de seguimiento alcanzando mejores métricas de asociación temporal (MOTA, HOTA, IDFW) y mejorar la calidad de sus segmentaciones; la optimización de hiperparámetros produce mejores resultados; y la conversión a TensorRT reduce significativamente los tiempos de inferencia, con mínima pérdida de desempeño.
+Los resultados demuestran que una base de datos más precisa puede aumentar su rendimiento en tareas de seguimiento alcanzando mejores métricas de asociación temporal (IDF1, AssA, HOTA, MOTA, MT\%, IDSW, Frag) y mejorar la calidad de sus segmentaciones; la optimización de hiperparámetros produce mejores resultados; y la conversión a TensorRT reduce significativamente los tiempos de inferencia, con mínima pérdida de desempeño.
 
 [**Leer PDF completo.**](https://juliopchile.github.io/memoria-informe/main.pdf)

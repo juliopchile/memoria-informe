@@ -25,7 +25,7 @@ In the aquaculture industry, the constant monitoring of fish health is crucial. 
 
 This project refines an instance segmentation dataset for salmon, with the aim of training YOLO models with superior performance. In addition, hyperparameters are optimized for training, and the models are exported to TensorRT in order to reduce their inference times.
 
-The results demonstrate that a more precise dataset can enhance performance in tracking tasks by achieving better temporal association metrics (MOTA, HOTA, IDFW) and improving the quality of segmentations; hyperparameter optimization yields better outcomes; and the conversion to TensorRT significantly reduces inference times with minimal performance loss.
+The results demonstrate that a more precise dataset can enhance performance in tracking tasks by achieving better temporal association metrics (IDF1, AssA, HOTA, MOTA, MT\%, IDSW, Frag) and improving the quality of segmentations; hyperparameter optimization yields better outcomes; and the conversion to TensorRT significantly reduces inference times with minimal performance loss.
 
 [See full PDF](build/main.pdf)
 

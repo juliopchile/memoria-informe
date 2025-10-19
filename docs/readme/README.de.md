@@ -31,6 +31,6 @@ In der Aquakultur ist die ständige Überwachung der Fischgesundheit von entsche
 
 Dieses Projekt verfeinert eine Instanzsegmentierungsdatenbank für Lachs mit dem Ziel, YOLO-Modelle mit überlegener Leistung zu trainieren. Außerdem werden Hyperparameter für das Training optimiert und die Modelle nach TensorRT exportiert, um die Inferenzzeiten zu reduzieren.
 
-Die Ergebnisse zeigen, dass eine präzisere Datenbank die Performance in Tracking-Aufgaben verbessern kann, indem bessere zeitliche Assoziationsmetriken (MOTA, HOTA, IDFW) erreicht werden, und die Qualität der Segmentierungen verbessert; die Optimierung von Hyperparametern liefert bessere Resultate; und die Konvertierung nach TensorRT verringert die Inferenzzeiten signifikant – bei minimalem Leistungsverlust.
+Die Ergebnisse zeigen, dass eine präzisere Datenbank die Performance in Tracking-Aufgaben verbessern kann, indem bessere zeitliche Assoziationsmetriken (IDF1, AssA, HOTA, MOTA, MT\%, IDSW, Frag) erreicht werden, und die Qualität der Segmentierungen verbessert; die Optimierung von Hyperparametern liefert bessere Resultate; und die Konvertierung nach TensorRT verringert die Inferenzzeiten signifikant – bei minimalem Leistungsverlust.
 
 [**Komplettes PDF lesen.**](https://juliopchile.github.io/memoria-informe/main.pdf)
