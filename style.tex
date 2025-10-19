@@ -464,7 +464,53 @@
 \setcounter{tocdepth}{5}
 \setcounter{secnumdepth}{5}
 
-%-------------------------------------------------------------------------------
+% --- NUMERACIÓN: incluir número de la parte antes de las secciones ---
+\usepackage{chngcntr}                % para resetear contadores con facilidad
+
+% forzar que \thepart sea arábigo (opcional, evita I, II en vez de 1,2)
+\renewcommand{\thepart}{\arabic{part}}
+
+% que las secciones se reinicien al cambiar de parte
+\counterwithin{section}{part}
+
+% numeración visible: Parte.Sección.Subsección...
+\renewcommand{\thesection}{\thepart.\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+
+% actualizar numeración de figuras/tablas/ecuaciones para que usen la nueva sección
+\renewcommand{\thefigure}{\thesection.\arabic{figure}}
+\renewcommand{\thetable}{\thesection.\arabic{table}}
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+
+% opcional: hacer que figure/table/equation se reinicien con la sección
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+\counterwithin{equation}{section}
+
+% agregar partes al índice de contenidos con numeración
+\newcommand{\parttoc}[1]{%
+  \part*{#1}%
+  \refstepcounter{part}%
+  \phantomsection%
+  \addcontentsline{toc}{part}{\protect\numberline{\thepart}#1}%
+}
+
+% ---------- AJUSTES DE TOC (evitar solapamiento de números largos) ----------
+\usepackage{tocloft}
+
+% Ajusta anchuras de la “columna de números” en el TOC (tunea estos valores)
+\setlength{\cftpartnumwidth}{1.5em}     % ancho columna para "Partes" (número)
+\setlength{\cftsecnumwidth}{2em}      % ancho columna para las secciones
+\setlength{\cftsubsecnumwidth}{2.9em}   % ancho columna para las subsecciones
+\setlength{\cftsubsubsecnumwidth}{3.8em}% ancho para subsubsecciones si las listaste
+\setlength{\cftfignumwidth}{2.9em}      % ancho columna para números de figuras
+\setlength{\cfttabnumwidth}{2.9em}      % ancho columna para números de tablas
+
+% Si deseas, ajusta el espacio entre número y texto
+%\setlength{\cftbeforesecskip}{0pt}      % espacio antes de cada entrada de sección
+% --------------------------------------------------------------------------
+
 
 \providecommand{\keywordses}[1]
 {
@@ -578,12 +624,14 @@
     \endgroup
 }
 
-% Section number referencing
-\renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}
-\renewcommand{\thetable}{\arabic{section}.\arabic{table}}
-\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
-%\renewcommand{\thelstlisting}{\arabic{section}.\arabic{lstlisting}}
+% Figures / Tables / Equations incluirán parte.sección.XXX
+\renewcommand{\thefigure}{\thesection.\arabic{figure}}
+\renewcommand{\thetable}{\thesection.\arabic{table}}
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
 %\renewcommand{\thelstlisting}{\thesection.\arabic{lstlisting}}
+%\makeatletter
+%\renewcommand{\thealgocf}{\thesection.\arabic{algocf}}
+%\makeatother
 
 
 % Table colours

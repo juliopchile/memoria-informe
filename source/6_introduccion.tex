@@ -1,4 +1,5 @@
-\part*{Capítulo 1: Introducción}\addcontentsline{toc}{part}{Capítulo 1: Introducción}
+\parttoc{Capítulo 1: Introducción}
+\label{part:chap1_introducción}
 \section{Contexto General}
 WildSense, empresa spin-off de la UTFSM, entre sus muchas actividades provee servicios de estimación de biomasa en peces con análisis de profundidad estéreo \cite{wildsense-1}. Es en este ámbito que la visión por computadora juega un rol fundamental, donde la segmentación de instancias y el seguimiento funcionan como etapas iniciales en la caracterización biométrica de salmones \cite{wildsense-2}. %Es muy importante que estas etapas sean robustas y precisas, ya que cualquier error puede propagarse a las etapas posteriores, afectando la calidad de las estimaciones finales.
 
@@ -93,18 +94,18 @@ Finalmente, la optimización de hiperparámetros en Deepfish debiese aumentar la
 
 %Para corroborar esta hipótesis se evaluará el rendimiento de los modelos entrenados en segmentación de instancias utilizando métricas de precisión (precisión, exhaustividad, F1, mAP@50 y mAP@50-95).
 
-
-\subsection{Objetivo general}
+\subsection{Objetivos}
+\subsubsection{Objetivo general}
 % (Versión original)
 % Entrenar modelos de segmentación de instancias YOLO para una base de datos de salmones mejorada y validar los modelos resultantes en las tareas de segmentación y seguimiento.
 
 Mejorar la calidad de la segmentación y seguimiento basado en detección de modelos YOLO entrenados en una base de datos de salmones en el contexto de jaulas de cultivo en acuicultura, mediante la depuración especializada de dicha base de datos. También corroborar la efectividad de la búsqueda de hiperparámetros, configuraciones de entrenamiento, la experimentación con múltiples versiones de YOLO y la optimización mediante TensorRT.
 
-\subsection{Objetivos específicos}
+\subsubsection{Objetivos específicos}
 \begin{itemize}
     \setlength{\itemsep}{0pt}%
-    %\setlength{\parskip}{0pt}%
-    %\setlength{\parsep}{0pt}%
+    \setlength{\parskip}{0pt}%
+    \setlength{\parsep}{0pt}%
     \item Optimizar una base de datos de salmones para adecuarla al caso de uso de WildSense.
     \item Diseñar una base de datos de seguimiento para evaluar \textit{tracking} en salmones.
     \item Evaluar y buscar hiperparámetros que potencien el entrenamiento en modelos YOLO, para diferentes configuraciones, bases de datos y versiones de modelo.
@@ -112,12 +113,13 @@ Mejorar la calidad de la segmentación y seguimiento basado en detección de mod
     \item Concluir sobre los efectos de optimizar la base de datos, realizar entrenamiento con búsqueda de hiperparámetros y la exportación de modelos con cuantización numérica.
 \end{itemize}
 
-\section{Estructura de la memoria}
-La memoria se estructura en los siguientes capítulos:
+\subsection{Estructura de la memoria}
+%La memoria se estructura en los siguientes capítulos:
 \begin{itemize}
-    \item \textbf{Capítulo 1: Introducción.} Presenta el contexto general, el problema a resolver, la hipótesis, los objetivos y la estructura de la memoria.
+    %\item \textbf{Capítulo 1: Introducción.} Presenta el contexto general, el problema a resolver, la hipótesis, los objetivos y la estructura de la memoria.
     \item \textbf{Capítulo 2: Estado del Arte.} Revisión de las soluciones existentes en visión por computadora aplicadas a la acuicultura; revisión del estado del arte en las tareas de segmentación de instancias, el seguimiento de objetos, parámetros de entrenamiento y técnicas de optimización de modelos; y una discusión sobre las técnicas y herramientas más relevantes de este capítulo empleadas en el desarrollo de esta memoria.
     \item \textbf{Capítulo 3: Desarrollo de la solución.} Descripción detallada de la solución implementada, incluyendo la depuración de la base de datos de salmones, el diseño del conjunto de seguimiento, el entrenamiento de modelos con búsqueda de hiperparámetros y la optimización con TensorRT.
-    \item \textbf{Capítulo 4: Resultados y discusión.} Presentación y análisis de los resultados obtenidos, incluyendo métricas de evaluación, comparativa con soluciones existentes y discusión sobre las contribuciones de la investigación. En este capítulo se incluyen las conclusiones finales y el trabajo futuro.
+    \item \textbf{Capítulo 4: Validación.} Presentación y análisis de los resultados obtenidos, incluyendo métricas de evaluación, comparativa con soluciones existentes y discusión sobre las contribuciones de la investigación.
+    \item \textbf{Capítulo 5: Conclusiones.} Resumen de los hallazgos principales, conclusiones derivadas del estudio, limitaciones del trabajo y propuestas para investigaciones futuras.
     \item \textbf{Anexos.} Material complementario que respalda el contenido de la memoria. Se exponen dos secciones: (\ref{sec:anexo_sota_segmentacion}) donde se explora más a fondo el estado del arte en segmentación de instancias desde un enfoque más histórico; y (\ref{sec:anexo_filtro_profundidad}) donde se presenta un filtro de profundidad que no fue utilizado pero que se desarrolló originalmente como parte de la memoria.
 \end{itemize}
