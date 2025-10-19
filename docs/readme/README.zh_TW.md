@@ -31,6 +31,6 @@ sudo apt install texlive-full
 
 本計畫精煉鮭魚實例分割資料庫，目標是訓練出效能更優的 YOLO 模型。此外，在訓練過程中優化超參數，並將模型匯出為 TensorRT 以縮短推論時間。
 
-結果顯示，更精準的資料庫可透過取得更佳的時間關聯指標（MOTA、HOTA、IDFW）來提升追蹤任務的表現，並改善分割品質；超參數優化帶來更佳成果；而轉換為 TensorRT 能在幾乎不影響效能的情況下大幅縮短推論時間。
+結果顯示，更精準的資料庫可透過取得更佳的時間關聯指標（IDF1、AssA、HOTA、MOTA、MT%、IDSW、Frag）來提升追蹤任務的表現，並改善分割品質；超參數優化帶來更佳成果；而轉換為 TensorRT 能在幾乎不影響效能的情況下大幅縮短推論時間。
 
 [**閱讀完整 PDF。**](https://juliopchile.github.io/memoria-informe/main.pdf)

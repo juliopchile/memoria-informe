@@ -31,6 +31,6 @@ Nell'industria dell'acquacoltura, il monitoraggio continuo della salute dei pesc
 
 Questo progetto perfeziona un database di segmentazione di istanze di salmoni, con l'obiettivo di addestrare modelli YOLO con prestazioni superiori. Inoltre si ottimizzano gli iperparametri durante l'addestramento e i modelli vengono esportati in TensorRT per ridurre i tempi di inferenza.
 
-I risultati dimostrano che un database più accurato può migliorare le prestazioni nelle attività di tracking raggiungendo metriche di associazione temporale migliori (IDF1, AssA, HOTA, MOTA, MT\%, IDSW, Frag) e migliorare la qualità delle segmentazioni; l'ottimizzazione degli iperparametri produce risultati migliori; e la conversione in TensorRT riduce in modo significativo i tempi di inferenza con una perdita di prestazioni minima.
+I risultati dimostrano che un database più accurato può migliorare le prestazioni nelle attività di tracking raggiungendo metriche di associazione temporale migliori (IDF1, AssA, HOTA, MOTA, MT%, IDSW, Frag) e migliorare la qualità delle segmentazioni; l'ottimizzazione degli iperparametri produce risultati migliori; e la conversione in TensorRT riduce in modo significativo i tempi di inferenza con una perdita di prestazioni minima.
 
 [**Lire le PDF complet.**](https://juliopchile.github.io/memoria-informe/main.pdf)

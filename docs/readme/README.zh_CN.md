@@ -31,6 +31,6 @@ sudo apt install texlive-full
 
 本项目精炼鲑鱼实例分割数据集，旨在训练性能更优的 YOLO 模型。此外，在训练过程中对超参数进行优化，并将模型导出为 TensorRT 以缩短推理时间。
 
-结果表明，更精确的数据集可通过获得更佳的时间关联指标（MOTA、HOTA、IDFW）来提升跟踪任务表现，并提高分割质量；超参数优化带来更好的结果；而转换为 TensorRT 能在性能几乎无损的情况下显著减少推理时间。
+结果表明，更精确的数据集可通过获得更佳的时间关联指标（IDF1、AssA、HOTA、MOTA、MT%、IDSW、Frag）来提升跟踪任务表现，并提高分割质量；超参数优化带来更好的结果；而转换为 TensorRT 能在性能几乎无损的情况下显著减少推理时间。
 
 [**阅读全文（PDF）。**](https://juliopchile.github.io/memoria-informe/main.pdf)

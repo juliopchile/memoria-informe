@@ -31,6 +31,6 @@ Dans l'industrie de l'aquaculture, le suivi permanent de la santé des poissons 
 
 Ce projet perfectionne une base de données de segmentation d'instances de saumons, afin d'entraîner des modèles YOLO aux performances supérieures. De plus, les hyperparamètres sont optimisés pendant l'entraînement et les modèles sont exportés vers TensorRT afin de réduire les temps d'inférence.
 
-Les résultats montrent qu'une base de données plus précise peut améliorer les performances dans les tâches de suivi en obtenant de meilleures métriques d'association temporelle (IDF1, AssA, HOTA, MOTA, MT\%, IDSW, Frag) et en améliorant la qualité des segmentations; que l'optimisation des hyperparamètres produit de meilleurs résultats; et que la conversion vers TensorRT réduit significativement les temps d'inférence avec une perte de performance minimale.
+Les résultats montrent qu'une base de données plus précise peut améliorer les performances dans les tâches de suivi en obtenant de meilleures métriques d'association temporelle (IDF1, AssA, HOTA, MOTA, MT%, IDSW, Frag) et en améliorant la qualité des segmentations; que l'optimisation des hyperparamètres produit de meilleurs résultats; et que la conversion vers TensorRT réduit significativement les temps d'inférence avec une perte de performance minimale.
 
 [**Lire le PDF complet.**](https://juliopchile.github.io/memoria-informe/main.pdf)
