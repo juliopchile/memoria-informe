@@ -91,7 +91,6 @@ Se calcula mediante la siguiente ecuación (Ec. \ref{eq:map}):
 
 donde $N$ es el número de clases y $\text{AP}_i$ es la precisión media de la clase $i$. La precisión media se calcula como el área bajo la curva de precisión-exhaustividad (PR) para cada clase, y se define como el promedio de la precisión en diferentes puntos de \textit{recall}. 
 
-% TODO lenguaje: Falta agregar fuentes y citas para métricas de tracking.
 \subsection{HOTA, DetA, AssA y LocA}
 HOTA \cite{HOTA} (\textit{Higher Order Tracking Accuracy}) es una métrica de seguimiento que busca equilibrar detección y asociación. HOTA y sus subcomponentes se obtienen emparejando detecciones y \textit{ground-truths} por cuadro (usualmente por IoU) y calculando las razones TP/FP/FN y medidas de asociación por umbral. Es habitual reportar HOTA como AUC (\textit{Area Under the Curve}) sobre distintos umbrales IoU. En la práctica se reporta:
 \begin{itemize}
@@ -104,11 +103,11 @@ HOTA \cite{HOTA} (\textit{Higher Order Tracking Accuracy}) es una métrica de se
 \end{itemize}
 
 \subsection{AssA y AssA\_AUC}
-AssA (\textit{Association Accuracy}) mide la calidad de la asociación (capacidad de mantener la misma ID a lo largo del tiempo). Se obtiene para cada par detección-GT correctamente emparejado y se evalúa la consistencia de la identidad; se calcula el puntaje de asociación y, para robustez frente a diferentes umbrales de IoU, se reporta el área bajo la curva (AssA\_AUC).  
+AssA \cite{HOTA} (\textit{Association Accuracy}) mide la calidad de la asociación (capacidad de mantener la misma ID a lo largo del tiempo). Se obtiene para cada par detección-GT correctamente emparejado y se evalúa la consistencia de la identidad; se calcula el puntaje de asociación y, para robustez frente a diferentes umbrales de IoU, se reporta el área bajo la curva (AssA\_AUC).  
 %Se utiliza porque captura directamente el objetivo esencial de este trabajo —reducir el ``parpadeo'' y conservar identidades de peces que interesa medir.
 
 \subsection{IDF1}
-Es el \textit{F1-score} entre las correspondencias de identidad (ID verdadero positivos, ID falsos positivos, ID falsos negativos). Se computan coincidencias de identidad cuadro-a-cuadro y se calcula precisión/\textit{recall} a nivel de ID. Se calcula con la siguiente fórmula (Ec. \ref{eq:idf1}):
+IDF1 \cite{IDF1} es el \textit{F1-score} entre las correspondencias de identidad (ID verdadero positivos, ID falsos positivos, ID falsos negativos). Se computan coincidencias de identidad cuadro-a-cuadro y se calcula precisión/\textit{recall} a nivel de ID. Se calcula con la siguiente fórmula (Ec. \ref{eq:idf1}):
 \begin{equation}
 \text{IDF1} = \frac{2 \cdot \text{IDTP}}{2\cdot\text{IDTP} + \text{IDFP} + \text{IDFN}}
 \label{eq:idf1}
@@ -130,11 +129,10 @@ Por cada GT (\textit{Ground Truth}) se clasifica su seguimiento como:
 MT\% es la fracción de GTs que son \textit{mostly tracked}. Se obtiene comparando, para cada GT, el número de cuadros donde existe una correspondencia válida con detecciones; se aplica un umbral de fracción (p. ej. 0.8) para clasificar. Se utiliza por ser una medida de continuidad a lo largo de múltiples cuadros.
 
 \subsection{IDSW (ID switches) y Fragmentación (Frag)}
-IDSW cuenta cuántas veces un mismo GT cambia de ID asignada por el \textit{tracker} (indicador de pérdida de identidad). Frag cuenta las rupturas de un seguimiento (un GT aparecía, desaparecía y luego reaparecía como nuevo track). Se obtienen a partir del seguimiento cuadro-a-cuadro tras el emparejamiento; cada cambio de ID o separación de continuidas se suma. Se usan por ser medidas directas del ``parpadeo'' y de la calidad práctica del seguimiento.
+IDSW \cite{IDSW} cuenta cuántas veces un mismo GT cambia de ID asignada por el \textit{tracker} (indicador de pérdida de identidad). Frag cuenta las rupturas de un seguimiento (un GT aparecía, desaparecía y luego reaparecía como nuevo track). Se obtienen a partir del seguimiento cuadro-a-cuadro tras el emparejamiento; cada cambio de ID o separación de continuidas se suma. Se usan por ser medidas directas del ``parpadeo'' y de la calidad práctica del seguimiento.
 
 \subsection{MOTA y MOTP}
-MOTA y MOTP son métricas clásicas en seguimiento. MOTA combina errores de falsos negativos, falsos positivos y cambios de identidad (IDSW) en un solo puntaje, reflejando la precisión global del seguimiento (Ec. \ref{eq:mota}). MOTP mide la precisión espacial de las detecciones emparejadas, reflejando qué tan cerca están las predicciones de las posiciones reales. En esencia, MOTA resume la capacidad del sistema para detectar y seguir objetos correctamente, mientras que MOTP evalúa la exactitud de las posiciones predichas.
-% TODO lenguaje: Añadir cita a CLEAR MOT (Bernardin & Stiefelhagen, 2008) para MOTA/MOTP; cita para IDF1 (Ristani et al., 2016).
+MOTA \cite{MOTA} y MOTP son métricas clásicas en seguimiento. MOTA combina errores de falsos negativos, falsos positivos y cambios de identidad (IDSW) en un solo puntaje, reflejando la precisión global del seguimiento (Ec. \ref{eq:mota}). MOTP mide la precisión espacial de las detecciones emparejadas, reflejando qué tan cerca están las predicciones de las posiciones reales. En esencia, MOTA resume la capacidad del sistema para detectar y seguir objetos correctamente, mientras que MOTP evalúa la exactitud de las posiciones predichas.
 
 \begin{equation}
 \text{MOTA} = 1 - \dfrac{\text{FN} + \text{FP} + \text{IDSW}}{\text{Total GT detections}}
