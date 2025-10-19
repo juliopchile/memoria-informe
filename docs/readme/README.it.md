@@ -1,6 +1,6 @@
 **Nota importante sulla traduzione**
 
-Il testo seguente è stato tradotto mediante strumenti di intelligenza artificiale (traduzione automatica). Poiché questo processo potrebbe contenere errori o imprecisioni, si consiglia di consultare la versione originale in inglese o in spagnolo per garantire l’accuratezza delle informazioni.
+Il testo seguente è stato tradotto mediante strumenti di intelligenza artificiale (traduzione automatica). Poiché questo processo potrebbe contenere errori o imprecisioni, si consiglia di consultare la versione originale in inglese o in spagnolo per garantire l'accuratezza delle informazioni.
 
 ---
 
@@ -18,7 +18,6 @@ Il testo seguente è stato tradotto mediante strumenti di intelligenza artificia
 [![Русский](https://img.shields.io/badge/lang-Русский-lightblue)](README.ru.md)
 [![Українська](https://img.shields.io/badge/lang-Українська-skyblue)](README.uk.md)
 
-
 # Configurazione
 Da usare con l’estensione di VS Code: [LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)
 
@@ -28,10 +27,10 @@ sudo apt install texlive-full
 ```
 
 # Riassunto
-Nell’industria dell’acquacoltura, il monitoraggio continuo della salute dei pesci è essenziale. I progressi nella visione artificiale consentono di svolgere questo compito in modo scalabile e meno invasivo. WildSense, uno spin-off dell’UTFSM, offre servizi di stima del peso dei salmoni, in cui la segmentazione di istanze e il tracciamento basato sul rilevamento sono componenti fondamentali del pipeline, benché vi siano ancora margini di ottimizzazione.
+Nell'industria dell'acquacoltura, il monitoraggio continuo della salute dei pesci è essenziale. I progressi nella visione artificiale consentono di svolgere questo compito in modo scalabile e meno invasivo. WildSense, uno spin-off dell'UTFSM, offre servizi di stima del peso dei salmoni, in cui la segmentazione di istanze e il tracciamento basato sul rilevamento sono componenti fondamentali del pipeline, benché vi siano ancora margini di ottimizzazione.
 
-Questo progetto affina un database di segmentazione di istanze di salmoni filtrandone i casi per includere solo quelli rilevanti, consentendo il training di modelli YOLO con prestazioni superiori rispetto ai lavori precedenti. Durante l’addestramento si ottimizzano gli iperparametri e i modelli vengono esportati in TensorRT per ridurre i tempi di inferenza.
+Questo progetto perfeziona un database di segmentazione di istanze di salmoni, con l'obiettivo di addestrare modelli YOLO con prestazioni superiori. Inoltre si ottimizzano gli iperparametri durante l'addestramento e i modelli vengono esportati in TensorRT per ridurre i tempi di inferenza.
 
-I risultati dimostrano che un database più accurato migliora la qualità dei modelli, che l’ottimizzazione degli iperparametri produce risultati migliori e che la conversione in TensorRT riduce significativamente i tempi di inferenza con una perdita di prestazioni minima.
+I risultati dimostrano che un database più accurato può migliorare le prestazioni nelle attività di tracking raggiungendo metriche di associazione temporale migliori (MOTA, HOTA, IDFW) e migliorare la qualità delle segmentazioni; l'ottimizzazione degli iperparametri produce risultati migliori; e la conversione in TensorRT riduce in modo significativo i tempi di inferenza con una perdita di prestazioni minima.
 
 [**Lire le PDF complet.**](https://juliopchile.github.io/memoria-informe/main.pdf)

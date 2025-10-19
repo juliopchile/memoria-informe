@@ -23,8 +23,8 @@ sudo apt install texlive-full
 # Resumen
 En la industria acuícola, el monitoreo constante de la salud de los peces es crucial. Gracias a los avances en visión por computadora es posible realizar esta labor de forma escalable y menos invasiva. WildSense, empresa spin-off de la UTFSM, provee servicios para la estimación de masa en salmones, donde la segmentación de instancias y seguimiento basado en detección son parte fundamental de su "pipeline", pero aún presenta oportunidades de optimización.
 
-Este proyecto perfecciona una base de datos de segmentación de instancias de salmones, al depurarla para incluir únicamente casos de interés, lo que permite entrenar modelos YOLO con rendimientos superiores a trabajos previos. Se optimizan los hiperparámetros durante el entrenamiento y se exportan los modelos a TensorRT para reducir los tiempos de inferencia.
+Este proyecto perfecciona una base de datos de segmentación de instancias de salmones, con el objetivo de entrenar modelos YOLO con rendimiento superior. Además se optimizan hiperparámetros para el entrenamiento y se exportan los modelos a TensorRT para reducir sus tiempos de inferencia.
 
-Los resultados demuestran que una base de datos más precisa mejora la calidad de los modelos, la optimización de hiperparámetros produce mejores resultados y la conversión a TensorRT reduce significativamente los tiempos de inferencia, con mínima pérdida de desempeño.
+Los resultados demuestran que una base de datos más precisa puede aumentar su rendimiento en tareas de seguimiento alcanzando mejores métricas de asociación temporal (MOTA, HOTA, IDFW) y mejorar la calidad de sus segmentaciones; la optimización de hiperparámetros produce mejores resultados; y la conversión a TensorRT reduce significativamente los tiempos de inferencia, con mínima pérdida de desempeño.
 
 [**Leer PDF completo.**](https://juliopchile.github.io/memoria-informe/main.pdf)

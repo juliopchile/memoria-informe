@@ -23,8 +23,8 @@ sudo apt install texlive-full
 # Abstract
 In the aquaculture industry, the constant monitoring of fish health is crucial. Advances in computer vision now allow this task to be performed in a scalable and less invasive manner. WildSense, a spin-off company of the UTFSM, provides services for weight estimation in salmon, for which instance segmentation and detection-based tracking are integral components of its pipeline, although there remains room for optimization.
 
-This project refines an instance segmentation database for salmon by filtering it to include only relevant cases, thereby enabling the training of YOLO models with performance superior to previous works. Hyperparameters are optimized during training, and the models are exported to TensorRT in order to reduce inference times.
+This project refines an instance segmentation dataset for salmon, with the aim of training YOLO models with superior performance. In addition, hyperparameters are optimized for training, and the models are exported to TensorRT in order to reduce their inference times.
 
-The results demonstrate that a more precise database enhances the quality of the models, hyperparameter optimization yields better outcomes, and the conversion to TensorRT significantly reduces inference times with minimal performance loss.
+The results demonstrate that a more precise dataset can enhance performance in tracking tasks by achieving better temporal association metrics (MOTA, HOTA, IDFW) and improving the quality of segmentations; hyperparameter optimization yields better outcomes; and the conversion to TensorRT significantly reduces inference times with minimal performance loss.
 
 [**Read full PDF.**](https://juliopchile.github.io/memoria-informe/main.pdf)

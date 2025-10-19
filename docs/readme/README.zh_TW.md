@@ -18,7 +18,6 @@
 [![Русский](https://img.shields.io/badge/lang-Русский-lightblue)](README.ru.md)
 [![Українська](https://img.shields.io/badge/lang-Українська-skyblue)](README.uk.md)
 
-
 # 設定
 請搭配 VS Code 擴充功能使用：[LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)
 
@@ -30,8 +29,8 @@ sudo apt install texlive-full
 # 摘要
 在水產養殖產業中，持續監測魚隻健康至關重要。伴隨電腦視覺技術的進步，這項工作能以更大規模且更低侵入性的方式進行。WildSense（源自 UTFSM 的衍生企業）提供鮭魚體重估算服務，其中實例分割與基於偵測的追蹤是其流程的關鍵要素，但仍有進一步優化的空間。
 
-本計畫針對鮭魚實例分割資料庫進行精煉，只保留與研究相關的案例，這使得在訓練 YOLO 模型時能達到比以往研究更優的效能。訓練過程中進行超參數的優化，並將模型匯出為 TensorRT 格式，以縮短推論時間。
+本計畫精煉鮭魚實例分割資料庫，目標是訓練出效能更優的 YOLO 模型。此外，在訓練過程中優化超參數，並將模型匯出為 TensorRT 以縮短推論時間。
 
-結果顯示，更精準的資料庫能顯著提升模型品質；透過超參數優化可進一步提升模型表現；而將模型轉換為 TensorRT 後，推論時間大幅縮短且僅帶來極小的效能損失。
+結果顯示，更精準的資料庫可透過取得更佳的時間關聯指標（MOTA、HOTA、IDFW）來提升追蹤任務的表現，並改善分割品質；超參數優化帶來更佳成果；而轉換為 TensorRT 能在幾乎不影響效能的情況下大幅縮短推論時間。
 
 [**閱讀完整 PDF。**](https://juliopchile.github.io/memoria-informe/main.pdf)
