@@ -338,7 +338,7 @@
 }
 
 %%% MOSTRAR CODIGO (Usando minted)
-\usepackage[newfloat,outputdir=out]{minted}
+\usepackage[newfloat]{minted}
 % newfloat para que cuente como lstlisting en la tabla de contenidos
 % outputdir=out para que compile correctamente
 % IMPORTANTE!! Invocar LaTeX con -shell-escape
@@ -415,7 +415,7 @@
 
 
 %Para qué los subtítulos aparezcan en español
-\usepackage[spanish,es-tabla,es-noshorthands,es-nolists,es-lcroman]{babel}
+\usepackage[spanish.es-tabla.es-noshorthands.es-nolists.es-lcroman]{babel}
 %\usepackage[spanish]{babel}
 %\usepackage[utf8]{inputenc}
 %\usepackage{sectsty}
@@ -445,7 +445,6 @@
 %\usepackage[backend=biber,style=ieee]{biblatex}
 \usepackage{citasEstiloUSM} % Estilo de citas de la USM
 \usepackage{xurl}
-
 %\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
 
 \newenvironment{poliabstract}[1]
