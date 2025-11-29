@@ -1,0 +1,6 @@
+# Necesary to use Pygments for syntax highlighting in LaTeX documents 
+Pygments
+
+# Used to add watermakrs to images
+#opencv-python
+#numpy

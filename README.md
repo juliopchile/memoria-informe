@@ -13,14 +13,37 @@
 [![Українська](https://img.shields.io/badge/lang-Українська-skyblue)](docs/readme/README.uk.md)
 
 # Setup
+
 Use with the VsCode extension: [Latex Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)
 
-Install a Text compiler (eg. textlive in Linux).
+Install a Text compiler (eg. textlive in Linux Ubuntu).
+
 ```bash
 sudo apt install texlive-full
 ```
 
+**Optionally**: you can use Docker,
+
+```bash
+docker build -t latex-ubuntu .
+```
+
+To run the container.
+
+```
+docker run --rm -it \
+  -v "$(pwd)":/workspace \
+  -v texlive-cache:/root/.texlive2024 \
+  -w /workspace \
+  --user "$(id -u)":"$(id -g)" \
+  --name latex-builder \
+  latex-ubuntu
+```
+
+Then to use it with VsCode, open with Dev Container. Remember to install the [Latex Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop) extension inside the Ubunto container.
+
 # Abstract
+
 In the aquaculture industry, the constant monitoring of fish health is crucial. Advances in computer vision now allow this task to be performed in a scalable and less invasive manner. WildSense, a spin-off company of the UTFSM, provides services for weight estimation in salmon, for which instance segmentation and detection-based tracking are integral components of its pipeline, although there remains room for optimization.
 
 This project refines an instance segmentation dataset for salmon, with the aim of training YOLO models with superior performance. In addition, hyperparameters are optimized for training, and the models are exported to TensorRT in order to reduce their inference times.
@@ -30,5 +53,6 @@ The results demonstrate that a more precise dataset can enhance performance in t
 [See full PDF](build/main.pdf)
 
 # Useful hotkeys
+
 - From code -> to PDF: `ctrl` + `alt` + `j`
 - From PDF -> to code: `ctrl` + `click`
