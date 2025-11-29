@@ -22,7 +22,7 @@ Con la llegada del aprendizaje profundo, especialmente las Redes Neuronales Conv
 
 En la evolución de técnicas de segmentación prima la buena representación de características de una imagen, esencial para la detección. En un inicio se intentó con el diseño de descriptores locales (como SIFT \cite{SIFT} y HOG \cite{HOG}) y técnicas para agrupar y abstraer descriptores en representaciones de alto nivel que destacaran las partes discriminativas (como Bag of Words \cite{BagOfWords} y Fisher Vector \cite{FisherVector}). El inconveniente de estos métodos de representación es que requerían una ingeniería manual compleja y conocimiento especializado. En cambio, los métodos de aprendizaje profundo, como las CNNs, aprenden automáticamente representaciones de características con distintos niveles de abstracción.
 
-Luego la tendencia ha sido el de aumentar la profundidad de la redes neuronales. AlexNet \cite{AlexNet} tenía 8 capas, VGGNet \cite{VGGNet} 16 y ResNet \cite{ResNet} junto a DenseNet \cite{DenseNet} más de 100. Fue con VGGNet y GoogLeNet \cite{GoogleNet} que se demostró que aumentar la profundidad de la red mejora su capacidad de representación. Algunas redes no tan profundas como AlexNet, OverFeat \cite{OverFeat}, ZFNet \cite{ZFNet} y VGGNet, aún así tienen un gran numero de parámetros debido a sus capas densas, y estas implican un mayor coste computacional que las capas puramente convolucionales.
+Luego la tendencia ha sido el de aumentar la profundidad de la redes neuronales. AlexNet \cite{AlexNet} tenía 8 capas, VGGNet \cite{VGGNet} 16 y ResNet \cite{ResNet} junto a DenseNet \cite{DenseNet} más de 100. Fue con VGGNet y GoogLeNet \cite{GoogleNet} que se demostró que aumentar la profundidad de la red mejora su capacidad de representación. Algunas redes no tan profundas como AlexNet, OverFeat \cite{OverFeat}, ZFNet \cite{ZFNet} y VGGNet, aun así tienen un gran número de parámetros debido a sus capas densas, y estas implican un mayor coste computacional que las capas puramente convolucionales.
 
 En la actualidad para problemas de clasificación de imágenes se prefieren Redes Neuronales Convolucionales Profundas (DCNNs) basadas en detectores como lo son Mask R-CNN \cite{MaskRCNN} y YOLO \cite{YOLO}. Usualmente se utilizan las características extraídas en las últimas capas para la representación de los objetos.
 
@@ -59,28 +59,28 @@ Una alternativa de clasificación para modelos de segmentación es la categoriza
 \setlength\itemsep{-0.3em}
     \item \textbf{Clasificación de máscara propuesta:} Esta técnica implica la generación de propuestas de máscaras, seguida de la clasificación de las propuestas generadas.
     \item \textbf{Detección seguida por segmentación:} Este popular enfoque implica la detección de objetos mediante una caja seguida de la segmentación objeto-caja.
-    \item \textbf{Etiquetado de pixéles seguido por agrupamiento:} Este enfoque implica el etiquetado categórico de cada píxel de la imagen, luego los píxeles se agrupan en instancias de objetos mediante un algoritmo de agrupación.
+    \item \textbf{Etiquetado de píxeles seguido por agrupamiento:} Este enfoque implica el etiquetado categórico de cada píxel de la imagen, luego los píxeles se agrupan en instancias de objetos mediante un algoritmo de agrupación.
     \item \textbf{Métodos de deslizamiento denso de ventana:} Se pasa una ventana de tamaño fijo a lo largo de toda la imagen para examinar cada región en detalle. En cada posición de la ventana, el modelo realiza una predicción para determinar qué clase de objeto o región pertenece a esa área.
 \end{itemize}
 
 \subsection{Segmentación de instancias en video}
-En 2019 \cite[Yang et al]{Yang2019} introducen la tarea de segmentación de instancias en video, \textit{Video Instance Segmentation} (VIS), que consiste en detectar, segmentar y seguir instancias individuales de objetos en videos. Ese mismo año, \cite[Voigtlaender et al.]{Voigtlaender2019} amplian la tarea de seguimiento en múltiples objetos, \textit{Multi-Object Tracking} (MOT), para incluir el seguimiento de segmentación de instancias, denominándolo \textit{Multi-Object Tracking and Segmentation} (MOTS). En la literatura científica y a efectos prácticos VIS y MOTS corresponden a la misma tarea y pueden ser usados indistintamente.
+En 2019 \cite[Yang et al]{Yang2019} introducen la tarea de segmentación de instancias en video, \textit{Video Instance Segmentation} (VIS), que consiste en detectar, segmentar y seguir instancias individuales de objetos en videos. Ese mismo año, \cite[Voigtlaender et al.]{Voigtlaender2019} amplían la tarea de seguimiento en múltiples objetos, \textit{Multi-Object Tracking} (MOT), para incluir el seguimiento de segmentación de instancias, denominándolo \textit{Multi-Object Tracking and Segmentation} (MOTS). En la literatura científica y a efectos prácticos VIS y MOTS corresponden a la misma tarea y pueden ser usados indistintamente.
 
 A diferencia de la segmentación en imágenes, todas las técnicas conocidas de VIS implementan Redes Neuronales, siendo las más comunes CNNs. En un inicio se recurrió a modelos de segmentación, como Mask R-CNN, con la incorporación de capas extras, las cuales almacenaban información de cuadros anteriores, pero en la actualidad métodos más complejos existen. Las mayores innovaciones se dan en el uso Redes Convolucionales Recurrentes (RCNNs) para el manejo de datos secuenciales y captura de características temporales, Graph Neural Networks (GNNs) para modelar las relaciones entre distintas instancias para un mejor seguimiento y segmentación, y el uso de transformadores que permiten la tokenización de parches de video con mecanismos de atención capaces de detección y segmentación en imágenes \cite{Zhou2023}.
 
-Estás técnicas resuelven simultáneamente el seguimiento y segmentación de instancias. Lamentablemente el mayor problema con VIS es la dificultad del etiquetado en bases de datos para su entrenamiento. Es por este inconveniente que suele preferirse un acercamiento con modelos cuadro a cuadro.
+Estas técnicas resuelven simultáneamente el seguimiento y segmentación de instancias. Lamentablemente el mayor problema con VIS es la dificultad del etiquetado en bases de datos para su entrenamiento. Es por este inconveniente que suele preferirse un acercamiento con modelos cuadro a cuadro.
 
 \section{Filtro de Profundidad (código original)}
 \label{sec:anexo_filtro_profundidad}
 En primera instancia se tenía la idea de crear un filtro capaz de utilizar datos de profundidad asociadas a las imágenes de la base de datos con el fin de filtrarlas, en caso de encontrarse a una distancia mayor a la de un umbral dado. Sin embargo, al no contar con datos de profundidad asociados a las imágenes del \textit{dataset}, se optó por un filtro más sencillo que es el utilizado.
 
-Si bien no se utilizó esta versión del filtro, sí estaba planeada su inclusión como material complementario de este proyecto. Lamentablemente el código se perdió en un formateo de disco duro y no fue posible su recuperación. Sin embargo, se incluye una imagen que muestra el funcionamiento del filtro de profundidad como evidencia de su existencia (Fig. \ref{fig:filtro_profundiad}).
+Si bien no se utilizó esta versión del filtro, sí estaba planeada su inclusión como material complementario de este proyecto. Lamentablemente el código se perdió en un formateo de disco duro y no fue posible su recuperación. Sin embargo, se incluye una imagen que muestra el funcionamiento del filtro de profundidad como evidencia de su existencia (Fig. \ref{fig:filtro_profundidad}).
 
 \begin{figure}[htbp]
 \begin{center}
     \includegraphics[width=0.8\textwidth]{figures/filtro_de_profunidad.png}
     \caption[Implementación del filtro de profundidad]{Implementación del filtro de profundidad. Como puede verse en la máscara binaria de la derecha, algunas instancias se encuentran fuera del umbral de distancia (en este caso 3 metros) y por ende son excluidas del \textit{dataset}.}
-    \label{fig:filtro_profundiad}
+    \label{fig:filtro_profundidad}
 \end{center}
 \end{figure}
 
