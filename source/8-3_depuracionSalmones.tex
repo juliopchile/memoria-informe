@@ -55,23 +55,23 @@ En primera instancia se mejoran a mano las etiquetas dentro de la base de datos 
 # Área pequeña
 if area <= 3950:
     if nitidez <= 1.3:
-      return False
+        return False
     elif (nitidez >= 1.7) and (perimeter >= 300):
-      return True
+        return True
     else:
-      return False
+        return False
 # Área mediana
 elif 3950 < area <= 6500:   
     if nitidez <= 1.2:
-      return False
+        return False
     else:
-      return True
+        return True
 # Área grande
 else:
     if (nitidez < 1) and (aspect_ratio <= 0.15):
-      return False
+        return False
     else:
-      return True
+        return True
 \end{minted}
 \end{listing}
 
