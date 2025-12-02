@@ -22,23 +22,28 @@ Install a Text compiler (eg. textlive in Linux Ubuntu).
 sudo apt install texlive-full
 ```
 
-**Optionally**: you can use Docker,
+### You can use Docker (Not reliable):
 
 ```bash
-docker build -t latex-ubuntu .
+# Build the Docker container.
+docker build -t memoria-informe .
+
+# Remove the Docker container.
+docker rm memoria-informe-dev then docker rmi memoria-informe
 ```
 
 To run the container.
 
+```bash
+# Run the container.
+docker run -d --name memoria-informe-dev -v "$PWD":/workspace -w /workspace memoria-informe:latest sleep infinity
+
+# Stop the container.
+docker stop memoria-informe-dev
+docker rm -f memoria-informe-dev
 ```
-docker run --rm -it \
-  -v "$(pwd)":/workspace \
-  -v texlive-cache:/root/.texlive2024 \
-  -w /workspace \
-  --user "$(id -u)":"$(id -g)" \
-  --name latex-builder \
-  latex-ubuntu
-```
+
+(Optionally use this code if something goes wrong and you can't delete files in the repository after using the Docker); ``sudo chown -R "$USER":"$USER" path_to_repository/memoria-informe``
 
 Then to use it with VsCode, open with Dev Container. Remember to install the [Latex Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop) extension inside the Ubunto container.
 
